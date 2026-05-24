@@ -1,0 +1,9 @@
+{
+  "name": "previdenciario-adv-os",
+  "version": "0.1.0",
+  "description": "Plugin Claude Code especializado em Direito Previdenciario Brasileiro (RGPS + RPPS + Previdencia Complementar + Acidentario). Hierarquia de 4 camadas com 22 Proibicoes Absolutas, 5 protocolos tecnicos (jurisprudencial, infralegal, pericia medica, calculos, compartimentacao de escopos), Suprema Corte R1-R4 e 26 skills modulares (Tier 0/1/2/3). Onboarding interativo via /start-previdenciario. Configuravel ao perfil do escritorio do operador via persona local em runtime.",
+  "author": {
+    "name": "Previdenciario Adv-OS contributors"
+  },
+  "license": "MIT"
+}
