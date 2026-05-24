@@ -1,0 +1,18 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "previdenciario-adv-os-marketplace",
+  "description": "Marketplace oficial do plugin Previdenciario Adv-OS. Sistema operacional do advogado previdenciarista — 26 skills (RGPS + RPPS + Previdencia Complementar + Acidentario), 4 camadas hierarquicas, 22 Proibicoes Absolutas, 5 protocolos tecnicos e Suprema Corte R1-R4.",
+  "owner": {
+    "name": "Sbroggio Advocacia & IA Combativa"
+  },
+  "plugins": [
+    {
+      "name": "previdenciario-adv-os",
+      "source": "./previdenciario-adv-os",
+      "description": "Plugin Claude Code especializado em Direito Previdenciario Brasileiro (RGPS + RPPS + Previdencia Complementar + Acidentario). Hierarquia de 4 camadas com 22 Proibicoes Absolutas, 5 protocolos tecnicos (jurisprudencial, infralegal, pericia medica, calculos, compartimentacao de escopos), Suprema Corte R1-R4 e 26 skills modulares (Tier 0/1/2/3). Onboarding interativo via /start-previdenciario.",
+      "author": {
+        "name": "Sbroggio Advocacia & IA Combativa"
+      }
+    }
+  ]
+}
