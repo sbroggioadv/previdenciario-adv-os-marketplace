@@ -4,6 +4,8 @@ description: >
   PREVIDENCIARIO ONBOARDING — Wizard de configuracao do plugin previdenciario no Cowork do operador. Conduz fluxo estruturado de perguntas para criar pasta `previdenciario/` com identidade (nome, OAB, escritorio, cidade), subareas (RGPS/RPPS/Complementar/Acidentario), especialidades, tom de voz e ferramentas declaradas. Wizard TRAVADO em PREVIDENCIARIO (sem pergunta de area juridica generica). Use quando operador disser configurar previdenciario, instalar previdenciario, primeira vez, /start-previdenciario, /onboarding-previdenciario, configurar plugin previdenciario.
 ---
 
+> **🖱️ Escolhas = botoes:** em campos de **lista fechada** (AREA_FOCO, tom, modo, atualizar/recriar, sim/nao) use a ferramenta **AskUserQuestion** para mostrar **botoes clicaveis** (max. 4 por pergunta; se houver mais, divida em 2). **Texto livre** (nome, OAB, cidade, e-mail) segue como pergunta digitada normal.
+
 # PREVIDENCIARIO ONBOARDING
 
 > Wizard de configuracao inicial. Travado em PREVIDENCIARIO. Linguagem acolhedora.
