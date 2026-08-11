@@ -1,5 +1,21 @@
 # Previdenciario Adv-OS — Marketplace
 
+> ## ⚖️ Este repositório NÃO é software livre
+>
+> O código fica visível para viabilizar a instalação no Claude/Cowork — não porque seja gratuito.
+>
+> **PREVIDENCIARIO ADV-OS — R$ 398,00, pagamento único** (sem assinatura, sem recorrência)
+> 👉 **[Adquirir a licença](https://pay.kirvano.com/f682ea43-0f51-4b77-93c7-021c863e85b2)**
+>
+> **Ao forkar ou clonar este repositório você adere à [licença de uso](LICENSE)**, devendo efetuar o
+> pagamento no link acima e enviar o comprovante para **luis@sbroggio.com.br**.
+>
+> Os forks são públicos no GitHub e são registrados pelo titular (data, conta e repositório).
+>
+> **Já comprou?** Nada a fazer — sua licença cobre o uso e o fork para instalação. Este aviso vale de
+> 11/08/2026 em diante, para quem chega ao repositório sem ter adquirido.
+
+
 Marketplace oficial do plugin **Previdenciario Adv-OS** para Claude Code / Cowork.
 
 Sistema operacional do advogado previdenciarista — 26 skills consolidadas (RGPS + RPPS + Previdencia Complementar + Acidentario), 4 camadas hierarquicas com 22 Proibicoes Absolutas, 5 protocolos tecnicos e Suprema Corte R1-R4.
@@ -52,4 +68,4 @@ Detalhes completos em [`previdenciario-adv-os/README.md`](./previdenciario-adv-o
 
 ## Licenca
 
-MIT — ver [LICENSE](./LICENSE).
+Uso licenciado mediante aquisição — ver [`LICENSE`](./LICENSE). As cópias obtidas até 11/08/2026 permanecem sob MIT; a partir dessa data o código é proprietário.
