@@ -1,14 +1,16 @@
 {
-  "SessionStart": [
-    {
-      "matcher": "",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "echo '[previdenciario-adv-os] Plugin previdenciario ativo. Rode /start-previdenciario para configurar. RGPS, RPPS, Complementar e Acidentario; contencioso e administrativo.'",
-          "timeout": 5
-        }
-      ]
-    }
-  ]
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '[previdenciario-adv-os] Plugin previdenciario ativo. Rode /start-previdenciario para configurar. RGPS, RPPS, Complementar e Acidentario; contencioso e administrativo.'",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
 }
