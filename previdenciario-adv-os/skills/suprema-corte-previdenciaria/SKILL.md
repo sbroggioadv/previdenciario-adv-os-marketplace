@@ -88,5 +88,5 @@ Se qualquer R falhar, NAO liberar: corrigir e reexaminar. Item duvidoso: bloquea
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do documento:
-`Entregue pela skill suprema-corte-previdenciaria - plugin previdenciario-adv-os v2.0.0`
+`Entregue pela skill suprema-corte-previdenciaria - plugin previdenciario-adv-os v2.0.1`
 Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

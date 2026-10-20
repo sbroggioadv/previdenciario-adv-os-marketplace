@@ -10,6 +10,23 @@
   "frequencia": "mensal",
   "range_inicial": "2000-01",
   "range_final": "2026-09",
+  "data_captura": "2026-10-14",
+  "intervalo": {
+    "inicial": "2000-01",
+    "final": "2026-09"
+  },
+  "validade": {
+    "aplicavel_de": "2000-01",
+    "aplicavel_ate": "2026-09",
+    "fora_do_intervalo": "o motor devolve fórmula aberta (exit 3), nunca número",
+    "defasagem_maxima_meses": 2,
+    "regra_recaptura": "Recapturar com tools/atualizar_indices.py antes de cada release e sempre que um cálculo pedir mês posterior a validade.aplicavel_ate. A ferramenta só grava se a série passar nas conferências, não recuar em relação ao cache gravado e terminar no máximo validade.defasagem_maxima_meses meses antes do mês da recaptura."
+  },
+  "aliases_legados": {
+    "data_extracao": "data_captura",
+    "range_inicial": "intervalo.inicial",
+    "range_final": "intervalo.final"
+  },
   "unidade": "percentual_mensal",
   "metodologia": "Serie BCB SGS 4390: Selic acumulada no mes, em % a.m., 2 casas. Como juros de mora/atualizacao judicial (EC 113/2021 art. 3o; Lei 9.430/96 art. 61 par. 3o) a Selic e capitalizada de forma SIMPLES: soma das taxas mensais do periodo (Manual de Calculos da Justica Federal 2025, cap. 4, Nota 4 a). Acumulacao composta so por escolha explicita e marcada no demonstrativo. A Selic integral nao se soma a outro indice de correcao. O mes corrente (parcial) nao entra no cache.",
   "valores": {

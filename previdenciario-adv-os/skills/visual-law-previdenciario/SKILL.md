@@ -78,5 +78,5 @@ Seguir com o que ha no context/ e avisar em uma linha o que faltou e o que isso 
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do quadro:
-`Entregue pela skill visual-law-previdenciario - plugin previdenciario-adv-os v2.0.0`.
+`Entregue pela skill visual-law-previdenciario - plugin previdenciario-adv-os v2.0.1`.
 Registrar a mesma linha em `previdenciario/casos/<slug>.md`.

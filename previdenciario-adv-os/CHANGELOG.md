@@ -2,6 +2,34 @@
 
 Todas as mudanças relevantes do plugin `previdenciario-adv-os`. Formato [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/); versões pelo [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [2.0.1] - 2026-10-20
+
+Correção sem mudança de uso: nada a refazer na configuração. Atualize pelo mesmo marketplace; não é preciso rodar `/start-previdenciario` de novo.
+
+### Corrigido
+
+- **Valor da causa: o complemento até o salário mínimo não é reajustado.** Quando a renda do benefício ficava abaixo do mínimo e era elevada até ele, o script somava esse complemento à base e aplicava o reajuste anual sobre o total. A Lei 8.213, art. 41-A, §6º, manda compensar o aumento que veio da elevação ao mínimo no momento do reajuste: o índice incide sobre a renda própria do benefício, e o piso é conferido depois. Exemplo: DIB em 01/2020 e renda de R$ 1.039,00; em 01/2021 o script dava R$ 1.101,95, quando o certo é reajustar R$ 1.039,00 (R$ 1.095,63) e elevar ao mínimo (R$ 1.100,00). Valores da causa de benefícios no piso calculados com a 2.0.0 merecem nova conferência. A revisão da RMI já fazia a conta certa e ganhou teste para não regredir.
+- **Valor da causa, RPV e revisão da RMI em 2007.** A data da MP 404/2007 foi capturada (11/12/2007, em vigor na publicação, DOU de 12/12/2007; `context/lei/mp-404-2007.md` e `lei-11665-2008.md`). Até a competência 11/2007 o pagamento é sempre no mês seguinte; desde a competência 12/2007 vale a antecipação do art. 41-A, §3º, para quem recebe até um mínimo. Antes, toda competência de 2007 com vencimento antecipado saía em aberto (exit 3); agora uma data no próprio mês até 11/2007 é recusada (exit 2) e, desde 12/2007, aceita dentro da janela.
+- **Reajuste de 01/08/2006.** Fechado pela Lei 11.430/2006, art. 3º, e pela Portaria MPS 342/2006, art. 1º e Anexo I: 5,01% (ou o pro rata da DIB) sobre a renda de março/2006, substituindo os 5,00% de abril, só para benefício com início até 31/03/2006. Antes, a renda abria a partir dessa data.
+- **Teto de jan/2004 e de jan–fev/2011.** Vale o ato normativo, não o AEPS: R$ 2.400,00 de 31/12/2003 a 31/01/2004 (EC 41/2003, art. 5º) e R$ 3.691,74 em jan–fev/2011 (PI MPS/MF 407/2011), com a divergência registrada nos dados. Antes, as duas janelas eram lacuna.
+
+### Dados
+
+- Reajustes anuais de 06/1997 a 06/2001 na tabela (`scripts/data/reajustes-rgps.json`), com o Anexo pro rata e a incorporação do teto de cada portaria, capturados da base Datalegis da ANTT (`context/lei/portaria-*-reajuste.md`). Os motores ainda abrem a conta para benefício com início até 2003 (veja "Limites" no README).
+- Motor de atualização monetária igual ao do plugin de cálculos judiciais 0.1.2 (cópia conferida por sha256). Nenhum índice e nenhum resultado mudou; os alertas `[VERIFICAR]` do regime do requisitório da EC 136 agora citam o texto literal do Provimento CNJ 207/2025, capturado em `context/lei/provimento-cnj-207-2025.md` (exceto quando o teto global da Selic é aplicado; veja "Continua em aberto").
+
+### Continua em aberto
+
+- **Reajustes de 05/1995 e 05/1996:** sem texto capturado (o DOU só tem imagem).
+- **Benefício com início anterior a 2004:** o valor da causa e a revisão da RMI abrem a conta (exit 3, fórmula com `[VERIFICAR]`), porque o aumento do mínimo de abril/maio era descontado no reajuste de junho e essa compensação não está modelada. A tabela de 1997 a 2001 já está carregada para quando estiver.
+- **Portaria de reajuste de 2027:** ainda não publicada.
+- **Alerta do CNJ quando o teto global da Selic é aplicado (ressalva conhecida):** no cálculo federal depois da EC 136, quando a Selic sobre o valor consolidado fica abaixo de IPCA + 2% a.a. e o teto é aplicado, o script mantém a fórmula da Res. CJF 983/2026 (art. 7º, §3º, III), que é a aceita, mas não repete o alerta com o texto literal do Provimento CNJ 207/2025 (art. 2º, III: Selic "exclusivamente sobre o principal"). O valor calculado não muda; nesse caso, confira você a divergência entre as duas normas antes de usar a conta. Correção prevista no plugin de cálculos 0.1.3 e no previdenciário 2.0.2.
+
+### Documentação
+
+- README ganhou a linha de instalação pelo marketplace.
+- A tabela de saídas de `context/calculo-transicao.md` (§8) foi alinhada ao script: sai em aberto (exit 3) também quando só a data em que a regra se cumpre muda com a normalização das competências.
+
 ## [2.0.0] - 2026-10-15
 
 Versão maior: muda a configuração gravada no seu computador, o aviso de início e os arquivos auxiliares do plugin. Os nomes das skills e dos comandos que você já usa continuam os mesmos.

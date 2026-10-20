@@ -13,6 +13,24 @@
   "frequencia": "mensal",
   "range_inicial": "2025-09",
   "range_final": "2026-10",
+  "data_captura": "2026-10-14",
+  "intervalo": {
+    "inicial": "2025-09",
+    "final": "2026-10"
+  },
+  "validade": {
+    "aplicavel_de": "2025-09",
+    "aplicavel_ate": "2026-10",
+    "fora_do_intervalo": "o motor devolve fórmula aberta (exit 3), nunca número",
+    "defasagem_maxima_meses": null,
+    "defasagem_nota": "série derivada: vale a conferência das séries de origem (derivado_de)",
+    "regra_recaptura": "Recapturar com tools/atualizar_indices.py antes de cada release e sempre que um cálculo pedir mês posterior a validade.aplicavel_ate. A ferramenta só grava se a série passar nas conferências, não recuar em relação ao cache gravado e terminar no máximo validade.defasagem_maxima_meses meses antes do mês da recaptura."
+  },
+  "aliases_legados": {
+    "data_extracao": "data_captura",
+    "range_inicial": "intervalo.inicial",
+    "range_final": "intervalo.final"
+  },
   "unidade": "percentual_mensal",
   "metodologia": "Competencia m: taxa = (Fator Selic do mes m-1 / (1 + INPC do mes m-1/100) - 1) x 100, 6 casas truncadas, zero se negativa. Fator Selic do mes = produto(1 + Selic diaria/100), 8 casas. Contra a Fazenda, a taxa da competencia m e computada no mes m+1 (Nota 7 do item 4.2.2): a de set./2025 entra em out./2025. Acumulacao SIMPLES (soma). Conferencia: o quadro da Nota 3 (set./2025 a maio/2026) e reproduzido nos 9 meses.",
   "componentes": {

@@ -4,7 +4,7 @@
 > **Fica no diretório de trabalho do advogado, nunca dentro do plugin.** O plugin é somente leitura; escrever nele quebra na atualização.
 > Lido pelo `previdenciario-master` (recorte e modo) e pelo `estilo-juridico-previdenciario` (voz). Nenhum hook lê este arquivo.
 
-**Configurado em:** {{DATA}} · **Versão do plugin:** 2.0.0 · **Origem:** {{wizard 2.0.0 | migrado da 0.1.0 em DATA}}
+**Configurado em:** {{DATA}} · **Versão do plugin:** 2.0.1 · **Origem:** {{wizard 2.0.1 | migrado da 0.1.0 em DATA}}
 
 ---
 
@@ -78,8 +78,8 @@ Campo não respondido fica em branco. Nada aqui é inventado.
 ## Migração da 0.1.0 (só se houve)
 
 - Arquivos antigos **preservados, não apagados:** {{lista — ex.: previdenciario/cowork-state.json, previdenciario/persona.md, previdenciario/CLAUDE.md, previdenciario/MEMORY.md, .claude/settings.local.json}}
-- A 2.0.0 não lê mais esses arquivos nem injeta persona por hook. As variáveis `PREVIDENCIARIO_*` do `.claude/settings.local.json` ficaram sem uso; o advogado pode removê-las quando quiser.
-- Itens não migrados: lista de skills ativas (na 2.0.0 todas ficam disponíveis), automações e tarefas agendadas, e a tese de revisão declarada inviável pelo STF (ver `CLAUDE.md` do plugin, verdade dura 1).
+- Desde a 2.0.0 o plugin não lê mais esses arquivos nem injeta persona por hook. As variáveis `PREVIDENCIARIO_*` do `.claude/settings.local.json` ficaram sem uso; o advogado pode removê-las quando quiser.
+- Itens não migrados: lista de skills ativas (desde a 2.0.0 todas ficam disponíveis), automações e tarefas agendadas, e a tese de revisão declarada inviável pelo STF (ver `CLAUDE.md` do plugin, verdade dura 1).
 
 ---
 

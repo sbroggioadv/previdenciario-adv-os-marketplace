@@ -12,6 +12,23 @@
   "data_extracao": "2026-10-14",
   "range_inicial": "2000-05",
   "range_final": "2026-09",
+  "data_captura": "2026-10-14",
+  "intervalo": {
+    "inicial": "2000-05",
+    "final": "2026-09"
+  },
+  "validade": {
+    "aplicavel_de": "2000-05",
+    "aplicavel_ate": "2026-09",
+    "fora_do_intervalo": "o motor devolve fórmula aberta (exit 3), nunca número",
+    "defasagem_maxima_meses": 2,
+    "regra_recaptura": "Recapturar com tools/atualizar_indices.py antes de cada release e sempre que um cálculo pedir mês posterior a validade.aplicavel_ate. A ferramenta só grava se a série passar nas conferências, não recuar em relação ao cache gravado e terminar no máximo validade.defasagem_maxima_meses meses antes do mês da recaptura."
+  },
+  "aliases_legados": {
+    "data_extracao": "data_captura",
+    "range_inicial": "intervalo.inicial",
+    "range_final": "intervalo.final"
+  },
   "metodologia": "Variacao percentual mensal do IPCA-15 (IBGE), lida da serie BCB SGS 7478 e conferida mes a mes contra o SIDRA tabela 3065 variavel 355.",
   "valores": {
     "2000-05": 0.09,

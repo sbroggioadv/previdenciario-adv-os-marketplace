@@ -1,6 +1,6 @@
 ---
 name: previdencia-complementar
-description: "Triagem e encaminhamento em previdencia complementar (fundo de pensao e plano aberto), sobre a lei seca: CF art. 202 e art. 40, par. 14 a 16, LC 109/2001 e LC 108/2001. Separa entidade fechada e aberta, patrocinio publico e privado, e mapeia os institutos (beneficio proporcional diferido, portabilidade, resgate, autopatrocinio), direito acumulado, regulamento aplicavel, deficit, custeio e prescricao, com checklist de documentos. Sem conta de reserva, resgate ou beneficio na 2.0.0. Use quando o operador disser previdencia privada, previdencia complementar, fundo de pensao, entidade fechada, plano aberto, portabilidade, resgate, deficit do plano, Funpresp. Nao use para o RPPS do servidor (rpps-servidor-publico) nem para o beneficio do INSS."
+description: "Triagem e encaminhamento em previdencia complementar (fundo de pensao e plano aberto), sobre a lei seca: CF art. 202 e art. 40, par. 14 a 16, LC 109/2001 e LC 108/2001. Separa entidade fechada e aberta, patrocinio publico e privado, e mapeia os institutos (beneficio proporcional diferido, portabilidade, resgate, autopatrocinio), direito acumulado, regulamento aplicavel, deficit, custeio e prescricao, com checklist de documentos. Sem conta de reserva, resgate ou beneficio na 2.0.1. Use quando o operador disser previdencia privada, previdencia complementar, fundo de pensao, entidade fechada, plano aberto, portabilidade, resgate, deficit do plano, Funpresp. Nao use para o RPPS do servidor (rpps-servidor-publico) nem para o beneficio do INSS."
 ---
 
 # PREVIDENCIA COMPLEMENTAR
@@ -42,7 +42,7 @@ Classificar a relacao (entidade, patrocinio, plano), apontar o dispositivo da le
 Regulamento do plano na adesao e na elegibilidade · estatuto da entidade · certificado de participante e proposta de inscricao · extratos de contribuicao e de saldo · plano de custeio e demonstracoes do deficit, se houver · prova da cessacao do vinculo com o patrocinador · resposta da entidade ao pedido administrativo · termo de opcao (servidor).
 
 ## Calculo
-Sem script na 2.0.0. Reserva, resgate, beneficio, deficit e portabilidade nao sao apurados pelo plugin: valor informado pela entidade ou pelo advogado sai marcado "conta nao conferida por script".
+Sem script na 2.0.1. Reserva, resgate, beneficio, deficit e portabilidade nao sao apurados pelo plugin: valor informado pela entidade ou pelo advogado sai marcado "conta nao conferida por script".
 
 ## Se faltar anexo
 Seguir com o que ha no context/ e avisar em uma linha o que faltou e o que isso limita na entrega. Nunca preencher o que faltou por suposicao.
@@ -56,5 +56,5 @@ Nunca citar sumula, tema ou norma do orgao regulador que nao esteja em context/.
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do documento:
-`Entregue pela skill previdencia-complementar - plugin previdenciario-adv-os v2.0.0`.
+`Entregue pela skill previdencia-complementar - plugin previdenciario-adv-os v2.0.1`.
 Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

@@ -1,6 +1,6 @@
 # previdenciario-adv-os — regras internas do plugin
 
-> Plugin de Direito Previdenciário brasileiro, versão **2.0.0**: 34 skills em 6 camadas, 9 comandos e 7 scripts de cálculo, sobre a EC 103/2019, as Leis 8.213/1991, 8.212/1991, 8.742/1993 e 10.259/2001, o Decreto 3.048/1999, a IN PRES/INSS 128/2022, a EC 113/2021, a EC 136/2025, o Manual de Cálculos da Justiça Federal de julho/2026 e a Resolução CJF 983/2026.
+> Plugin de Direito Previdenciário brasileiro, versão **2.0.1**: 34 skills em 6 camadas, 9 comandos e 7 scripts de cálculo, sobre a EC 103/2019, as Leis 8.213/1991, 8.212/1991, 8.742/1993 e 10.259/2001, o Decreto 3.048/1999, a IN PRES/INSS 128/2022, a EC 113/2021, a EC 136/2025, o Manual de Cálculos da Justiça Federal de julho/2026 e a Resolução CJF 983/2026.
 > **Advoga para o segurado, o dependente e o beneficiário contra o INSS** (polo ativo); o lado é preferência gravada no perfil do escritório, não trava.
 > Despersonalizado (autoria IA Combativa; o escritório do cliente é configurado pelo `/start-previdenciario`, que grava `previdenciario/perfil.md`).
 > **O núcleo comercial é a conta:** `calculos-previdenciarios` e `planejamento-previdenciario`, com os scripts por trás — qual regra vale mais, quando aposentar, quanto vai receber.
@@ -47,7 +47,7 @@
 - **Lei 9.289/1996 (custas na Justiça Federal):** não capturada; não afirmar isenção nem cobrança do INSS na Justiça Federal.
 - **Acumulação do auxílio-acidente com o auxílio temporário:** fechadas só a vedação com aposentadoria (Lei 8.213, art. 86) e a suspensão na reabertura pelo mesmo acidente (Decreto 3.048, art. 104, §6º); as demais combinações seguem indeterminadas.
 - **Juros da poupança (maio/2012 a nov./2021)** e **taxa legal depois de maio/2026** sem tabela do CJF: fórmula.
-- **RPPS e previdência complementar:** a LC 108/2001, a LC 109/2001 e a lei do RPPS só são citáveis se o texto estiver em `context/lei/` (conferir no `INDICE.md`). Sem o arquivo, **não citar artigo delas**: a skill faz checklist de documentos e de questões e declara o gap. Ancorados: CF, arts. 40 e 202; EC 103, arts. 4º, 10 e 20 para o servidor federal. Nenhum cálculo do servidor na 2.0.0.
+- **RPPS e previdência complementar:** a LC 108/2001, a LC 109/2001 e a lei do RPPS só são citáveis se o texto estiver em `context/lei/` (conferir no `INDICE.md`). Sem o arquivo, **não citar artigo delas**: a skill faz checklist de documentos e de questões e declara o gap. Ancorados: CF, arts. 40 e 202; EC 103, arts. 4º, 10 e 20 para o servidor federal. Nenhum cálculo do servidor na 2.0.1.
 - **Aposentadoria da pessoa com deficiência (LC 142/2013) e pensão por morte:** sem script; o dispositivo da duração da cota da pensão é conferido no anexo antes de citar.
 
 ## Porta única

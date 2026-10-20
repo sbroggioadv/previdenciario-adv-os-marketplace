@@ -1,6 +1,6 @@
 ---
 name: rpps-servidor-publico
-description: "Triagem e encaminhamento do servidor titular de cargo efetivo no regime proprio (RPPS), sobre a lei seca: CF art. 40, EC 103 (arts. 4, 9, 10, 20, 22, 24 e 26) para o servidor federal, Lei 9.717/1998 e Lei 10.887/2004. Aponta a regra permanente ou de transicao, integralidade e paridade, abono de permanencia, acumulacao, contagem reciproca e a lei do ente que falta, com checklist de documentos. Sem conta de proventos na 2.0.0. Use quando o operador disser servidor publico, RPPS, regime proprio, aposentadoria do servidor, abono de permanencia, integralidade, paridade, CTC. Nao use para quem ocupa exclusivamente emprego publico, cargo em comissao, cargo temporario ou mandato, sem cargo efetivo (RGPS, planejamento-previdenciario) nem para a previdencia complementar do servidor (previdencia-complementar)."
+description: "Triagem e encaminhamento do servidor titular de cargo efetivo no regime proprio (RPPS), sobre a lei seca: CF art. 40, EC 103 (arts. 4, 9, 10, 20, 22, 24 e 26) para o servidor federal, Lei 9.717/1998 e Lei 10.887/2004. Aponta a regra permanente ou de transicao, integralidade e paridade, abono de permanencia, acumulacao, contagem reciproca e a lei do ente que falta, com checklist de documentos. Sem conta de proventos na 2.0.1. Use quando o operador disser servidor publico, RPPS, regime proprio, aposentadoria do servidor, abono de permanencia, integralidade, paridade, CTC. Nao use para quem ocupa exclusivamente emprego publico, cargo em comissao, cargo temporario ou mandato, sem cargo efetivo (RGPS, planejamento-previdenciario) nem para a previdencia complementar do servidor (previdencia-complementar)."
 ---
 
 # RPPS SERVIDOR PUBLICO
@@ -45,7 +45,7 @@ Dizer ao advogado qual regra do RPPS se aplica ao servidor, o que a lei seca exi
 Certidao de tempo de contribuicao de cada regime anterior · ficha funcional com ingresso no servico publico e em cada cargo · historico de cargos e de magisterio · termo de opcao pela complementar, se houver · fichas financeiras desde 07/1994 · lei do RPPS do ente e lei da complementar do ente · laudos de atividade nociva ou avaliacao da deficiencia · ato de aposentadoria ou indeferimento, se ja houver.
 
 ## Calculo
-Sem script na 2.0.0. Tempo, pontos, media e provento do servidor nao sao apurados pelo plugin: a tabela mostra exigido x informado pelo advogado, com o aviso "conta do advogado, nao conferida por script". Nunca usar os scripts do RGPS para o servidor.
+Sem script na 2.0.1. Tempo, pontos, media e provento do servidor nao sao apurados pelo plugin: a tabela mostra exigido x informado pelo advogado, com o aviso "conta do advogado, nao conferida por script". Nunca usar os scripts do RGPS para o servidor.
 
 ## Se faltar anexo
 Seguir com o que ha no context/ e avisar em uma linha o que faltou e o que isso limita na entrega. Nunca preencher o que faltou por suposicao.
@@ -60,5 +60,5 @@ Nunca transportar regra do RGPS para o servidor sem ancora. Nunca pedagio de 50%
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do documento:
-`Entregue pela skill rpps-servidor-publico - plugin previdenciario-adv-os v2.0.0`.
+`Entregue pela skill rpps-servidor-publico - plugin previdenciario-adv-os v2.0.1`.
 Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

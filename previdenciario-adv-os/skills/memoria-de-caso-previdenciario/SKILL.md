@@ -42,7 +42,7 @@ Nunca perder o fio: quem e quem, qual beneficio, em que fase, que prazo corre, o
 3. **Ao atualizar:** acrescentar o ato no fim (nunca reescrever atos anteriores), atualizar situacao e fase, gravar o prazo que a skill de prazo devolveu e a proxima providencia.
 4. **Fato novo relevante** (documento novo, decisao nova, prazo novo): registrar e avisar o master de que o quadro precisa ser reconfirmado.
 5. **Estado da 0.1.0:** se existir `previdenciario/cowork-state.json` ou `persona.md` sem `perfil.md`, nao converter aqui; apontar `/start-previdenciario` (migracao). Nunca apagar arquivo antigo.
-6. **Resumo (/status-previdenciario):** versao do plugin (2.0.0), perfil configurado ou nao, lista dos casos com fase e proximo prazo, e, do caso ativo, 5 a 8 linhas: partes, beneficio, fase, situacao, proxima providencia, proximo prazo fatal.
+6. **Resumo (/status-previdenciario):** versao do plugin (2.0.1), perfil configurado ou nao, lista dos casos com fase e proximo prazo, e, do caso ativo, 5 a 8 linhas: partes, beneficio, fase, situacao, proxima providencia, proximo prazo fatal.
 
 ## Se faltar anexo
 Seguir com a estrutura desta skill e avisar em uma linha que o modelo `templates/caso.md.tpl` nao foi encontrado. Sem `perfil.md`: registrar "perfil nao configurado" e seguir.
@@ -55,5 +55,5 @@ Dados do caso sao sensiveis (CNIS, laudo, dados de saude e de renda). Gravar so 
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do documento:
-`Entregue pela skill memoria-de-caso-previdenciario - plugin previdenciario-adv-os v2.0.0`
+`Entregue pela skill memoria-de-caso-previdenciario - plugin previdenciario-adv-os v2.0.1`
 Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

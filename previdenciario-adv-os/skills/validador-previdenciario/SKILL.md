@@ -52,5 +52,5 @@ BLOQUEAR: item que nao consta no context/; redacao riscada usada como vigente; d
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do documento:
-`Entregue pela skill validador-previdenciario - plugin previdenciario-adv-os v2.0.0`.
+`Entregue pela skill validador-previdenciario - plugin previdenciario-adv-os v2.0.1`.
 Registrar a mesma linha em `previdenciario/casos/<slug>.md`.

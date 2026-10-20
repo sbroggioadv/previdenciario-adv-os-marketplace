@@ -29,7 +29,7 @@ import sys
 from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
 from pathlib import Path
 
-VERSAO = "2.0.0"
+VERSAO = "2.0.1"
 EXIT_OK, EXIT_ENTRADA, EXIT_FALTA = 0, 2, 3
 
 PASTA = Path(__file__).resolve().parent
@@ -460,9 +460,10 @@ def salario_minimo(e, tabela, faltas):
 #
 # QA final r2 A-01: a antecipação do §3º (até um mínimo, pagamento desde o fim do próprio mês da competência) entrou
 # pela MP 404/2007 e não vale para trás. Até ela, o pagamento é sempre no mês seguinte ao da competência (art. 41, §4º,
-# redações original, da Lei 8.444/1992 e da Lei 10.699/2003; art. 41-A, §2º, redação da Lei 11.430/2006). A captura
-# só data a MP como "de 2007": as competências de 2007 são a fronteira, e nelas a parte antecipada da janela não fecha
-# nada (exit 3), nunca a regra posterior. "antecipacao": False = só mês seguinte; None = incerta; True = §3º em vigor.
+# redações original, da Lei 8.444/1992 e da Lei 10.699/2003; art. 41-A, §2º, redação da Lei 11.430/2006). 2.0.1: a MP
+# 404, de 11/12/2007, entrou em vigor na publicação (art. 2º; DOU 12/12/2007; context/lei/mp-404-2007.md). A janela da
+# competência 11/2007 já tinha passado sem antecipação; a de 12/2007 começa no 5º dia útil antes do fim de dezembro, com
+# a MP em vigor. "antecipacao": False = só mês seguinte; None = incerta (nenhum regime hoje); True = §3º em vigor.
 JANELAS = (
     {"id": "art41-original-ou-8444", "desde": (1991, 7), "ate": (1992, 12), "dias": None, "fim_dia_util": 10,
      "antecipacao": False, "paragrafo": "art. 41, §4º, redação original ou da Lei 8.444/1992",
@@ -480,28 +481,23 @@ JANELAS = (
      "fonte_ate": "Lei 10.699/2003: \"A partir de abril de 2004, os pagamentos ... do primeiro ao quinto dia útil do mês "
                   "seguinte\" (art. 41, §4º): a regra é do pagamento, e a competência de fevereiro/2004, paga em março, é "
                   "a última da janela de 10 dias"},
-    {"id": "art41-10699", "desde": (2004, 3), "ate": (2006, 12), "dias": (1, 5), "fim_dia_util": 5,
+    {"id": "art41-10699", "desde": (2004, 3), "ate": (2007, 11), "dias": (1, 5), "fim_dia_util": 5,
      "antecipacao": False, "paragrafo": "art. 41, §4º, redação da Lei 10.699/2003, ou art. 41-A, §2º, redação da Lei "
                                          "11.430/2006",
      "regra": "do 1º ao 5º dia útil do mês seguinte, para todo benefício (sem antecipação para quem recebe até um "
               "mínimo)",
      "fonte_desde": "Lei 10.699/2003 (art. 41, §4º, em context/lei/lei-8213-1991.md: pagamentos a partir de abril/2004, "
                     "logo desde a competência de março/2004)",
-     "fonte_ate": "Lei 11.430/2006 (art. 41-A, §2º, mesma janela) até a MP 404, \"de 2007\" (nota de redação do art. "
-                  "41-A, §§2º e 3º, em context/lei/lei-8213-1991.md): sem dia nem mês capturados, a borda é o fim de 2006"},
-    {"id": "art41A-fronteira-mp404", "desde": (2007, 1), "ate": (2007, 12), "dias": (1, 5), "fim_dia_util": 5,
-     "antecipacao": None, "paragrafo": "§2º",
-     "regra": "acima de um mínimo, do 1º ao 5º dia útil do mês seguinte (art. 41-A, §2º, nas duas redações); até um "
-              "mínimo, a antecipação do §3º depende da data da MP 404/2007, não capturada: a parte antecipada da "
-              "janela fica em aberto",
-     "fonte_desde": "MP 404, \"de 2007\" (nota de redação do art. 41-A, §§2º e 3º, em context/lei/lei-8213-1991.md); "
-                    "dia e mês não capturados",
-     "fonte_ate": "MP 404, \"de 2007\": em vigor, no mais tardar, ao fim de 2007"},
-    {"id": "art41A", "desde": (2008, 1), "ate": None, "dias": (1, 5), "fim_dia_util": 5,
+     "fonte_ate": "Lei 11.430/2006 (art. 41-A, §2º, mesma janela) até a MP 404, de 11/12/2007, em vigor na publicação "
+                  "(art. 2º; DOU 12/12/2007; context/lei/mp-404-2007.md): a competência 11/2007, paga do 1º ao 5º dia útil "
+                  "de dezembro, é a última sem antecipação"},
+    {"id": "art41A", "desde": (2007, 12), "ate": None, "dias": (1, 5), "fim_dia_util": 5,
      "antecipacao": True, "paragrafo": "§2º",
      "regra": "do 1º ao 5º dia útil do mês seguinte acima de um mínimo (§2º); até um mínimo, do 5º dia útil que "
               "antecede o fim do mês da competência ao 5º dia útil do seguinte (§3º)",
-     "fonte_desde": "MP 404/2007 (nota de redação do art. 41-A, §§2º e 3º, em context/lei/lei-8213-1991.md), com o texto "
+     "fonte_desde": "MP 404, de 11/12/2007, art. 1º (redação do art. 41-A, §§2º e 3º) e art. 2º (vigência na publicação, "
+                    "DOU 12/12/2007), em context/lei/mp-404-2007.md: a janela da competência 12/2007 abre no 5º dia útil "
+                    "antes do fim de dezembro, depois de 12/12/2007 em qualquer contagem; texto "
                     "mantido pela Lei 11.665/2008",
      "fonte_ate": "art. 41-A, §§2º a 4º, redação da Lei 11.665/2008, em vigor"},
 )

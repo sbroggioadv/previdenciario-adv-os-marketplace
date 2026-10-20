@@ -1,4 +1,4 @@
-# Previdenciário Adv OS — v2.0.0
+# Previdenciário Adv OS — v2.0.1
 
 Plugin de Direito Previdenciário brasileiro para o advogado do **segurado, do dependente e do beneficiário contra o INSS**: do requerimento administrativo ao cumprimento de sentença, com as contas feitas por script e cada número acompanhado da fonte.
 
@@ -38,6 +38,16 @@ Se falta um dado obrigatório da entrada, como a espécie do benefício, o scrip
 
 A lei seca usada pelo plugin está anexada (EC 103/2019, Leis 8.213/1991, 8.212/1991, 8.742/1993 e 10.259/2001, Decreto 3.048/1999, IN PRES/INSS 128/2022, Manual de Cálculos da Justiça Federal de 2026, entre outras). Toda citação de dispositivo, súmula ou tema é conferida contra esses anexos. O que não tem âncora sai marcado `[VERIFICAR]`, nunca como fato. A revisão final R1–R4 (Suprema Corte) vem ligada e audita cada entrega. Você pode desligá-la em `/start-previdenciario` ou pular caso a caso; nesse caso a entrega sai com o aviso "Suprema Corte: não executada" no rodapé.
 
+## Instalação
+
+No Claude Code:
+
+```
+/plugin install previdenciario-adv-os --marketplace sbroggioadv/previdenciario-adv-os-marketplace
+```
+
+No Cowork, adicione o marketplace pela URL do repositório em Settings → Plugins. Depois, rode `/start-previdenciario`.
+
 ## Comandos
 
 | Comando | Para quê |
@@ -68,6 +78,7 @@ CNIS, laudo médico e documentos do cliente são dado pessoal sensível (LGPD), 
 - **Fator previdenciário:** sai como fórmula, porque a tábua de mortalidade do IBGE não está anexada.
 - **Limite de ruído da aposentadoria especial:** não é automatizado; exige a prova técnica (PPP amparado em laudo).
 - **Aposentadoria da pessoa com deficiência e pensão por morte:** sem script.
+- **Reajuste da renda antes de 2004:** a tabela traz os reajustes de 1997 a 2001, mas o valor da causa e a revisão da RMI abrem a conta para benefício com início até 2003, porque o aumento do mínimo de abril/maio era descontado no reajuste de junho e os reajustes de 1995 e 1996 não têm texto capturado.
 - **Revisão da vida toda:** não é oferecida como tese. O STF fixou que a regra do art. 3º da Lei 9.876/1999 é obrigatória para quem se enquadra nela (ADIs 2.110 e 2.111; Tema 1.102); o plugin explica o que ainda se pode fazer pelo segurado.
 
 ## Atualizando da versão 0.1

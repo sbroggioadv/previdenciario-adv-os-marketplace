@@ -12,7 +12,7 @@ Argumento recebido: `$ARGUMENTS`
 
 ## PROTOCOLO
 1. Acionar `memoria-de-caso-previdenciario` no modo resumo - ele le `previdenciario/perfil.md` e `previdenciario/casos/*.md` do diretorio de trabalho.
-2. Mostrar: versao do plugin (2.0.0); perfil configurado ou nao; lista dos casos com fase e proximo prazo; e, do caso ativo (ou do slug recebido no argumento), 5 a 8 linhas com partes, beneficio, fase, situacao, proxima providencia e proximo prazo fatal.
+2. Mostrar: versao do plugin (2.0.1); perfil configurado ou nao; lista dos casos com fase e proximo prazo; e, do caso ativo (ou do slug recebido no argumento), 5 a 8 linhas com partes, beneficio, fase, situacao, proxima providencia e proximo prazo fatal.
 3. Somente leitura: este comando nao grava nem altera caso.
 4. Sem `perfil.md` e com `previdenciario/cowork-state.json` ou `persona.md` da 0.1.0: apontar `/start-previdenciario` para a migracao. Sem nada: apontar `/start-previdenciario`.
 5. Prazo que nao estiver registrado no caso aparece como lacuna, nunca estimado.

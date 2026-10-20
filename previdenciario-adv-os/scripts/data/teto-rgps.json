@@ -13,7 +13,7 @@
       "url": "https://www.in.gov.br/web/dou/-/portaria-interministerial-mps/mf-n-13-de-9-de-janeiro-de-2026-680382603"
     }
   ],
-  "conferencia": "AEPS 2017, Tabela 1.1 (mensal, 282 meses de 07/1994 a 12/2017: 279 iguais, 1 diferença só de granularidade em 12/1998, 2 divergências reais em lacunas) e INSS 'Tabela de contribuição – histórico' (2012–2021, 10 de 10), em 2026-10-15; 2022–2025 sem tabela oficial consolidada",
+  "conferencia": "AEPS 2017, Tabela 1.1 (mensal, 282 meses de 07/1994 a 12/2017: 279 iguais, 1 diferença só de granularidade em 12/1998, 2 divergências reais ato × AEPS, resolvidas pelo ato na 2.0.1 (campo 'divergencia_aeps' das linhas de 31/12/2003 e 01/01/2011)) e INSS 'Tabela de contribuição – histórico' (2012–2021, 10 de 10), em 2026-10-15; 2022–2025 sem tabela oficial consolidada",
   "data_captura": "2026-10-15",
   "intervalo": {
     "inicio": "1994-07-01",
@@ -233,6 +233,18 @@
       "texto": "Art. 4º A partir de 1º de junho de 2003, o salário-de-benefício não poderá ser inferior a R$ 240,00 (duzentos e quarenta reais), nem superior a R$ 1.869,34 (um mil oitocentos e sessenta e nove reais e trinta e quatro centavos)."
     },
     {
+      "vigencia_inicio": "2003-12-31",
+      "vigencia_fim": "2004-01-31",
+      "teto": "2400.00",
+      "piso": "240.00",
+      "norma": "EC 41, de 19/12/2003, art. 5º (DOU 31/12/2003) e Portaria MPS 12, de 06/01/2004, art. 2º (DOU 08/01/2004, p. 17; revogou a Portaria MPS 1/2004, de igual teor)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=17&data=08/01/2004&captchafield=firstAccess",
+      "piso_fonte": "salário mínimo vigente (Lei 10.699, de 09/07/2003 (conversão da MP 116/2003), art. 1º), por força da Lei 8.213/1991, art. 29, §2º, e da Lei 8.212/1991, art. 28, §3º",
+      "texto": "Art. 2o O limite máximo do valor dos benefícios do RGPS, a serem concedidos a partir de 31 de dezembro de 2003, é de R$ 2.400,00 (dois mil e quatrocentos reais).",
+      "divergencia_aeps": "AEPS 2017, Tabela 1.1, registra R$ 1.869,34 em janeiro de 2004; vale o ato normativo (EC 41/2003, art. 5º, desde a publicação em 31/12/2003; Portaria MPS 12/2004, art. 2º): estatística não é norma (decisão do coordenador, 2.0.1)"
+    },
+    {
       "vigencia_inicio": "2004-02-01",
       "vigencia_fim": "2004-04-30",
       "teto": "2400.00",
@@ -330,6 +342,18 @@
       "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=95&data=30/06/2010&captchafield=firstAccess",
       "piso_fonte": "mesmo dispositivo da norma do teto",
       "texto": "Art. 2º A partir de 1º de janeiro de 2010, o salário-de-benefício e o salário-de-contribuição não poderão ser inferiores a R$ 510,00 (quinhentos e dez reais), nem superiores a R$ 3.467,40 (três mil quatrocentos e sessenta e sete reais e quarenta centavos)."
+    },
+    {
+      "vigencia_inicio": "2011-01-01",
+      "vigencia_fim": "2011-02-28",
+      "teto": "3691.74",
+      "piso": "540.00",
+      "norma": "Portaria Interministerial MPS/MF 407, de 14/07/2011, art. 2º (DOU 15/07/2011, p. 54), retroativa a 01/01/2011; revogou a PI 568/2010 (R$ 3.689,66 a partir de 01/01/2011; DOU 03/01/2011, p. 32) e a PI 115/2011 (não capturada)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=54&data=15/07/2011&captchafield=firstAccess",
+      "piso_fonte": "salário mínimo vigente (Medida Provisória 516, de 30/12/2010, art. 1º), por força da Lei 8.213/1991, art. 29, §2º, e da Lei 8.212/1991, art. 28, §3º",
+      "texto": "Art. 2o A partir de 1o de janeiro de 2011 o salário-de-benefício e o salário-de-contribuição não poderão ser superiores a R$ 3.691,74 (três mil, seiscentos e noventa e um reais e setenta e quatro centavos), nem inferiores a R$ 540,00 (quinhentos e quarenta reais)",
+      "divergencia_aeps": "AEPS 2017, Tabela 1.1, registra R$ 3.689,66 em janeiro e fevereiro de 2011 (o da PI 568/2010, revogada); vale a PI MPS/MF 407/2011, que fixa R$ 3.691,74 'a partir de 1º de janeiro de 2011' (decisão do coordenador, 2.0.1)"
     },
     {
       "vigencia_inicio": "2011-03-01",
@@ -536,28 +560,6 @@
       "teto": null,
       "piso": null,
       "motivo": "fora do escopo (Plano Real); valores em cruzeiro real/URV anteriores não capturados"
-    },
-    {
-      "periodo": "2003-12-31 a 2004-01-31",
-      "teto": null,
-      "piso": null,
-      "teto_candidatos": {
-        "ato": "2400.00",
-        "aeps": "1869.34"
-      },
-      "piso_candidato": "240.00",
-      "motivo": "🔴 EC 41/2003, art. 5º, e Portaria MPS 12/2004, art. 2º, fixam R$ 2.400,00 para benefícios concedidos a partir de 31/12/2003 (a Portaria 12/2004, art. 4º, aplica a nova tabela de salário-de-contribuição 'a partir de janeiro de 2004'); o AEPS 2017, Tabela 1.1, registra R$ 1.869,34 em janeiro de 2004 e R$ 2.400,00 só a partir de fevereiro. Ver context/lei/serie-teto-rgps-1994-2026.md"
-    },
-    {
-      "periodo": "2011-01-01 a 2011-02-28",
-      "teto": null,
-      "piso": null,
-      "teto_candidatos": {
-        "ato": "3691.74",
-        "aeps": "3689.66"
-      },
-      "piso_candidato": "540.00",
-      "motivo": "🔴 a PI MPS/MF 407/2011 (DOU 15/07/2011) fixa R$ 3.691,74 'a partir de 1º de janeiro de 2011' e revoga a PI 568/2010, que fixara R$ 3.689,66 para a mesma data; o AEPS 2017, Tabela 1.1, registra R$ 3.689,66 em janeiro e fevereiro de 2011 e R$ 3.691,74 só a partir de março. Ver context/lei/serie-teto-rgps-1994-2026.md"
     },
     {
       "periodo": "a partir de 2027-01-01",

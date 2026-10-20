@@ -77,7 +77,7 @@ Mostrar o resumo em tabela e perguntar [Gravar] [Corrigir um campo] [Cancelar]. 
 
 ### Bloco 9 — Encerramento
 ```
-Plugin previdenciario-adv-os v2.0.0 configurado.
+Plugin previdenciario-adv-os v2.0.1 configurado.
 Advogado: <nome> - OAB <numero>/<UF> · Escritorio: <firma> (<cidade>/<UF>)
 Lado: <lado> · Frentes: <lista> · Tom: <perfil> (<X>/10) · Modo: <modo>
 Suprema Corte: <ATIVA | DESATIVADA> · Perfil em: <raiz>/previdenciario/perfil.md
@@ -95,7 +95,7 @@ Ler o perfil e mostrar: advogado, lado, frentes, data. Botoes: [Continuar usando
 - Recriar: confirmar antes de comecar; no Bloco 8, copia + segunda confirmacao. **`casos/` nunca e apagado nem tocado.**
 
 ## Fluxo de migracao 0.1.0
-1. Avisar: "Encontrei a configuracao da versao 0.1.0. A 2.0.0 grava tudo em `previdenciario/perfil.md` e nao injeta mais persona por hook."
+1. Avisar: "Encontrei a configuracao da versao 0.1.0. Desde a 2.0.0 o plugin grava tudo em `previdenciario/perfil.md` e nao injeta mais persona por hook."
 2. Botoes: [Converter para o perfil novo (Recomendado)] [Comecar do zero] [Cancelar]. Nas duas primeiras, **nenhum arquivo antigo e apagado, movido ou editado**.
 3. Converter: ler com Read `previdenciario/cowork-state.json`; sem ele, `persona.md` pelos titulos (Identidade Profissional, Areas de Atuacao Ativas, Tom de Voz e Postura, Suas Ferramentas, Diretrizes Permanentes: formato e status da Corte). Do JSON, mapear:
    - `identity.advogado_nome`, `oab_numero`, `oab_uf`, `firm_name`, `cidade`, `uf`, `email`, `telefone` → Identidade
@@ -103,7 +103,7 @@ Ler o perfil e mostrar: advogado, lado, frentes, data. Botoes: [Continuar usando
    - Frentes: RGPS sempre; `skills.opt_in_active` com `rpps-servidor-publico` → RPPS, `previdencia-complementar` → Complementar, `acidentario-do-trabalho` → Acidentario. Sem sinal: perguntar o Bloco 3 · `suprema_corte.enabled` → Gates · `preferences.sync_folder_warning_acknowledged` → so indica que ja houve aviso; o Bloco 1 roda de novo
    - `tools.*` → Ferramentas (fora das 4 categorias, em Outras como `categoria: nome`); `preferences.output_format_preferido` (docx, md ou pdf) → Formato
    Valor nulo, vazio ou com `{{` nao resolvido = campo em branco.
-4. Nao migrar: listas de skills ativas (na 2.0.0 todas ficam disponiveis), `automations` e tarefas agendadas (a 2.0.0 nao agenda nada) e a tese de revisao que o `CLAUDE.md` declara inviavel (verdade dura 1). Dizer isso ao advogado em 1 linha.
+4. Nao migrar: listas de skills ativas (desde a 2.0.0 todas ficam disponiveis), `automations` e tarefas agendadas (o plugin nao agenda nada desde a 2.0.0) e a tese de revisao que o `CLAUDE.md` declara inviavel (verdade dura 1). Dizer isso ao advogado em 1 linha.
 5. Perguntar sempre Bloco 1 (LGPD), lado e modo, e todo campo de Recorte, Voz ou Gates que nao se recuperou (frentes vindas so da persona: perguntar o Bloco 3). Depois Bloco 8, com "Origem: migrado da 0.1.0" e a lista de arquivos antigos preservados.
 6. No encerramento, informar: `previdenciario/CLAUDE.md`, `previdenciario/MEMORY.md` e `.claude/settings.local.json` antigos ficaram intactos e o plugin novo nao os usa, mas o Claude ainda pode carregar o `CLAUDE.md` e o `settings.local.json` (variaveis `PREVIDENCIARIO_*`). O advogado pode revisa-los ou remove-los manualmente quando quiser; o plugin nao mexe neles. Anotacoes do `MEMORY.md` antigo nao viram caso sozinhas.
 
@@ -125,4 +125,4 @@ Nao inventar dado do advogado: o que nao foi respondido fica em branco. Pasta si
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do perfil.md:
-`Entregue pela skill previdenciario-onboarding - plugin previdenciario-adv-os v2.0.0`.
+`Entregue pela skill previdenciario-onboarding - plugin previdenciario-adv-os v2.0.1`.

@@ -32,7 +32,7 @@ import sys
 from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
 from pathlib import Path
 
-VERSAO = "2.0.0"
+VERSAO = "2.0.1"
 EXIT_OK, EXIT_ENTRADA, EXIT_FALTA = 0, 2, 3
 
 PASTA = Path(__file__).resolve().parent
@@ -43,16 +43,15 @@ TABELA_SALARIO_MINIMO = PASTA.parent / "data" / "salario-minimo.json"
 TABELA_REAJUSTES = PASTA.parent / "data" / "reajustes-rgps.json"
 TABELA_TETO = PASTA.parent / "data" / "teto-rgps.json"
 # Desde 2004 o reajuste é na data do reajuste do salário mínimo (Lei 8.213, art. 41, redação da Lei 10.699/2003; art.
-# 41-A, caput); antes, data e fator não capturados.
+# 41-A, caput). Antes, a tabela traz 1997–2001 (e 2002–2003), mas o aumento do mínimo de abril/maio era "descontado" no
+# reajuste de junho (art. 3º das portarias), compensação não modelada, e faltam 1995 e 1996: a conta abre.
 INICIO_REGIME_REAJUSTE = dt.date(2004, 1, 1)
 # W3-reajustes r2 (decisão 1): a tabela de reajustes é a fonte única de QUANDO o benefício acima do mínimo é reajustado.
 # Data em que só o mínimo ou o teto mudam, num ano que tem linha de reajuste, não pede fator: a renda se mantém e só o
 # piso passa ao mínimo novo (Lei 8.213, art. 41-A e art. 33). Ano sem linha e as datas abaixo continuam abrindo a conta.
-LACUNAS_REAJUSTE = {
-    dt.date(2006, 8, 1): "Portaria MPS 342/2006, art. 1º, e MP 316/2006, art. 4º: 5,01% sobre a renda de março/2006, em "
-                         "substituição aos 5,00% de 01/04/2006 — não é fator sobre a renda vigente (lacuna declarada em "
-                         "scripts/data/reajustes-rgps.json)",
-}
+# 2.0.1: 01/08/2006 saiu daqui — a linha tem 'sobre_renda_de' (5,01% sobre a renda de março/2006, substituindo os
+# 5,00% de 01/04/2006: Lei 11.430/2006, art. 3º; Portaria MPS 342/2006, art. 1º), aplicada em evolucao_renda.
+LACUNAS_REAJUSTE = {}
 
 
 def so_piso_e_teto(d, datas_reajuste):
@@ -408,9 +407,10 @@ def salario_minimo(e, tabela, faltas):
 #
 # QA final r2 A-01: a antecipação do §3º (até um mínimo, pagamento desde o fim do próprio mês da competência) entrou
 # pela MP 404/2007 e não vale para trás. Até ela, o pagamento é sempre no mês seguinte ao da competência (art. 41, §4º,
-# redações original, da Lei 8.444/1992 e da Lei 10.699/2003; art. 41-A, §2º, redação da Lei 11.430/2006). A captura
-# só data a MP como "de 2007": as competências de 2007 são a fronteira, e nelas a parte antecipada da janela não fecha
-# nada (exit 3), nunca a regra posterior. "antecipacao": False = só mês seguinte; None = incerta; True = §3º em vigor.
+# redações original, da Lei 8.444/1992 e da Lei 10.699/2003; art. 41-A, §2º, redação da Lei 11.430/2006). 2.0.1: a MP
+# 404, de 11/12/2007, entrou em vigor na publicação (art. 2º; DOU 12/12/2007; context/lei/mp-404-2007.md). A janela da
+# competência 11/2007 já tinha passado sem antecipação; a de 12/2007 começa no 5º dia útil antes do fim de dezembro, com
+# a MP em vigor. "antecipacao": False = só mês seguinte; None = incerta (nenhum regime hoje); True = §3º em vigor.
 JANELAS = (
     {"id": "art41-original-ou-8444", "desde": (1991, 7), "ate": (1992, 12), "dias": None, "fim_dia_util": 10,
      "antecipacao": False, "paragrafo": "art. 41, §4º, redação original ou da Lei 8.444/1992",
@@ -428,28 +428,23 @@ JANELAS = (
      "fonte_ate": "Lei 10.699/2003: \"A partir de abril de 2004, os pagamentos ... do primeiro ao quinto dia útil do mês "
                   "seguinte\" (art. 41, §4º): a regra é do pagamento, e a competência de fevereiro/2004, paga em março, é "
                   "a última da janela de 10 dias"},
-    {"id": "art41-10699", "desde": (2004, 3), "ate": (2006, 12), "dias": (1, 5), "fim_dia_util": 5,
+    {"id": "art41-10699", "desde": (2004, 3), "ate": (2007, 11), "dias": (1, 5), "fim_dia_util": 5,
      "antecipacao": False, "paragrafo": "art. 41, §4º, redação da Lei 10.699/2003, ou art. 41-A, §2º, redação da Lei "
                                          "11.430/2006",
      "regra": "do 1º ao 5º dia útil do mês seguinte, para todo benefício (sem antecipação para quem recebe até um "
               "mínimo)",
      "fonte_desde": "Lei 10.699/2003 (art. 41, §4º, em context/lei/lei-8213-1991.md: pagamentos a partir de abril/2004, "
                     "logo desde a competência de março/2004)",
-     "fonte_ate": "Lei 11.430/2006 (art. 41-A, §2º, mesma janela) até a MP 404, \"de 2007\" (nota de redação do art. "
-                  "41-A, §§2º e 3º, em context/lei/lei-8213-1991.md): sem dia nem mês capturados, a borda é o fim de 2006"},
-    {"id": "art41A-fronteira-mp404", "desde": (2007, 1), "ate": (2007, 12), "dias": (1, 5), "fim_dia_util": 5,
-     "antecipacao": None, "paragrafo": "§2º",
-     "regra": "acima de um mínimo, do 1º ao 5º dia útil do mês seguinte (art. 41-A, §2º, nas duas redações); até um "
-              "mínimo, a antecipação do §3º depende da data da MP 404/2007, não capturada: a parte antecipada da "
-              "janela fica em aberto",
-     "fonte_desde": "MP 404, \"de 2007\" (nota de redação do art. 41-A, §§2º e 3º, em context/lei/lei-8213-1991.md); "
-                    "dia e mês não capturados",
-     "fonte_ate": "MP 404, \"de 2007\": em vigor, no mais tardar, ao fim de 2007"},
-    {"id": "art41A", "desde": (2008, 1), "ate": None, "dias": (1, 5), "fim_dia_util": 5,
+     "fonte_ate": "Lei 11.430/2006 (art. 41-A, §2º, mesma janela) até a MP 404, de 11/12/2007, em vigor na publicação "
+                  "(art. 2º; DOU 12/12/2007; context/lei/mp-404-2007.md): a competência 11/2007, paga do 1º ao 5º dia útil "
+                  "de dezembro, é a última sem antecipação"},
+    {"id": "art41A", "desde": (2007, 12), "ate": None, "dias": (1, 5), "fim_dia_util": 5,
      "antecipacao": True, "paragrafo": "§2º",
      "regra": "do 1º ao 5º dia útil do mês seguinte acima de um mínimo (§2º); até um mínimo, do 5º dia útil que "
               "antecede o fim do mês da competência ao 5º dia útil do seguinte (§3º)",
-     "fonte_desde": "MP 404/2007 (nota de redação do art. 41-A, §§2º e 3º, em context/lei/lei-8213-1991.md), com o texto "
+     "fonte_desde": "MP 404, de 11/12/2007, art. 1º (redação do art. 41-A, §§2º e 3º) e art. 2º (vigência na publicação, "
+                    "DOU 12/12/2007), em context/lei/mp-404-2007.md: a janela da competência 12/2007 abre no 5º dia útil "
+                    "antes do fim de dezembro, depois de 12/12/2007 em qualquer contagem; texto "
                     "mantido pela Lei 11.665/2008",
      "fonte_ate": "art. 41-A, §§2º a 4º, redação da Lei 11.665/2008, em vigor"},
 )
@@ -925,7 +920,11 @@ def evolucao_renda(e, fim, dados_sm, pasta_dados=None):
         return abre(dib + dt.timedelta(days=1), f"salário mínimo ou teto da DIB ({dib.isoformat()}) fora de scripts/data/")
     piso = rmi >= sm_dib
     info["sem_piso"] = not piso
-    renda = rmi
+    # 2.0.1 (revisão P201 C1): a elevação ao mínimo numa data só de mínimo ou teto é complemento da renda paga, não
+    # entra na base do reajuste seguinte; ele incide sobre a renda sem o complemento, que se compensa nele (Lei 8.213,
+    # art. 41-A, §6º, context/lei/lei-8213-1991.md:1149), com o piso de novo na data. 'renda' = paga; 'base' = de reajuste.
+    renda = base_reaj = rmi
+    bases = [(dib, rmi)]
     for d in sorted(x for x in datas if dib < x <= fim):
         if d > cobertura:
             break
@@ -937,7 +936,21 @@ def evolucao_renda(e, fim, dados_sm, pasta_dados=None):
                 return abre(d, f"salário mínimo ou teto de {d.isoformat()} fora de scripts/data/")
             if piso and renda < sm_d:
                 info["passos"].append(f"{d.isoformat()}: só o salário mínimo muda (sem reajuste acima do mínimo); "
-                                      f"{q2(renda)} < salário mínimo {sm_d} → {sm_d} (CF, art. 201, §2º)")
+                                      f"{q2(renda)} < salário mínimo {sm_d} → {sm_d} (CF, art. 201, §2º; complemento de piso, fora da "
+                                      f"base do reajuste seguinte, que segue {q2(base_reaj)} — Lei 8.213, art. 41-A, §6º)")
+                renda = sm_d
+                info["segmentos"].append((d, renda))
+            continue
+        if ln is not None and ln.get("dib_ate") and dib > dt.date.fromisoformat(ln["dib_ate"]):
+            # 01/08/2006: só os benefícios mantidos em 31/03/2006 (Lei 11.430/2006, art. 3º); DIB posterior mantém a
+            # renda, e o piso e o teto da data valem como numa data só de mínimo ou teto
+            sm_d = _vigente(dados_sm, d, "valor")
+            if sm_d is None:
+                return abre(d, f"salário mínimo de {d.isoformat()} fora de scripts/data/")
+            if piso and renda < sm_d:
+                info["passos"].append(f"{d.isoformat()}: DIB posterior a {ln['dib_ate']}, sem o reajuste da data "
+                                      f"({ln['norma']}); {q2(renda)} < salário mínimo {sm_d} → {sm_d} (complemento de piso, fora da base "
+                                      f"do reajuste seguinte, que segue {q2(base_reaj)} — Lei 8.213, art. 41-A, §6º)")
                 renda = sm_d
                 info["segmentos"].append((d, renda))
             continue
@@ -970,8 +983,16 @@ def evolucao_renda(e, fim, dados_sm, pasta_dados=None):
                 return abre(d, f"incorporação do teto no reajuste de {d.isoformat()} ({inc['norma']}): o percentual é "
                                "a diferença entre a média e o teto da DIB, que o valor da causa não recebe")
         fator = 1 + Decimal(pct) / 100
-        nova = q2(renda * fator)
-        passo = f"reajuste de {d.isoformat()}: {q2(renda)} × {fator} ({rotulo}; {ln['norma']}) = {nova}"
+        base, sobre = base_reaj, ""
+        if ln.get("sobre_renda_de"):
+            # o fator incide sobre a renda da competência indicada (a de março/2006) e substitui o reajuste de
+            # ln["substitui"] (Lei 11.430/2006, art. 3º, caput e §4º)
+            a, m = (int(x) for x in ln["sobre_renda_de"].split("-"))
+            ref = dt.date(a, m, calendar.monthrange(a, m)[1])
+            base = [r for desde, r in bases if desde <= ref][-1]
+            sobre = f" sobre a renda de {m:02d}/{a} ({q2(base)}), em substituição ao reajuste de {ln['substitui']}"
+        nova = q2(base * fator)
+        passo = f"reajuste de {d.isoformat()}: {q2(base)} × {fator} ({rotulo}; {ln['norma']}){sobre} = {nova}"
         sm_d, teto_d = _vigente(dados_sm, d, "valor"), _vigente(teto, d, "teto")
         if sm_d is None or teto_d is None:
             return abre(d, f"salário mínimo ou teto de {d.isoformat()} fora de scripts/data/")
@@ -981,8 +1002,9 @@ def evolucao_renda(e, fim, dados_sm, pasta_dados=None):
         if nova > teto_d:
             passo += f" > teto {teto_d} → {teto_d}"
             nova = teto_d
-        renda = nova
+        renda = base_reaj = nova
         info["segmentos"].append((d, renda))
+        bases.append((d, base_reaj))
         info["passos"].append(passo)
         if ln["norma"] not in info["normas"]:
             info["normas"].append(ln["norma"])

@@ -3,6 +3,11 @@
   "descricao": "Reajuste anual dos benefícios em manutenção do RGPS (Lei 8.213, art. 41-A), por ano, com o fator pro rata pela data de início do benefício (DIB) no ano anterior.",
   "fonte": [
     {
+      "norma": "Portarias MPAS de reajuste de 1997 a 2001 (3.971/1997, 4.478/1998, 5.188/1999, 6.211/2000, 1.987/2001) e Portaria MPS 342/2006 (reajuste de 01/08/2006), artigo do reajuste e Anexo pro rata — uma por linha",
+      "arquivo": "context/lei/portaria-mpas-*-reajuste.md e context/lei/portaria-mps-342-2006-reajuste.md",
+      "url": "Datalegis da ANTT (anttlegis.antt.gov.br, base federal que avisa não substituir o DOU; a mesma da série de teto); URL e sha256 do bruto em cada linha"
+    },
+    {
       "norma": "Portarias anuais de reajuste de 2002 a 2024 (MPAS/MPS, Interministeriais MPS/MF, MF, ME, SEPRT/ME, MTP/ME), art. do reajuste, art. do pro rata e Anexo I, e art. da incorporação do teto — uma por linha",
       "arquivo": "context/lei/serie-reajustes-rgps-1995-2026.md",
       "url": "DOU: fac-símile oficial (pesquisa.in.gov.br, INPDFViewer, Seção 1) de 2002 a 2018; in.gov.br de 2019 a 2024 (URL e sha256 de cada ano no arquivo)"
@@ -18,15 +23,166 @@
       "url": "https://www.in.gov.br/web/dou/-/portaria-interministerial-mps/mf-n-13-de-9-de-janeiro-de-2026-680382603"
     }
   ],
-  "data_captura": "2026-10-19",
+  "data_captura": "2026-10-20",
   "intervalo": {
-    "inicio": "2002-06-01",
+    "inicio": "1997-06-01",
     "fim": "2026-12-31"
   },
-  "validade": "2026-12-31 (reajustes de 06/2002 a 01/2026, com as lacunas listadas; recapturar com a portaria de 2027 antes de usar competência posterior)",
+  "validade": "2026-12-31 (reajustes de 06/1997 a 06/2001 e de 06/2002 a 01/2026, com 01/08/2006, e as lacunas listadas; recapturar com a portaria de 2027 antes de usar competência posterior)",
   "unidade": "percentual, string decimal (ler com Decimal); 3.90 = 3,90%",
-  "regra_de_consulta": "O reajuste do ano vale a partir de 1º de janeiro (competência janeiro) para benefício com DIB anterior a essa data. DIB antes de 'pro_rata_desde': 'integral'. DIB a partir dela: o percentual do mês da DIB em 'pro_rata' (AAAA-MM). Ano ausente = fator não capturado em context/lei/: o script não estima, devolve exit 3 com a fórmula aberta. 'incorporacao_teto': diferença entre média e teto incorporada à renda no reajuste (o percentual depende da média, que a revisão não recebe).",
+  "regra_de_consulta": "O reajuste do ano vale a partir de 1º de janeiro (competência janeiro) para benefício com DIB anterior a essa data. DIB antes de 'pro_rata_desde': 'integral'. DIB a partir dela: o percentual do mês da DIB em 'pro_rata' (AAAA-MM). Ano ausente = fator não capturado em context/lei/: o script não estima, devolve exit 3 com a fórmula aberta. 'incorporacao_teto': diferença entre média e teto incorporada à renda no reajuste (o percentual depende da média, que a revisão não recebe). 'sobre_renda_de' (AAAA-MM): o fator incide sobre a renda daquela competência, não sobre a vigente, e a linha 'substitui' (data) deixa de valer da sua vigência em diante; 'dib_ate': DIB posterior não recebe o reajuste da linha (renda mantida). Só 01/08/2006 (Lei 11.430/2006, art. 3º; Portaria MPS 342/2006, art. 1º).",
   "linhas": [
+    {
+      "ano": 1997,
+      "vigencia_inicio": "1997-06-01",
+      "integral": "7.76",
+      "pro_rata_desde": "1996-05-01",
+      "pro_rata": {
+        "1996-05": "7.76",
+        "1996-06": "7.14",
+        "1996-07": "6.53",
+        "1996-08": "5.92",
+        "1996-09": "5.31",
+        "1996-10": "4.71",
+        "1996-11": "4.11",
+        "1996-12": "3.51",
+        "1997-01": "2.92",
+        "1997-02": "2.33",
+        "1997-03": "1.74",
+        "1997-04": "1.16",
+        "1997-05": "0.58"
+      },
+      "incorporacao_teto": {
+        "dib_de": "1996-05-01",
+        "dib_ate": "1997-05-31",
+        "limite": "1031.87",
+        "norma": "Portaria MPAS 3.971/1997, art. 5º"
+      },
+      "norma": "Portaria MPAS 3.971, de 05/06/1997, arts. 1º e 2º e Anexo (DOU 06/06/1997, Seção 1, p. 53)",
+      "arquivo": "context/lei/portaria-mpas-3971-1997-reajuste.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00003971&seqAto=000&valorAno=1997&orgao=MPAS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "sha256_bruto": "74aee25da553b97618b375c56ac5276dfedb8f9564902ac3d1ca2fb2761d3b37"
+    },
+    {
+      "ano": 1998,
+      "vigencia_inicio": "1998-06-01",
+      "integral": "4.81",
+      "pro_rata_desde": "1997-06-01",
+      "pro_rata": {
+        "1997-06": "4.81",
+        "1997-07": "4.40",
+        "1997-08": "3.99",
+        "1997-09": "3.59",
+        "1997-10": "3.18",
+        "1997-11": "2.78",
+        "1997-12": "2.38",
+        "1998-01": "1.98",
+        "1998-02": "1.58",
+        "1998-03": "1.18",
+        "1998-04": "0.79",
+        "1998-05": "0.39"
+      },
+      "incorporacao_teto": {
+        "dib_de": "1997-06-01",
+        "dib_ate": "1998-05-31",
+        "limite": "1081.50",
+        "norma": "Portaria MPAS 4.478/1998, art. 5º"
+      },
+      "norma": "Portaria MPAS 4.478, de 04/06/1998, arts. 1º e 2º e Anexo (DOU 05/06/1998)",
+      "arquivo": "context/lei/portaria-mpas-4478-1998-reajuste.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00004478&seqAto=000&valorAno=1998&orgao=MPAS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "sha256_bruto": "470544bcd98c51fbe8af7dacd8ba672c7b519ef94b6876326d3e6a3b4f01170a"
+    },
+    {
+      "ano": 1999,
+      "vigencia_inicio": "1999-06-01",
+      "integral": "4.61",
+      "pro_rata_desde": "1998-06-01",
+      "pro_rata": {
+        "1998-06": "4.61",
+        "1998-07": "4.22",
+        "1998-08": "3.83",
+        "1998-09": "3.44",
+        "1998-10": "3.05",
+        "1998-11": "2.66",
+        "1998-12": "2.28",
+        "1999-01": "1.90",
+        "1999-02": "1.51",
+        "1999-03": "1.13",
+        "1999-04": "0.75",
+        "1999-05": "0.38"
+      },
+      "incorporacao_teto": {
+        "dib_de": "1998-06-01",
+        "dib_ate": "1999-05-31",
+        "limite": "1255.32",
+        "norma": "Portaria MPAS 5.188/1999, art. 9º"
+      },
+      "norma": "Portaria MPAS 5.188, de 06/05/1999, arts. 5º e 6º e Anexo III (DOU 10/05/1999)",
+      "arquivo": "context/lei/portaria-mpas-5188-1999-reajuste.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00005188&seqAto=000&valorAno=1999&orgao=MPAS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "sha256_bruto": "5b2a4277fb862a436c12ec246a12fe2e71d75876a527e908b225941c693ed852"
+    },
+    {
+      "ano": 2000,
+      "vigencia_inicio": "2000-06-01",
+      "integral": "5.81",
+      "pro_rata_desde": "1999-06-01",
+      "pro_rata": {
+        "1999-06": "5.81",
+        "1999-07": "5.31",
+        "1999-08": "4.82",
+        "1999-09": "4.33",
+        "1999-10": "3.84",
+        "1999-11": "3.35",
+        "1999-12": "2.86",
+        "2000-01": "2.38",
+        "2000-02": "1.90",
+        "2000-03": "1.42",
+        "2000-04": "0.95",
+        "2000-05": "0.47"
+      },
+      "incorporacao_teto": {
+        "dib_de": "1999-06-01",
+        "dib_ate": "2000-05-31",
+        "limite": "1328.25",
+        "norma": "Portaria MPAS 6.211/2000, art. 5º"
+      },
+      "norma": "Portaria MPAS 6.211, de 25/05/2000, arts. 1º e 2º e Anexo I (DOU 26/05/2000)",
+      "arquivo": "context/lei/portaria-mpas-6211-2000-reajuste.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00006211&seqAto=000&valorAno=2000&orgao=MPAS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "sha256_bruto": "b0c4e7881f6b7c51795067b34778f66e017f182489623bb1b9963d1ea1b6fe71"
+    },
+    {
+      "ano": 2001,
+      "vigencia_inicio": "2001-06-01",
+      "integral": "7.66",
+      "pro_rata_desde": "2000-06-01",
+      "pro_rata": {
+        "2000-06": "7.66",
+        "2000-07": "7.34",
+        "2000-08": "5.87",
+        "2000-09": "4.60",
+        "2000-10": "4.15",
+        "2000-11": "3.99",
+        "2000-12": "3.68",
+        "2001-01": "3.12",
+        "2001-02": "2.33",
+        "2001-03": "1.83",
+        "2001-04": "1.34",
+        "2001-05": "0.50"
+      },
+      "incorporacao_teto": {
+        "dib_de": "2000-06-01",
+        "dib_ate": "2001-05-31",
+        "limite": "1430.00",
+        "norma": "Portaria MPAS 1.987/2001, art. 5º"
+      },
+      "norma": "Portaria MPAS 1.987, de 04/06/2001, arts. 1º e 2º e Anexo I (DOU 05/06/2001)",
+      "arquivo": "context/lei/portaria-mpas-1987-2001-reajuste.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00001987&seqAto=000&valorAno=2001&orgao=MPAS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "sha256_bruto": "f4b22b11d95dad6a5d7f9e53d4d5075e7fe0293111db31d26c1ef0095c21d683"
+    },
     {
       "ano": 2002,
       "vigencia_inicio": "2002-06-01",
@@ -164,6 +320,38 @@
       },
       "norma": "Portaria MPS 119, de 18/04/2006, art. 1º, caput e §1º, e Anexo I (DOU 19/04/2006, Seção 1, pp. 42–43)",
       "arquivo": "context/lei/serie-reajustes-rgps-1995-2026.md"
+    },
+    {
+      "ano": 2006,
+      "vigencia_inicio": "2006-08-01",
+      "integral": "5.010",
+      "pro_rata_desde": "2005-05-01",
+      "pro_rata": {
+        "2005-05": "5.010",
+        "2005-06": "4.280",
+        "2005-07": "4.395",
+        "2005-08": "4.364",
+        "2005-09": "4.364",
+        "2005-10": "4.208",
+        "2005-11": "3.607",
+        "2005-12": "3.050",
+        "2006-01": "2.640",
+        "2006-02": "2.251",
+        "2006-03": "2.017"
+      },
+      "incorporacao_teto": {
+        "dib_de": "2005-05-01",
+        "dib_ate": "2006-03-31",
+        "limite": "2801.82",
+        "norma": "Portaria MPS 342/2006, art. 5º"
+      },
+      "sobre_renda_de": "2006-03",
+      "substitui": "2006-04-01",
+      "dib_ate": "2006-03-31",
+      "norma": "Portaria MPS 342, de 16/08/2006, art. 1º, caput e §§1º e 4º, e Anexo I (DOU 17/08/2006, Seção 1, p. 38); Lei 11.430/2006, art. 3º",
+      "arquivo": "context/lei/portaria-mps-342-2006-reajuste.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00000342&seqAto=000&valorAno=2006&orgao=MPS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "sha256_bruto": "eb2cc9a2ec7a246581569c40fb861c1b77baf552cbfb76aac90b8f996c629d3d"
     },
     {
       "ano": 2007,
@@ -725,12 +913,12 @@
   ],
   "lacunas": [
     {
-      "periodo": "reajustes de 1995 a 2001 (05/1995, 05/1996 e 06/1997 a 06/2001)",
-      "motivo": "páginas das portarias localizadas no fac-símile do DOU (09/05/1995 p. 18; 15/05/1996 p. 57; 06/06/1997 p. 53; 05/06/1998 pp. 61-62; 10/05/1999 p. 44; 26/05/2000 pp. 27-28; 05/06/2001 pp. 51-52), mas são imagens digitalizadas: o OCR perde linhas do Anexo e nenhum fator foi transcrito sem conferência; 1995 e 1996 somam duas parcelas (IPC-r/IGP-DI pro rata + aumento real) sem um percentual único por DIB. Os motores abrem a conta para DIB anterior a 2004 antes de consultar esta tabela"
+      "periodo": "reajustes de 05/1995 e 05/1996",
+      "motivo": "fac-símile do DOU só em imagem (09/05/1995 p. 18; 15/05/1996 p. 57), sem texto na base Datalegis da ANTT nem no Planalto; os dois somam duas parcelas (IPC-r/IGP-DI pro rata + aumento real) sem um percentual único por DIB. Não transcritos"
     },
     {
-      "periodo": "2006-08-01",
-      "motivo": "Portaria MPS 342/2006 (DOU 17/08/2006, p. 38), art. 1º, e MP 316/2006, art. 4º: 5,01% sobre a renda de março/2006, substituindo o 5,00% de 01/04/2006 — não é um fator sobre a renda vigente em julho/2006; a linha (renda × fator) não o representa sem derivar um percentual que a norma não traz. Renda aberta a partir dessa data"
+      "periodo": "DIB anterior a 2004 nos motores",
+      "motivo": "as linhas de 1997 a 2001 (e 2002–2003) estão na tabela, mas os motores (calc_previdenciario_valor_causa.py, INICIO_REGIME_REAJUSTE; calc_previdenciario_rmi.py, REGIMES_DATA_REAJUSTE) abrem a conta para DIB anterior a 2004 antes de consultá-la: até 2003 o mínimo subia em abril/maio e o reajuste vinha em junho, com o aumento do mínimo 'descontado' na aplicação do reajuste (art. 3º das portarias de 1997, 1998, 2000 e 2001; art. 7º da de 1999), compensação que os motores não modelam; e faltam 1995 e 1996. Decisão do coordenador na 2.0.1: dados gravados, trava mantida"
     },
     {
       "periodo": "2004-02-01, 2011-03-01, 2020-02-01 e 2023-05-01",

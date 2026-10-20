@@ -156,9 +156,9 @@ Uma linha por regra: `regra` (`adquirido-tc`, `adquirido-idade`, `art15` … `ar
 
 | Exit | Quando |
 |---|---|
-| 0 | calculado (inclusive com datas em duas leituras, se o veredito na DER é o mesmo) |
+| 0 | calculado; com menos de 12 competências desde 12/2019 até o horizonte as duas normalizações coincidem |
 | 2 | entrada inválida |
-| 3 | veredito na DER muda conforme a leitura ou a normalização; competência 11/2019 trabalhada em parte; **regra cumprida na DER que depende do fator previdenciário** (art. 17; direito adquirido sem art. 29-C), porque sem a tábua do IBGE não há número |
+| 3 | veredito na DER muda conforme a leitura ou a normalização, ou qualquer valor da projeção, inclusive só a data em que cumpre, muda com a normalização das competências desde 12/2019 (seção 3); competência 11/2019 trabalhada em parte; **regra cumprida na DER que depende do fator previdenciário** (art. 17; direito adquirido sem art. 29-C), porque sem a tábua do IBGE não há número |
 
 ---
 

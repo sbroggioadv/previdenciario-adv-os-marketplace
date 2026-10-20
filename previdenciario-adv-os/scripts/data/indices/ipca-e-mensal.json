@@ -10,6 +10,23 @@
   "frequencia": "mensal",
   "range_inicial": "2001-01",
   "range_final": "2026-09",
+  "data_captura": "2026-10-14",
+  "intervalo": {
+    "inicial": "2001-01",
+    "final": "2026-09"
+  },
+  "validade": {
+    "aplicavel_de": "2001-01",
+    "aplicavel_ate": "2026-09",
+    "fora_do_intervalo": "o motor devolve fórmula aberta (exit 3), nunca número",
+    "defasagem_maxima_meses": 2,
+    "regra_recaptura": "Recapturar com tools/atualizar_indices.py antes de cada release e sempre que um cálculo pedir mês posterior a validade.aplicavel_ate. A ferramenta só grava se a série passar nas conferências, não recuar em relação ao cache gravado e terminar no máximo validade.defasagem_maxima_meses meses antes do mês da recaptura."
+  },
+  "aliases_legados": {
+    "data_extracao": "data_captura",
+    "range_inicial": "intervalo.inicial",
+    "range_final": "intervalo.final"
+  },
   "unidade": "percentual_mensal",
   "metodologia": "Copia mes a mes da variacao mensal do IPCA-15 (BCB SGS 7478) de 01/2001 em diante, gerada por tools/atualizar_indices.py. Acumulado do periodo = produto((1 + ipca_e_mes/100)). Conferencia: produto de 01/2020 a 11/2021 = 1,1420100005, o coeficiente da Nota 5 do Manual.",
   "valores": {

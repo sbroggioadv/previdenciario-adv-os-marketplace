@@ -10,6 +10,23 @@
   "frequencia": "mensal",
   "range_inicial": "2024-08",
   "range_final": "2026-10",
+  "data_captura": "2026-10-14",
+  "intervalo": {
+    "inicial": "2024-08",
+    "final": "2026-10"
+  },
+  "validade": {
+    "aplicavel_de": "2024-08",
+    "aplicavel_ate": "2026-10",
+    "fora_do_intervalo": "o motor devolve fórmula aberta (exit 3), nunca número",
+    "defasagem_maxima_meses": 1,
+    "regra_recaptura": "Recapturar com tools/atualizar_indices.py antes de cada release e sempre que um cálculo pedir mês posterior a validade.aplicavel_ate. A ferramenta só grava se a série passar nas conferências, não recuar em relação ao cache gravado e terminar no máximo validade.defasagem_maxima_meses meses antes do mês da recaptura."
+  },
+  "aliases_legados": {
+    "data_extracao": "data_captura",
+    "range_inicial": "intervalo.inicial",
+    "range_final": "intervalo.final"
+  },
   "unidade": "percentual_mensal",
   "metodologia": "Taxa legal do CC art. 406 par. 1o e 3o (Lei 14.905/2024), publicada pelo BCB na serie SGS 29543, % a.m., 6 casas, minimo zero. Acumulacao por juros SIMPLES: soma das taxas mensais; fracao de mes pro rata pelos dias corridos do mes (Res. CMN 5.171/2024 arts. 2o, 6o e 8o). A taxa de 2024-08 vale para 30 e 31/08/2024. E so juros: cumula-se com o IPCA como correcao. Nunca recalcular por Selic menos IPCA.",
   "vigencia_legal": "30/08/2024",

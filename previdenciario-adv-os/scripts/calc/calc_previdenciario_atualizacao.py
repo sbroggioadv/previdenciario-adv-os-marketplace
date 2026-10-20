@@ -274,11 +274,16 @@ class Cache:
             self._dados[nome] = bruto
         bruto = self._dados[nome]
         if nome not in [u["indice"] for u in self.usados]:
+            # Metadados canônicos (data_captura, intervalo); os legados ficam como fallback.
+            intervalo = bruto.get("intervalo") or {}
+            ini = intervalo.get("inicial", bruto.get("range_inicial"))
+            fim = intervalo.get("final", bruto.get("range_final"))
             self.usados.append({
                 "indice": nome,
                 "arquivo": f"scripts/data/indices/{ARQUIVOS[nome]}",
-                "data_extracao": bruto.get("data_extracao"),
-                "range": f"{bruto.get('range_inicial')}..{bruto.get('range_final')}",
+                "fonte": bruto.get("fonte"),
+                "data_extracao": bruto.get("data_captura", bruto.get("data_extracao")),
+                "range": f"{ini}..{fim}",
             })
         return bruto["valores"]
 
@@ -1051,14 +1056,16 @@ def trecho_ec136(e, cache, faltas, alertas, principal, juros, juros_selic, d_ini
     inicio = INICIO_EC136[ente]
     if ente == "federal":
         fund = ("EC 113/2021 art. 3º caput e §§1º e 3º (redação da EC 136/2025); Res. CJF 983/2026 art. 7º "
-                "§§2º a 4º; Provimento CNJ 207/2025 art. 2º")
+                "§§2º a 4º; Provimento CNJ 207/2025 art. 2º, I, II e §2º")
     else:
         fund = ("ADCT art. 97 §§16 e 16-A (EC 136/2025); EC 113/2021 art. 3º §3º; Res. CJF 983/2026 art. 7º "
-                "§7º III e art. 8º n; Provimento CNJ 207/2025 art. 3º")
+                "§7º III e art. 8º n; Provimento CNJ 207/2025 art. 3º, §1º, a e b, e §3º")
         alertas.append(
             "[VERIFICAR] Estados, DF e Municípios: a Selic do teto incide sobre o valor consolidado (principal "
-            "e juros), como na Res. CJF 983/2026 art. 7º §7º III e art. 8º n; na Justiça estadual, conferir o "
-            "Provimento CNJ 207/2025 art. 3º."
+            "e juros), como na Res. CJF 983/2026 art. 7º §7º III e art. 8º n. O Provimento CNJ 207/2025 art. 3º "
+            "§1º c manda aplicar a Selic \"em substituição\" quando o IPCA somado aos juros a supera \"no mês da "
+            "atualização\", e o §5º, no precatório não quitado no prazo do art. 100 §5º da CF, \"sobre o valor "
+            "principal\"; na Justiça estadual, conferir qual regra o tribunal segue."
         )
     m_ini = mes(d_ini)
     if m_ini < inicio:
@@ -1152,8 +1159,10 @@ def trecho_ec136(e, cache, faltas, alertas, principal, juros, juros_selic, d_ini
     if teto_mensal and not teto:
         alertas.append(
             "[VERIFICAR] Em " + ", ".join(teto_mensal) + " o IPCA + juros do mês passou da Selic do "
-            "mês. O Provimento CNJ 207/2025 art. 2º III compara mês a mês; a EC (art. 3º §1º) e a Res. CJF "
-            "983/2026 (art. 7º §3º III) falam no menor valor do período. O script compara no período."
+            "mês. O Provimento CNJ 207/2025 compara \"no mês da atualização\" (art. 2º III; art. 3º §1º c) e, "
+            "no federal, aplica a Selic \"exclusivamente sobre o principal\" (art. 2º III); a EC (art. 3º §1º) "
+            "e a Res. CJF 983/2026 (art. 7º §3º III) falam no menor valor do período, com a Selic sobre o "
+            "valor consolidado. O script segue a Res. CJF 983/2026."
         )
     if teto:
         alertas.append(

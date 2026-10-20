@@ -47,7 +47,7 @@ import sys
 from decimal import ROUND_CEILING, ROUND_FLOOR, ROUND_HALF_UP, Decimal
 from pathlib import Path
 
-VERSAO = "2.0.0"
+VERSAO = "2.0.1"
 NOME = "calc_previdenciario_rmi"
 EXIT_OK, EXIT_ENTRADA, EXIT_FALTA = 0, 2, 3
 
@@ -111,7 +111,7 @@ ATOS_ABONO = {
 # muda no tempo e mexe na revisão, com a fonte de cada linha; cada parcela usa o regime vigente na SUA competência.
 # Fora de toda linha, a parcela fica em aberto (exit 3) com o dado faltante nomeado: nunca a regra de outra época,
 # nem para fechar o total nem para recusar a entrada. Piso e teto: scripts/data/salario-minimo.json e teto-rgps.json,
-# por competência (renda_da_competencia). Fator do reajuste: scripts/data/reajustes-rgps.json (2025 e 2026).
+# por competência (renda_da_competencia). Fator do reajuste: scripts/data/reajustes-rgps.json.
 #
 # Data do reajuste anual da renda. 'datas' = "limites": a renda só muda numa data em que o salário mínimo mudou;
 # entram também as do teto, que as portarias de reajuste fixam junto (ex.: Portaria 13/2026, art. 2º; a de 08/2006
@@ -119,11 +119,9 @@ ATOS_ABONO = {
 # W3-reajustes r2 (decisão 1): a tabela de reajustes é a fonte única de QUANDO o benefício acima do mínimo é reajustado.
 # Data em que só o mínimo ou o teto mudam, num ano que tem linha de reajuste, não pede fator: a renda se mantém e o piso
 # e o teto da competência valem (Lei 8.213, art. 41-A e art. 33). Ano sem linha e as datas abaixo continuam abrindo.
-LACUNAS_REAJUSTE = {
-    dt.date(2006, 8, 1): "Portaria MPS 342/2006, art. 1º, e MP 316/2006, art. 4º: 5,01% sobre a renda de março/2006, em "
-                         "substituição aos 5,00% de 01/04/2006 — não é fator sobre a renda vigente (lacuna declarada em "
-                         "scripts/data/reajustes-rgps.json)",
-}
+# 2.0.1: 01/08/2006 saiu daqui — a linha tem 'sobre_renda_de' (5,01% sobre a renda de março/2006, substituindo os
+# 5,00% de 01/04/2006: Lei 11.430/2006, art. 3º; Portaria MPS 342/2006, art. 1º), aplicada em evolucao_renda.
+LACUNAS_REAJUSTE = {}
 
 
 def so_piso_e_teto(d, datas_reajuste):
@@ -151,14 +149,16 @@ REGIMES_JANELA = [
      "fonte": "Lei 8.213, art. 41, §4º, redação da Lei 8.444/1992: do primeiro ao décimo dia útil do mês seguinte "
               "(context/lei/lei-8213-1991.md:1103). Competência 2004-03, paga em abril/2004, cabe também na leitura do "
               "§4º da Lei 10.699/2003 (\"a partir de abril de 2004\", linha 1105): a janela do 1º ao 10º contém a dela"},
-    {"de": (2004, 4), "ate": (2006, 12), "tipo": "1a5",
+    {"de": (2004, 4), "ate": (2007, 11), "tipo": "1a5",
      "fonte": "Lei 8.213, art. 41, §4º, redação da Lei 10.699/2003 (\"a partir de abril de 2004\", do primeiro ao quinto "
               "dia útil do mês seguinte; context/lei/lei-8213-1991.md:1105), e art. 41-A, §2º, redação da Lei 11.430/2006 "
-              "(linha 1125), sem distinção de faixa"},
-    {"de": (2007, 1), "ate": (2008, 12), "tipo": "faixa",
-     "fonte": "Lei 8.213, art. 41-A, §§2º a 4º: faixas da MPv 404/2007 e da Lei 11.665/2008 (context/lei/lei-8213-1991.md:"
-              "1131-1145), cujo dia de início não está capturado; o §3º contém o 1º ao 5º da redação anterior e acima do "
-              "mínimo as duas coincidem: vale a união"},
+              "(linha 1125), sem distinção de faixa, até a MPv 404, de 11/12/2007, em vigor na publicação (art. 2º; DOU "
+              "12/12/2007; context/lei/mp-404-2007.md): a competência 11/2007, paga em dezembro do 1º ao 5º dia útil, é "
+              "a última sem faixa"},
+    {"de": (2007, 12), "ate": (2008, 12), "tipo": "faixa",
+     "fonte": "Lei 8.213, art. 41-A, §§2º a 4º: faixas da MPv 404/2007 (em vigor desde 12/12/2007, art. 2º; context/lei/"
+              "mp-404-2007.md), mantidas pela Lei 11.665/2008 (context/lei/lei-11665-2008.md; context/lei/lei-8213-1991.md:"
+              "1131-1145)"},
     {"de": (2009, 1), "ate": None, "tipo": "faixa",
      "fonte": "Lei 8.213, art. 41-A, §§2º a 4º, redação da Lei 11.665/2008 (context/lei/lei-8213-1991.md:1141-1145)"},
 ]
@@ -1383,6 +1383,12 @@ def evolucao_renda(e, fim, memoria):
             memoria.append(f"{br(d)}: só o salário mínimo ou o teto mudam (sem reajuste acima do mínimo): renda "
                            "mantida; piso e teto da competência")
             continue
+        if linha is not None and linha.get("dib_ate") and dib > dt.date.fromisoformat(linha["dib_ate"]):
+            # 01/08/2006: só os benefícios mantidos em 31/03/2006 (Lei 11.430/2006, art. 3º); DIB posterior mantém a
+            # renda, com o piso e o teto da competência
+            memoria.append(f"{br(d)}: DIB posterior a {linha['dib_ate']}, sem o reajuste da data ({linha['norma']}): "
+                           "renda mantida; piso e teto da competência")
+            continue
         if linha is None:
             falta = LACUNAS_REAJUSTE.get(d, f"sem fator capturado em context/lei/ (scripts/data/{ARQ_REAJUSTES.name})")
             return segmentos, d, (f"possível reajuste em {br(d)} (Lei 8.213, art. 41-A, caput: na data do reajuste do "
@@ -1411,12 +1417,19 @@ def evolucao_renda(e, fim, memoria):
         if sm is None or teto is None:
             return segmentos, d, (f"piso e teto de {br(d)} (CF, art. 201, §2º) fora de scripts/data/: sem eles a renda "
                                   "reajustada não se confere"), fonte
-        novos = []
+        novos, base, sobre = [], leituras, ""
+        if linha.get("sobre_renda_de"):
+            # o fator incide sobre a renda da competência indicada (a de março/2006) e substitui o reajuste de
+            # linha["substitui"] (Lei 11.430/2006, art. 3º, caput e §4º)
+            a, mes = (int(x) for x in linha["sobre_renda_de"].split("-"))
+            ref = dt.date(a, mes, calendar.monthrange(a, mes)[1])
+            base = [seg for desde, seg in segmentos if desde <= ref][-1]
+            sobre = f" sobre a renda de {mes:02d}/{a}, em substituição ao reajuste de {linha['substitui']}"
         for nome in ("paga", "devida"):
             reajustadas, totais, passos = [], set(), []
-            for com, v in leituras[nome]:
+            for com, v in base[nome]:
                 r = q(v * fator)
-                passo = f"{'base da ' if com else ''}RMI {nome} {v} × {fator} ({rotulo}) = {r}"
+                passo = f"{'base da ' if com else ''}RMI {nome} {v} × {fator} ({rotulo}{sobre}) = {r}"
                 if r < sm:
                     if e["especie"] == "outra":
                         return segmentos, d, (f"RMI {nome} reajustada em {br(d)} ({r}) abaixo do salário mínimo {sm}: "
