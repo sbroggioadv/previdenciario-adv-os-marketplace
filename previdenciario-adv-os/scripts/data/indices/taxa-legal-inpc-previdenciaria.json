@@ -1,0 +1,107 @@
+{
+  "indice": "TAXA_LEGAL_INPC",
+  "descricao": "Taxa legal dos beneficios previdenciarios contra a Fazenda a partir de set./2025: Selic com deducao do INPC (Manual de Calculos da Justica Federal, ed. jul./2026, item 4.3.2 e Nota 3; ARE 1.557.312/SP, Tema 1.419 do STF; CC art. 406, Lei 14.905/2024). Nao e a SGS 29543, que deduz o IPCA-15.",
+  "fonte": "Derivada pela metodologia da Nota 3 do item 4.3.2 do Manual CJF (ed. jul./2026), similar a da Res. CMN 5.171/2024: Selic diaria BCB SGS 11 e INPC BCB SGS 188 (conferido no SIDRA 1736).",
+  "url_oficial": "https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/corregedoria-geral-da-justica-federal/manual-de-calculos-da-justica-federal-edicao-julho-de-2026.pdf",
+  "codigo_serie_sgs": 11,
+  "url_serie_sgs": "https://api.bcb.gov.br/dados/serie/bcdata.sgs.11/dados?formato=json",
+  "derivado_de": [
+    "SGS 11 (Selic diaria)",
+    "inpc-mensal.json"
+  ],
+  "data_extracao": "2026-10-14",
+  "frequencia": "mensal",
+  "range_inicial": "2025-09",
+  "range_final": "2026-10",
+  "unidade": "percentual_mensal",
+  "metodologia": "Competencia m: taxa = (Fator Selic do mes m-1 / (1 + INPC do mes m-1/100) - 1) x 100, 6 casas truncadas, zero se negativa. Fator Selic do mes = produto(1 + Selic diaria/100), 8 casas. Contra a Fazenda, a taxa da competencia m e computada no mes m+1 (Nota 7 do item 4.2.2): a de set./2025 entra em out./2025. Acumulacao SIMPLES (soma). Conferencia: o quadro da Nota 3 (set./2025 a maio/2026) e reproduzido nos 9 meses.",
+  "componentes": {
+    "2025-09": {
+      "mes_dos_dados": "2025-08",
+      "fator_selic": "1.01164156",
+      "fator_inpc": "0.9979"
+    },
+    "2025-10": {
+      "mes_dos_dados": "2025-09",
+      "fator_selic": "1.01219929",
+      "fator_inpc": "1.0052"
+    },
+    "2025-11": {
+      "mes_dos_dados": "2025-10",
+      "fator_selic": "1.01275733",
+      "fator_inpc": "1.0003"
+    },
+    "2025-12": {
+      "mes_dos_dados": "2025-11",
+      "fator_selic": "1.01052703",
+      "fator_inpc": "1.0003"
+    },
+    "2026-01": {
+      "mes_dos_dados": "2025-12",
+      "fator_selic": "1.01219929",
+      "fator_inpc": "1.0021"
+    },
+    "2026-02": {
+      "mes_dos_dados": "2026-01",
+      "fator_selic": "1.01164156",
+      "fator_inpc": "1.0039"
+    },
+    "2026-03": {
+      "mes_dos_dados": "2026-02",
+      "fator_selic": "1.00997022",
+      "fator_inpc": "1.0056"
+    },
+    "2026-04": {
+      "mes_dos_dados": "2026-03",
+      "fator_selic": "1.01212054",
+      "fator_inpc": "1.0091"
+    },
+    "2026-05": {
+      "mes_dos_dados": "2026-04",
+      "fator_selic": "1.01090058",
+      "fator_inpc": "1.0081"
+    },
+    "2026-06": {
+      "mes_dos_dados": "2026-05",
+      "fator_selic": "1.01073435",
+      "fator_inpc": "1.0065"
+    },
+    "2026-07": {
+      "mes_dos_dados": "2026-06",
+      "fator_selic": "1.01119504",
+      "fator_inpc": "1.0014"
+    },
+    "2026-08": {
+      "mes_dos_dados": "2026-07",
+      "fator_selic": "1.01215220",
+      "fator_inpc": "0.9999"
+    },
+    "2026-09": {
+      "mes_dos_dados": "2026-08",
+      "fator_selic": "1.01093123",
+      "fator_inpc": "0.9968"
+    },
+    "2026-10": {
+      "mes_dos_dados": "2026-09",
+      "fator_selic": "1.01081673",
+      "fator_inpc": "1.0082"
+    }
+  },
+  "valores": {
+    "2025-09": 1.377047,
+    "2025-10": 0.696308,
+    "2025-11": 1.245359,
+    "2025-12": 1.022396,
+    "2026-01": 1.007812,
+    "2026-02": 0.771148,
+    "2026-03": 0.434588,
+    "2026-04": 0.29933,
+    "2026-05": 0.277807,
+    "2026-06": 0.4207,
+    "2026-07": 0.978134,
+    "2026-08": 1.225342,
+    "2026-09": 1.417659,
+    "2026-10": 0.259544
+  },
+  "aviso": "Serie derivada por tools/atualizar_indices.py, conferida contra o quadro da Nota 3 do Manual. So para beneficio previdenciario contra a Fazenda, de set./2025 em diante. Fora do intervalo range_inicial..range_final o plugin devolve formula, nao numero."
+}

@@ -1,0 +1,951 @@
+{
+  "tabela": "transicoes-ec103",
+  "descricao": "Requisitos das regras de transição (arts. 15 a 18, 20 e 21) e da regra permanente (art. 19) da EC 103/2019, com a progressão ano a ano dos arts. 15, 16 e 18.",
+  "fonte": [
+    {
+      "norma": "EC 103/2019, arts. 15 a 21 e 36, III (DOU 13/11/2019)",
+      "arquivo": "context/lei/ec-103-2019.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/constituicao/emendas/emc/emc103.htm"
+    }
+  ],
+  "data_captura": "2026-10-14",
+  "intervalo": {
+    "inicio": "2019",
+    "fim": "2033 (2033 em diante = valores de 2033; todos os limites já atingidos)"
+  },
+  "validade": "Enquanto vigentes os arts. 15 a 21 da EC 103/2019; reverificar no gate de vigência antes de cada publicação.",
+  "marco": {
+    "data_entrada_em_vigor": "2019-11-13",
+    "norma": "EC 103/2019, art. 36, III (data da publicação; DOU 13.11.2019)",
+    "arquivo": "context/lei/ec-103-2019.md",
+    "regra": "Arts. 15 a 18, 20 e 21 só para quem se filiou ao RGPS até 13/11/2019; filiado depois = art. 19."
+  },
+  "convencoes": {
+    "idade": "{anos, meses}: 61 anos e 6 meses = {\"anos\": 61, \"meses\": 6}",
+    "progressao": "ano civil do cumprimento; o acréscimo começa em 1º/01/2020 (arts. 15 §1º, 15 §3º, 16 §1º, 16 §2º, 18 §1º)",
+    "dias": "arts. 15 §2º e 21 §1º: idade e tempo apurados em dias para o somatório de pontos; a convenção de contagem (IN 128, arts. 206 e 207) é do script, não desta tabela",
+    "derivacao": "linhas de 'anual' calculadas por aritmética direta do texto: base + 1 ponto (ou + 6 meses) por ano desde 2020, limitado ao teto do próprio parágrafo"
+  },
+  "regras": [
+    {
+      "id": "art15",
+      "nome": "pontos",
+      "dispositivo": "EC 103, art. 15, I, II, §§1º e 2º",
+      "arquivo": "context/lei/ec-103-2019.md",
+      "filiacao_ate": "2019-11-13",
+      "tempo_contribuicao_anos": {
+        "homem": 35,
+        "mulher": 30
+      },
+      "pontos_2019": {
+        "homem": 96,
+        "mulher": 86
+      },
+      "acrescimo_anual_pontos": 1,
+      "a_partir_de": "2020-01-01",
+      "limite_pontos": {
+        "homem": 105,
+        "mulher": 100
+      }
+    },
+    {
+      "id": "art15_par3",
+      "nome": "pontos do professor",
+      "dispositivo": "EC 103, art. 15, §3º",
+      "arquivo": "context/lei/ec-103-2019.md",
+      "filiacao_ate": "2019-11-13",
+      "requisito_especifico": "tempo exclusivamente em efetivo exercício de magistério na educação infantil e no ensino fundamental e médio",
+      "tempo_contribuicao_anos": {
+        "homem": 30,
+        "mulher": 25
+      },
+      "pontos_2019": {
+        "homem": 91,
+        "mulher": 81
+      },
+      "acrescimo_anual_pontos": 1,
+      "a_partir_de": "2020-01-01",
+      "limite_pontos": {
+        "homem": 100,
+        "mulher": 92
+      }
+    },
+    {
+      "id": "art16",
+      "nome": "idade progressiva",
+      "dispositivo": "EC 103, art. 16, I, II e §1º",
+      "arquivo": "context/lei/ec-103-2019.md",
+      "filiacao_ate": "2019-11-13",
+      "tempo_contribuicao_anos": {
+        "homem": 35,
+        "mulher": 30
+      },
+      "idade_2019": {
+        "homem": {
+          "anos": 61,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 56,
+          "meses": 0
+        }
+      },
+      "acrescimo_anual_meses": 6,
+      "a_partir_de": "2020-01-01",
+      "limite_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 62,
+          "meses": 0
+        }
+      }
+    },
+    {
+      "id": "art16_par2",
+      "nome": "idade progressiva do professor",
+      "dispositivo": "EC 103, art. 16, §2º",
+      "arquivo": "context/lei/ec-103-2019.md",
+      "filiacao_ate": "2019-11-13",
+      "requisito_especifico": "tempo exclusivamente em efetivo exercício de magistério na educação infantil e no ensino fundamental e médio",
+      "tempo_contribuicao_anos": {
+        "homem": 30,
+        "mulher": 25
+      },
+      "idade_2019": {
+        "homem": {
+          "anos": 56,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 51,
+          "meses": 0
+        }
+      },
+      "acrescimo_anual_meses": 6,
+      "a_partir_de": "2020-01-01",
+      "limite_idade": {
+        "homem": {
+          "anos": 60,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 57,
+          "meses": 0
+        }
+      }
+    },
+    {
+      "id": "art17",
+      "nome": "pedágio de 50%",
+      "dispositivo": "EC 103, art. 17, caput, I, II e parágrafo único",
+      "arquivo": "context/lei/ec-103-2019.md",
+      "filiacao_ate": "2019-11-13",
+      "tempo_em_13_11_2019_mais_de_anos": {
+        "homem": 33,
+        "mulher": 28
+      },
+      "tempo_contribuicao_anos": {
+        "homem": 35,
+        "mulher": 30
+      },
+      "pedagio_percentual_do_tempo_faltante_em_13_11_2019": 50,
+      "idade_minima": null,
+      "valor": "média × fator previdenciário (Lei 8.213, art. 29, §§7º a 9º)",
+      "progressao_anual": false
+    },
+    {
+      "id": "art18",
+      "nome": "idade",
+      "dispositivo": "EC 103, art. 18, I, II e §1º",
+      "arquivo": "context/lei/ec-103-2019.md",
+      "filiacao_ate": "2019-11-13",
+      "idade_2019": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 60,
+          "meses": 0
+        }
+      },
+      "acrescimo_anual_meses": {
+        "homem": 0,
+        "mulher": 6
+      },
+      "a_partir_de": "2020-01-01",
+      "limite_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 62,
+          "meses": 0
+        }
+      },
+      "tempo_contribuicao_anos": {
+        "homem": 15,
+        "mulher": 15
+      }
+    },
+    {
+      "id": "art19",
+      "nome": "permanente",
+      "dispositivo": "EC 103, art. 19, caput",
+      "arquivo": "context/lei/ec-103-2019.md",
+      "filiacao_apos": "2019-11-13",
+      "idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 62,
+          "meses": 0
+        }
+      },
+      "tempo_contribuicao_anos": {
+        "homem": 20,
+        "mulher": 15
+      },
+      "progressao_anual": false
+    },
+    {
+      "id": "art19_par1_I",
+      "nome": "especial permanente",
+      "dispositivo": "EC 103, art. 19, §1º, I, a, b e c",
+      "arquivo": "context/lei/ec-103-2019.md",
+      "filiacao_apos": "2019-11-13",
+      "idade_por_atividade": [
+        {
+          "atividade_anos": 15,
+          "idade_anos": 55
+        },
+        {
+          "atividade_anos": 20,
+          "idade_anos": 58
+        },
+        {
+          "atividade_anos": 25,
+          "idade_anos": 60
+        }
+      ],
+      "progressao_anual": false
+    },
+    {
+      "id": "art19_par1_II",
+      "nome": "professor permanente",
+      "dispositivo": "EC 103, art. 19, §1º, II",
+      "arquivo": "context/lei/ec-103-2019.md",
+      "filiacao_apos": "2019-11-13",
+      "idade": {
+        "homem": {
+          "anos": 60,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 57,
+          "meses": 0
+        }
+      },
+      "tempo_contribuicao_anos": {
+        "homem": 25,
+        "mulher": 25
+      },
+      "progressao_anual": false
+    },
+    {
+      "id": "art20",
+      "nome": "pedágio de 100%",
+      "dispositivo": "EC 103, art. 20, I, II, IV",
+      "arquivo": "context/lei/ec-103-2019.md",
+      "filiacao_ate": "2019-11-13",
+      "idade": {
+        "homem": {
+          "anos": 60,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 57,
+          "meses": 0
+        }
+      },
+      "tempo_contribuicao_anos": {
+        "homem": 35,
+        "mulher": 30
+      },
+      "pedagio_percentual_do_tempo_faltante_em_13_11_2019": 100,
+      "progressao_anual": false,
+      "nota": "inciso III (20 anos de serviço público e 5 no cargo) só para servidor; não se aplica ao segurado do RGPS"
+    },
+    {
+      "id": "art20_par1",
+      "nome": "pedágio de 100% do professor",
+      "dispositivo": "EC 103, art. 20, §1º",
+      "arquivo": "context/lei/ec-103-2019.md",
+      "filiacao_ate": "2019-11-13",
+      "requisito_especifico": "tempo exclusivamente em efetivo exercício de magistério na educação infantil e no ensino fundamental e médio",
+      "idade": {
+        "homem": {
+          "anos": 55,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 52,
+          "meses": 0
+        }
+      },
+      "tempo_contribuicao_anos": {
+        "homem": 30,
+        "mulher": 25
+      },
+      "pedagio_percentual_do_tempo_faltante_em_13_11_2019": 100,
+      "progressao_anual": false,
+      "derivacao": "requisitos do caput reduzidos em 5 anos, para ambos os sexos (§1º)"
+    },
+    {
+      "id": "art21",
+      "nome": "especial por pontos",
+      "dispositivo": "EC 103, art. 21, I, II, III e §1º",
+      "arquivo": "context/lei/ec-103-2019.md",
+      "filiacao_ate": "2019-11-13",
+      "pontos_por_exposicao": [
+        {
+          "exposicao_anos": 15,
+          "pontos": 66
+        },
+        {
+          "exposicao_anos": 20,
+          "pontos": 76
+        },
+        {
+          "exposicao_anos": 25,
+          "pontos": 86
+        }
+      ],
+      "progressao_anual": false
+    }
+  ],
+  "anual": [
+    {
+      "ano": 2019,
+      "art15_pontos": {
+        "homem": 96,
+        "mulher": 86
+      },
+      "art15_par3_pontos_professor": {
+        "homem": 91,
+        "mulher": 81
+      },
+      "art16_idade": {
+        "homem": {
+          "anos": 61,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 56,
+          "meses": 0
+        }
+      },
+      "art16_par2_idade_professor": {
+        "homem": {
+          "anos": 56,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 51,
+          "meses": 0
+        }
+      },
+      "art18_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 60,
+          "meses": 0
+        }
+      }
+    },
+    {
+      "ano": 2020,
+      "art15_pontos": {
+        "homem": 97,
+        "mulher": 87
+      },
+      "art15_par3_pontos_professor": {
+        "homem": 92,
+        "mulher": 82
+      },
+      "art16_idade": {
+        "homem": {
+          "anos": 61,
+          "meses": 6
+        },
+        "mulher": {
+          "anos": 56,
+          "meses": 6
+        }
+      },
+      "art16_par2_idade_professor": {
+        "homem": {
+          "anos": 56,
+          "meses": 6
+        },
+        "mulher": {
+          "anos": 51,
+          "meses": 6
+        }
+      },
+      "art18_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 60,
+          "meses": 6
+        }
+      }
+    },
+    {
+      "ano": 2021,
+      "art15_pontos": {
+        "homem": 98,
+        "mulher": 88
+      },
+      "art15_par3_pontos_professor": {
+        "homem": 93,
+        "mulher": 83
+      },
+      "art16_idade": {
+        "homem": {
+          "anos": 62,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 57,
+          "meses": 0
+        }
+      },
+      "art16_par2_idade_professor": {
+        "homem": {
+          "anos": 57,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 52,
+          "meses": 0
+        }
+      },
+      "art18_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 61,
+          "meses": 0
+        }
+      }
+    },
+    {
+      "ano": 2022,
+      "art15_pontos": {
+        "homem": 99,
+        "mulher": 89
+      },
+      "art15_par3_pontos_professor": {
+        "homem": 94,
+        "mulher": 84
+      },
+      "art16_idade": {
+        "homem": {
+          "anos": 62,
+          "meses": 6
+        },
+        "mulher": {
+          "anos": 57,
+          "meses": 6
+        }
+      },
+      "art16_par2_idade_professor": {
+        "homem": {
+          "anos": 57,
+          "meses": 6
+        },
+        "mulher": {
+          "anos": 52,
+          "meses": 6
+        }
+      },
+      "art18_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 61,
+          "meses": 6
+        }
+      }
+    },
+    {
+      "ano": 2023,
+      "art15_pontos": {
+        "homem": 100,
+        "mulher": 90
+      },
+      "art15_par3_pontos_professor": {
+        "homem": 95,
+        "mulher": 85
+      },
+      "art16_idade": {
+        "homem": {
+          "anos": 63,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 58,
+          "meses": 0
+        }
+      },
+      "art16_par2_idade_professor": {
+        "homem": {
+          "anos": 58,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 53,
+          "meses": 0
+        }
+      },
+      "art18_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 62,
+          "meses": 0
+        }
+      }
+    },
+    {
+      "ano": 2024,
+      "art15_pontos": {
+        "homem": 101,
+        "mulher": 91
+      },
+      "art15_par3_pontos_professor": {
+        "homem": 96,
+        "mulher": 86
+      },
+      "art16_idade": {
+        "homem": {
+          "anos": 63,
+          "meses": 6
+        },
+        "mulher": {
+          "anos": 58,
+          "meses": 6
+        }
+      },
+      "art16_par2_idade_professor": {
+        "homem": {
+          "anos": 58,
+          "meses": 6
+        },
+        "mulher": {
+          "anos": 53,
+          "meses": 6
+        }
+      },
+      "art18_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 62,
+          "meses": 0
+        }
+      }
+    },
+    {
+      "ano": 2025,
+      "art15_pontos": {
+        "homem": 102,
+        "mulher": 92
+      },
+      "art15_par3_pontos_professor": {
+        "homem": 97,
+        "mulher": 87
+      },
+      "art16_idade": {
+        "homem": {
+          "anos": 64,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 59,
+          "meses": 0
+        }
+      },
+      "art16_par2_idade_professor": {
+        "homem": {
+          "anos": 59,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 54,
+          "meses": 0
+        }
+      },
+      "art18_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 62,
+          "meses": 0
+        }
+      }
+    },
+    {
+      "ano": 2026,
+      "art15_pontos": {
+        "homem": 103,
+        "mulher": 93
+      },
+      "art15_par3_pontos_professor": {
+        "homem": 98,
+        "mulher": 88
+      },
+      "art16_idade": {
+        "homem": {
+          "anos": 64,
+          "meses": 6
+        },
+        "mulher": {
+          "anos": 59,
+          "meses": 6
+        }
+      },
+      "art16_par2_idade_professor": {
+        "homem": {
+          "anos": 59,
+          "meses": 6
+        },
+        "mulher": {
+          "anos": 54,
+          "meses": 6
+        }
+      },
+      "art18_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 62,
+          "meses": 0
+        }
+      }
+    },
+    {
+      "ano": 2027,
+      "art15_pontos": {
+        "homem": 104,
+        "mulher": 94
+      },
+      "art15_par3_pontos_professor": {
+        "homem": 99,
+        "mulher": 89
+      },
+      "art16_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 60,
+          "meses": 0
+        }
+      },
+      "art16_par2_idade_professor": {
+        "homem": {
+          "anos": 60,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 55,
+          "meses": 0
+        }
+      },
+      "art18_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 62,
+          "meses": 0
+        }
+      }
+    },
+    {
+      "ano": 2028,
+      "art15_pontos": {
+        "homem": 105,
+        "mulher": 95
+      },
+      "art15_par3_pontos_professor": {
+        "homem": 100,
+        "mulher": 90
+      },
+      "art16_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 60,
+          "meses": 6
+        }
+      },
+      "art16_par2_idade_professor": {
+        "homem": {
+          "anos": 60,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 55,
+          "meses": 6
+        }
+      },
+      "art18_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 62,
+          "meses": 0
+        }
+      }
+    },
+    {
+      "ano": 2029,
+      "art15_pontos": {
+        "homem": 105,
+        "mulher": 96
+      },
+      "art15_par3_pontos_professor": {
+        "homem": 100,
+        "mulher": 91
+      },
+      "art16_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 61,
+          "meses": 0
+        }
+      },
+      "art16_par2_idade_professor": {
+        "homem": {
+          "anos": 60,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 56,
+          "meses": 0
+        }
+      },
+      "art18_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 62,
+          "meses": 0
+        }
+      }
+    },
+    {
+      "ano": 2030,
+      "art15_pontos": {
+        "homem": 105,
+        "mulher": 97
+      },
+      "art15_par3_pontos_professor": {
+        "homem": 100,
+        "mulher": 92
+      },
+      "art16_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 61,
+          "meses": 6
+        }
+      },
+      "art16_par2_idade_professor": {
+        "homem": {
+          "anos": 60,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 56,
+          "meses": 6
+        }
+      },
+      "art18_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 62,
+          "meses": 0
+        }
+      }
+    },
+    {
+      "ano": 2031,
+      "art15_pontos": {
+        "homem": 105,
+        "mulher": 98
+      },
+      "art15_par3_pontos_professor": {
+        "homem": 100,
+        "mulher": 92
+      },
+      "art16_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 62,
+          "meses": 0
+        }
+      },
+      "art16_par2_idade_professor": {
+        "homem": {
+          "anos": 60,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 57,
+          "meses": 0
+        }
+      },
+      "art18_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 62,
+          "meses": 0
+        }
+      }
+    },
+    {
+      "ano": 2032,
+      "art15_pontos": {
+        "homem": 105,
+        "mulher": 99
+      },
+      "art15_par3_pontos_professor": {
+        "homem": 100,
+        "mulher": 92
+      },
+      "art16_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 62,
+          "meses": 0
+        }
+      },
+      "art16_par2_idade_professor": {
+        "homem": {
+          "anos": 60,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 57,
+          "meses": 0
+        }
+      },
+      "art18_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 62,
+          "meses": 0
+        }
+      }
+    },
+    {
+      "ano": 2033,
+      "art15_pontos": {
+        "homem": 105,
+        "mulher": 100
+      },
+      "art15_par3_pontos_professor": {
+        "homem": 100,
+        "mulher": 92
+      },
+      "art16_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 62,
+          "meses": 0
+        }
+      },
+      "art16_par2_idade_professor": {
+        "homem": {
+          "anos": 60,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 57,
+          "meses": 0
+        }
+      },
+      "art18_idade": {
+        "homem": {
+          "anos": 65,
+          "meses": 0
+        },
+        "mulher": {
+          "anos": 62,
+          "meses": 0
+        }
+      }
+    }
+  ],
+  "fora_desta_tabela": "valor do benefício (coeficientes do art. 26) e fator previdenciário: o fator depende da tábua do IBGE, não capturada (sai como fórmula)."
+}

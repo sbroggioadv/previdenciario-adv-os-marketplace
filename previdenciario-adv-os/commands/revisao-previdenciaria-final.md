@@ -1,137 +1,20 @@
 ---
-description: Aciona apenas a Suprema Corte (R1-R4) sobre documento ja produzido. Use quando quiser revisar uma peca/parecer/calculo que voce ou outra IA produziu.
-allowed-tools: Read, Write, Edit, Bash, Glob, Grep, Task
-argument-hint: [path opcional do arquivo a revisar]
+description: Roda so a Suprema Corte (R1 a R4, com a checagem anti-IA no R4) sobre peca, recurso, parecer, calculo ou requerimento previdenciario ja produzido.
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, Skill, AskUserQuestion
+argument-hint: [caminho do arquivo a revisar, opcional]
 ---
 
-Voce foi acionado pelo comando `/revisao-previdenciaria-final` do plugin Previdenciario-Adv-OS.
+Voce foi acionado pelo comando `/revisao-previdenciaria-final` do plugin previdenciario-adv-os.
 
 Argumento recebido: `$ARGUMENTS`
 
-**Objetivo:** auditar documento ja produzido (peca, parecer, calculo, recurso) aplicando exclusivamente o sistema de revisao da Suprema Corte (R1-R4). Pula triagem dogmatica e estado-maior porque o documento ja existe.
+**Objetivo:** auditar um documento que ja existe e devolver o veredito por revisora, com o trecho e o anexo de cada achado.
 
-## PROTOCOLO DE EXECUCAO
+## PROTOCOLO
+1. Acionar `suprema-corte-previdenciaria` - R1 fatos, via e competencia contra o quadro confirmado; R2 base legal na redacao vigente com o diploma nomeado; R3 tema ou sumula so com selo verde no anexo; R4 forma, prazo, calculo conferido com o JSON do script e checagem anti-IA objetiva.
+2. Sem caminho no argumento: pedir o arquivo ou o texto colado. Documento ausente nao e revisado por suposicao.
+3. Antes da Corte, rodar o `validador-previdenciario` sobre cada item citavel do documento.
+4. Numero de calculo sem o JSON do script correspondente nao passa no R4: refazer a conta pela `calculos-previdenciarios` ou marcar "conta nao conferida por script".
+5. Veredito por revisora: OK, CORRIGIR ou REPROVA. A Corte aponta, nao reescreve o documento sem pedido do advogado.
 
-### 1. Identificar documento a revisar
-
-Se argumento fornecido com path, ler o arquivo. Caso contrario:
-
-```
-Que documento voce quer revisar?
-
-Opcoes:
-1. Cole o texto integral aqui
-2. Anexe o arquivo (.md, .docx, .pdf)
-3. Indique o path do arquivo no diretorio atual
-```
-
-### 2. Identificar tipo de documento
-
-```
-Que tipo de documento e este?
-
-a. Peticao inicial / contestacao / replica
-b. Recurso (JEF, TRF, REsp, RE, PEDILEF, CRPS)
-c. Parecer juridico
-d. Calculo previdenciario
-e. Notificacao extrajudicial
-f. Comunicacao ao segurado
-```
-
-A escolha define qual checklist da Camada 3 aplicar (estilo do tipo).
-
-### 3. Acionar Suprema Corte (skills do Tier 3)
-
-```
-suprema-corte-previdenciario (meta-skill orquestradora)
-   │
-   ├── R1 — suprema-corte-r1-coleta-dados
-   ├── R2 — suprema-corte-r2-base-juridica
-   ├── R3 — suprema-corte-r3-tese
-   └── R4 — suprema-corte-r4-completude
-```
-
-### 4. Executar R1 — Coleta de Dados
-
-Verificar:
-- Todo dado factual extraido da fonte?
-- Pontos de Omissao sinalizados? (PA-03)
-- Faltam CNIS, PPP, LTCAT, laudo, carta de concessao?
-
-Se houver lacuna critica → **PARALISA documento ate resolucao**.
-
-### 5. Executar R2 — Base Juridica
-
-Verificar:
-- Toda lei citada existe e esta vigente? (PA-10)
-- Toda jurisprudencia classificada Nivel 1/2/3? (PA-01)
-- Toda norma infralegal no protocolo correto? (PA-02)
-- Decadencia/prescricao analisada? (PA-09)
-- Competencia correta? (PA-15)
-- Regras de transicao EC 103/2019 verificadas? (PA-08)
-
-Se violacao → bloquear ate corrigir.
-
-### 6. Executar R3 — Tese Juridica
-
-Verificar:
-- Tese central sustentada?
-- Escala de comprometimento (forte → fraco)?
-- Teses adversarias antecipadas e neutralizadas?
-- FIRAC integro por bloco tematico?
-- AIDA na arquitetura macro?
-- Baloney detection — falacias na tese adversa identificadas?
-- Aventura juridica? Sinalizar.
-
-### 7. Executar R4 — Completude
-
-Verificar:
-- Estilo conforme Camada 3 do tipo (peca / parecer / calculo)?
-- Tom Nivel 4 (firmeza categorica)?
-- Conformidade OAB-Provimento 205/2021 (se marketing)?
-- Pedido determinado?
-- Endereçamento correto?
-- Rito processual apropriado?
-- Output formato correto (Markdown vs plain text)?
-- PA-05 — sem mistura de escopos?
-- PA-17 — sem ataque pessoal?
-
-### 8. Relatorio final
-
-```
-========================================
-SUPREMA CORTE — RELATORIO DE AUDITORIA
-========================================
-
-Documento: <tipo>
-Tamanho: <N paginas / palavras>
-
-R1 — COLETA DE DADOS
-   ✓ ou ✗ por item
-   - Pontos de Omissao: <lista>
-   - Bloqueios: <lista>
-
-R2 — BASE JURIDICA
-   ✓ ou ✗ por item
-   - Lei: <validacoes>
-   - Jurisprudencia: <classificacao>
-   - Infralegal: <validacoes>
-
-R3 — TESE
-   ✓ ou ✗ por item
-   - Pontos fortes: <lista>
-   - Pontos fragilizados: <lista>
-
-R4 — COMPLETUDE
-   ✓ ou ✗ por item
-
-VEREDICTO:
-   [ ] APROVADO (sai como esta)
-   [ ] APROVADO COM RECOMENDACOES (lista de melhorias opcionais)
-   [ ] REPROVADO (lista de correcoes obrigatorias)
-
-PROXIMO PASSO:
-   <descricao>
-```
-
-**Skill a acionar:** `suprema-corte-previdenciario` (meta-skill).
+**Skill a acionar:** `suprema-corte-previdenciaria`.

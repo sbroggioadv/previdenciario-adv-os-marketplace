@@ -1,0 +1,27 @@
+{
+  "descricao": "Feriados nacionais e datas forenses usados pelo Engine B (calc_prazo.py). Os fixos estão aqui; os móveis são calculados pela Páscoa (computus gregoriano) dentro do script, a partir dos deslocamentos abaixo. Nenhum feriado estadual ou municipal: esses são sempre entrada do usuário (feriados_locais).",
+  "data_revisao": "2026-10-14",
+  "tipos": {
+    "nacional": "feriado nacional por lei federal; sempre excluído",
+    "religioso": "[VERIFICAR] não é feriado nacional por lei: feriado religioso da Lei 9.093/1995 art. 2º, que depende de lei municipal (na Justiça Federal, Lei 5.010/1966 art. 62 II); segue incluir_pontos_forenses como o ponto forense — excluído por padrão, contado como útil com false — e sempre listado com alerta",
+    "ponto-forense": "[VERIFICAR] não é feriado nacional por lei; o fechamento depende de ato do tribunal; excluído só com incluir_pontos_forenses=true (padrão) e sempre listado"
+  },
+  "fixos": [
+    {"mes_dia": "01-01", "nome": "Confraternização Universal", "tipo": "nacional", "fundamento": "Lei 662/1949 art. 1º, redação da Lei 10.607/2002"},
+    {"mes_dia": "04-21", "nome": "Tiradentes", "tipo": "nacional", "fundamento": "Lei 662/1949 art. 1º, redação da Lei 10.607/2002"},
+    {"mes_dia": "05-01", "nome": "Dia do Trabalho", "tipo": "nacional", "fundamento": "Lei 662/1949 art. 1º, redação da Lei 10.607/2002"},
+    {"mes_dia": "09-07", "nome": "Independência", "tipo": "nacional", "fundamento": "Lei 662/1949 art. 1º, redação da Lei 10.607/2002"},
+    {"mes_dia": "10-12", "nome": "Nossa Senhora Aparecida", "tipo": "nacional", "fundamento": "Lei 6.802/1980"},
+    {"mes_dia": "11-02", "nome": "Finados", "tipo": "nacional", "fundamento": "Lei 662/1949 art. 1º, redação da Lei 10.607/2002"},
+    {"mes_dia": "11-15", "nome": "Proclamação da República", "tipo": "nacional", "fundamento": "Lei 662/1949 art. 1º, redação da Lei 10.607/2002"},
+    {"mes_dia": "11-20", "nome": "Dia Nacional de Zumbi e da Consciência Negra", "tipo": "nacional", "fundamento": "Lei 14.759/2023", "vigencia_desde": "2024-01-01", "nota": "feriado nacional a partir de 2024; antes, só onde lei estadual ou municipal o previa (informe em feriados_locais)"},
+    {"mes_dia": "12-25", "nome": "Natal", "tipo": "nacional", "fundamento": "Lei 662/1949 art. 1º, redação da Lei 10.607/2002"}
+  ],
+  "moveis": [
+    {"dias_da_pascoa": -48, "nome": "Segunda-feira de Carnaval", "tipo": "ponto-forense", "fundamento": "[VERIFICAR] ponto facultativo/forense: ato do tribunal (na Justiça Federal, Lei 5.010/1966 art. 62 III)"},
+    {"dias_da_pascoa": -47, "nome": "Terça-feira de Carnaval", "tipo": "ponto-forense", "fundamento": "[VERIFICAR] ponto facultativo/forense: ato do tribunal (na Justiça Federal, Lei 5.010/1966 art. 62 III)"},
+    {"dias_da_pascoa": -2, "nome": "Sexta-feira da Paixão", "tipo": "religioso", "fundamento": "Lei 9.093/1995 art. 2º (feriado religioso, declarado por lei municipal); Lei 5.010/1966 art. 62 II na Justiça Federal"},
+    {"dias_da_pascoa": 60, "nome": "Corpus Christi", "tipo": "ponto-forense", "fundamento": "[VERIFICAR] ponto facultativo/forense: ato do tribunal ou lei municipal"}
+  ],
+  "recesso": {"inicio": "12-20", "fim": "01-20", "fundamento": "CPC art. 220; CLT art. 775-A", "nota": "suspende o curso do prazo processual (em dias, meses ou anos) nos dias de 20/12 a 20/01, inclusive; no processo penal, CPP art. 798-A (Lei 14.365/2022), salvo réu preso, Lei Maria da Penha e medida urgente fundamentada; não suspende prazo material"}
+}

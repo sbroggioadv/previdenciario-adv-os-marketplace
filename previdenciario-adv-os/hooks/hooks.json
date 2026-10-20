@@ -2,12 +2,10 @@
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "echo '[previdenciario-adv-os] Plugin previdenciario ativo. Rode /start-previdenciario para configurar. RGPS, RPPS, Complementar e Acidentario; contencioso e administrativo.'",
-            "timeout": 5
+            "command": "echo '[previdenciario-adv-os] v2.0.0 ativo: Direito Previdenciario do segurado contra o INSS, do administrativo ao cumprimento, com calculos previdenciarios. Rode /start-previdenciario para configurar; depois /previdenciario-master.'"
           }
         ]
       }

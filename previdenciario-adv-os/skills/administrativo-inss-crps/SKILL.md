@@ -1,283 +1,85 @@
 ---
 name: administrativo-inss-crps
-description: >
-  ADMINISTRATIVO INSS / CRPS — Skill consolidada para todos os procedimentos administrativos previdenciarios. Cobre requerimento administrativo (DER + Tema 350 STF), recurso a Junta de Recursos do CRPS (1a instancia administrativa, 30 dias), recurso as Camaras de Julgamento do CRPS (2a instancia, 30 dias), e defesa administrativa em revisao de oficio (art. 103-A Lei 8.213/91, decadencia decenal do INSS). Linguagem formal-administrativa, foco em Lei 8.213/91 + Decreto 3.048/99 + IN 128/2022 + sumulas AGU/CRPS. Use para qualquer interacao administrativa com INSS.
+description: "Via administrativa contra o INSS: requerimento de beneficio com carencia e qualidade de segurado conferidas pelo script antes do protocolo (no BPC nao se aplicam), reafirmacao da DER, beneficio mais vantajoso, novo requerimento, recurso ordinario as Juntas e recurso especial as Camaras do CRPS em 30 dias, contrarrazoes, novos elementos no recurso, defesa contra revisao de oficio e anulacao. Use quando o operador disser requerimento no INSS, Meu INSS, recurso ao CRPS, Junta de Recursos, Camara de Julgamento, indeferimento administrativo, revisao de oficio, defesa administrativa. Nao use para mandado de seguranca (mandado-seguranca-previdenciario) nem para acao judicial (peticao-inicial-previdenciaria)."
 ---
 
-# ADMINISTRATIVO INSS / CRPS — Skill Tier 2 B (consolidada)
+# ADMINISTRATIVO INSS CRPS
 
-> Procedimentos administrativos previdenciarios. Linguagem direta, fundamentacao em Lei + Decreto + IN.
+> Camada 4. Do requerimento ao recurso no CRPS, com a carencia conferida antes do protocolo nos beneficios previdenciarios (no BPC nao se aplica).
 
----
+## Entradas
+- Recebe: o que se pede ao INSS ou a decisao recebida, com a data da ciencia (obrigatorio) · CNIS e documentos do segurado (obrigatorio no beneficio previdenciario; no BPC, documentos da renda e do grupo familiar e, se for o caso, da deficiencia) · processo administrativo completo (opcional, pedir no recurso)
+- Chamada por: previdenciario-master · analise-carta-concessao-indeferimento · bpc-loas-previdenciario | Chama: prazos-previdenciarios · analise-cnis · bpc-loas-previdenciario · mandado-seguranca-previdenciario · memoria-de-caso-previdenciario
 
-## 1. SITUACOES E FLUXOS
+## Anexos obrigatorios (context/)
+- `context/lei/in-128-2022-inss.md` (arts. 576, 576-A, 577, 578, 579, 580, 582 e 583 - grep o artigo e leia a faixa)
+- `context/lei/decreto-3048-1999.md` (art. 305 - grep o artigo e leia a faixa)
+- `context/lei/regimento-crps-portaria-mps-125-2026.md` (arts. 77, 78, 80, 89 e 112)
+- `context/lei/lei-8213-1991.md` (arts. 103, 103-A, 105 e 129-A - grep o artigo e leia a faixa)
+- `context/calculo-cnis.md` (secao 5, CAMPOS)
+- `context/metodologia-previdenciario.md` (secoes 4 e 9: prazo vencido e relogio)
 
-| Situacao | Documento | Prazo |
-|----------|-----------|-------|
-| Pleito inicial | Requerimento Administrativo | n/a (cria DER) |
-| Indeferimento -> recurso | Recurso a Junta de Recursos do CRPS | 30 dias do conhecimento |
-| Decisao da Junta -> recurso | Recurso as Camaras de Julgamento do CRPS | 30 dias |
-| Revisao de oficio do INSS | Defesa Administrativa | conforme notificacao |
-| Mora administrativa (>45 dias) | Mandado de Seguranca por mora | 120 dias do ato |
+## Objetivo
+Levar o pedido ao INSS ou ao CRPS do jeito que mais preserva o direito e a data de inicio do cliente, sem prometer o que a via administrativa nao garante.
 
----
+## Metodologia
+1. [redacao] Devolver o quadro em 3-6 linhas (o que se pede ou o que foi decidido, especie, data da ciencia, documentos) e esperar confirmacao.
+2. Prazo primeiro: recurso correndo ou decisao ha menos de 30 dias vai para `prazos-previdenciarios`. Prazo vencido: avisar antes de tudo. O INSS nao pode recusar o recebimento do recurso (IN 128, art. 578, par. 1), mas a admissibilidade e do CRPS: intempestividade leva ao nao conhecimento (Regimento CRPS, art. 112, I), e a relevacao so cabe com liquidez e certeza inequivocas (pars. 1o e 2o), sem diligencia (par. 8o). Examinar se o caso se encaixa, nunca prometer relevacao, e mostrar as outras vias.
+3. Antes de requerer: no BPC, carencia e qualidade de segurado nao se aplicam (CF, art. 203, caput; LOAS, art. 20): nao rodar o script do CNIS nem barrar o pedido por falta de vinculo; conferir os requisitos assistenciais pela `bpc-loas-previdenciario`. Nos beneficios previdenciarios, rodar `calc_previdenciario_cnis.py` para carencia e qualidade de segurado. Exit 3 (carencia indeterminada) nao autoriza afirmar que o requisito esta cumprido; dizer o que falta provar. Lacunas do CNIS vao para `analise-cnis`.
+4. Requerimento: documentacao incompleta nao e motivo para recusa (Lei 8.213, art. 105); juntar desde ja toda a prova, porque elemento novo apresentado so no recurso fixa os efeitos financeiros na data da apresentacao (IN 128, art. 582). Pedir que o INSS ofereca o beneficio mais vantajoso e reafirme a DER, com concordancia, se o requisito se completar antes da decisao (art. 577, I e II).
+5. Arquivamento por falta de documento indispensavel: nao cabe recurso ao CRPS; novo requerimento produz efeitos da nova data (art. 578, par. 2 e 3). Por isso o requerimento completo vale mais que o recurso.
+6. Novo requerimento da mesma especie: so depois da decisao do anterior e do decurso dos 30 dias do recurso ordinario (art. 576-A, redacao da IN 208/2026), salvo pedido de revisao e beneficio por incapacidade (paragrafo unico). Ler a faixa antes de orientar: redacao mudou duas vezes em 2026.
+7. Recurso ordinario: das decisoes do INSS, as Juntas de Recursos do CRPS (art. 578). Recurso especial: das decisoes da Junta, as Camaras de Julgamento, ressalvadas as materias de alcada exclusiva das Juntas (art. 579; Regimento CRPS, art. 89, pars. 2o e 3o - ler a faixa). Prazo de 30 dias da ciencia da decisao (Decreto 3.048, art. 305, par. 1, II; IN 128, art. 580).
+8. Contrarrazoes: 30 dias. Prazo fatal da intimacao da interposicao (IN 128, art. 580; Regimento CRPS, arts. 77, 78 e 80). O Decreto diz "da interposicao" (art. 305, par. 1, III): essa data vale so como meta interna preventiva, pela `prazos-previdenciarios`. Nunca tratar como vencida defesa ainda no prazo da intimacao; sem a data da intimacao, tempestividade indeterminada. No recurso ordinario, as razoes do indeferimento substituem as contrarrazoes do INSS (art. 580, par. 2); o INSS pode reformar a propria decisao (Decreto, art. 305, par. 3).
+9. Revisao de oficio e anulacao: o direito do INSS de anular ato favoravel ao beneficiario decai em 10 anos da pratica, salvo ma-fe comprovada (Lei 8.213, art. 103-A); com efeitos patrimoniais continuos, conta da percepcao do primeiro pagamento (par. 1), e qualquer medida da autoridade que impugne a validade do ato ja e exercicio do direito de anular (par. 2). Na defesa, pedir a data do ato, a do primeiro pagamento e a da primeira medida de impugnacao, e conferir se ha acusacao de ma-fe. Revisao a pedido do segurado segue o art. 583 da IN e a decadencia do art. 103 da Lei 8.213, com o item 7 do gate de vigencia (ADI 6.096 nao capturada).
+10. Demora do INSS sem decisao: avaliar `mandado-seguranca-previdenciario`; nao afirmar prazo legal de analise que nao esteja em context/.
+11. Via judicial: a inicial de beneficio por incapacidade exige comprovante do indeferimento ou da nao prorrogacao (Lei 8.213, art. 129-A, II, a); guardar a decisao e o processo administrativo.
+12. [redacao] Propor 2-3 caminhos (requerimento completo, recurso ao CRPS, novo requerimento, acao judicial), cada um com ganho e risco para a DIB do cliente; o advogado escolhe.
+13. [redacao] Redigir a peca (requerimento, recurso ordinario, recurso especial, contrarrazoes ou defesa) em I. fatos, II. fundamentos com o diploma nomeado, III. pedido e documentos; voz do escritorio pelo `estilo-juridico-previdenciario`; passada anti-IA com `context/escrita-humana.md` (secao 7).
 
-## 2. REQUERIMENTO ADMINISTRATIVO
-
-**Por que protocolar:**
-- Tema 350 STF (RE 631.240) — exige previo requerimento para acao judicial
-- Cria DER (Data de Entrada do Requerimento) — marco para DIB
-- Carta de indeferimento e prova essencial para acao judicial
-
-**Canais:**
-- Meu INSS (web/app) — preferencial
-- Telefone 135
-- Agencia (com agendamento)
-
-**Estrutura:**
-
+## Calculo
+Achar e rodar o script pela secao 13 de `context/metodologia-previdenciario.md`; o bloco campos e o contrato da entrada JSON.
+```flags
+# script: calc_previdenciario_cnis.py
+--entrada  arquivo  opcional  JSON de entrada (sem ela, entrada padrao)
+--versao  nenhum  opcional  imprime a versao
 ```
-AO INSTITUTO NACIONAL DO SEGURO SOCIAL — INSS
-GERENCIA EXECUTIVA DE <cidade> / AGENCIA <X>
-
-REQUERENTE: <nome completo>
-CPF: <numero>
-NIT: <numero>
-Endereco: <completo>
-
-REQUERIMENTO DE <BENEFICIO>
-
-ESPECIE SAB:
-  41 - aposentadoria por idade
-  42 - aposentadoria por tempo de contribuicao
-  91 - incapacidade temporaria (BPI)
-  32 - incapacidade permanente
-  21 - pensao por morte
-  87 - BPC idoso
-  88 - BPC pessoa com deficiencia
-  ...
-
-I. FUNDAMENTACAO
-   Documentos anexos:
-   - <CNIS>
-   - <RG, CPF>
-   - <comprovante de residencia>
-   - <documentos especificos do beneficio>:
-     * Aposentadoria idade: idade comprovada + 180 contribuicoes
-     * Aposentadoria tempo: CNIS + PPP/LTCAT (se especial)
-     * BPI: laudo + atestados + receituario
-     * Pensao: certidao de obito + dependencia
-     * BPC: hipossuficiencia + idade ou laudo de deficiencia
-
-II. PEDIDO
-   a) Processamento do requerimento
-   b) Pericia / analise / o que cabivel
-   c) CONCESSAO do beneficio com:
-      - DIB: <DER ou anterior>
-      - DIP: logo apos concessao
-   d) Subsidiariamente: CARTA DE INDEFERIMENTO MOTIVADA com fundamentos
-      expressos (para fins de eventual recurso)
-
-Pede deferimento.
-
-Local, data.
-<assinatura segurado>
-[via procurador, se houver — OAB]
+```campos
+# script: calc_previdenciario_cnis.py
+beneficio  enum  obrigatorio  idade | tempo | especial | incapacidade | salario-maternidade | auxilio-reclusao | pensao | auxilio-acidente | bpc
+data_referencia  data  obrigatorio  DER, DII ou data do obito
+vinculos  lista  condicional  ao menos 1 vinculo, salvo beneficio = bpc (LOAS, art. 20)
+vinculos[].origem  enum  obrigatorio  empregado | contribuinte-individual | facultativo | especial | domestico | avulso
+vinculos[].inicio  data  obrigatorio  AAAA-MM-DD
+vinculos[].fim  data  opcional  ausente = vinculo sem fim (vai para lacunas)
+vinculos[].filiacao_domestica_comprovada  bool  nao  so origem domestico; true = filiacao comprovada
+vinculos[].indicadores  lista de texto  opcional  siglas do Anexo V; padrao []
+vinculos[].competencias  lista  obrigatorio  uma entrada por competencia
+vinculos[].competencias[].mes  competencia  obrigatorio  AAAA-MM
+vinculos[].competencias[].valor  decimal  opcional  salario de contribuicao
+vinculos[].competencias[].recolhido_em  data  opcional  data do pagamento
+vinculos[].competencias[].indicadores  lista de texto  opcional  siglas do Anexo V; padrao []
+historico_anterior_informado  bool  obrigatorio  false leva a carencia apos a perda a indeterminada
+desemprego_registrado  bool  opcional  padrao false
+acidente_ou_doenca_dispensa  bool  opcional  padrao false; decisao do advogado
+dias_sem_expediente_bancario  lista de data  opcional  ausente = feriados nacionais do motor de prazos
+ano_implementacao_requisitos  inteiro  nao  ano das condicoes da tabela do art. 142
+inscrito_ate_24_07_1991  bool  nao  art. 142; ausente = inferido dos vinculos
 ```
+Exit 0: usar e mostrar a memoria. Exit 2: perguntar de novo o dado recusado. Exit 3: carencia indeterminada, `formula_aberta` com `[VERIFICAR]`. Sem Python, script ausente ou outro exit: conta aberta por `context/calculo-cnis.md`, passo a passo, avisando que o numero nao foi conferido por script.
 
-**Atencao prazos:** 45 dias para decisao (art. 41-A IN 128/2022 — verificar redacao atual). Se INSS demorar, MS por mora.
+## Se faltar anexo
+Seguir com o que ha no context/ e avisar em uma linha o que faltou e o que isso limita na entrega. Nunca preencher o que faltou por suposicao.
 
----
+## Entrega obrigatoria final
+- Beneficio previdenciario: carencia e qualidade de segurado pelo script, com a memoria. BPC: registro de que carencia e qualidade nao se aplicam e quadro dos requisitos assistenciais da `bpc-loas-previdenciario`.
+- A peca pedida (requerimento, recurso, contrarrazoes ou defesa) com a lista de documentos e o prazo contado.
+- Os 2-3 caminhos e o escolhido.
 
-## 3. RECURSO A JUNTA DE RECURSOS DO CRPS (1a instancia administrativa)
+## Guard
+Nunca protocolar beneficio previdenciario sem conferir carencia e qualidade; nunca exigi-las no BPC. Nunca contar prazo de cabeca: vai para `prazos-previdenciarios`. Nunca prometer admissao de recurso fora do prazo. Nunca citar regimento do CRPS, enunciado do CRPS ou sumula administrativa que nao esteja em context/. Nunca deixar prova para o recurso quando ela ja existe no requerimento.
 
-**Cabivel:** decisao do INSS (indeferimento, cessacao, revisao indeferida).
-
-**Prazo:** 30 dias do conhecimento da decisao (art. 305 IN 128/2022).
-
-**Estrutura:**
-
-```
-A ILUSTRISSIMA JUNTA DE RECURSOS DO CONSELHO DE RECURSOS DA
-PREVIDENCIA SOCIAL (CRPS)
-
-PROCESSO ADMINISTRATIVO N. <numero>
-RECORRENTE: <nome>, CPF, NIT
-
-<NOME>, qualificado, inconformado com decisao da APS de <cidade> que
-<indeferiu/cessou/negou revisao> o beneficio NB <numero>, vem, no
-prazo de 30 dias previsto no art. 305 da IN 128/2022, apresentar
-
-RECURSO
-
-a esta Egregia Junta de Recursos:
-
-I. SINTESE DOS FATOS
-   - Beneficio: <tipo> NB <numero>
-   - DER: <data>
-   - Decisao recorrida: <indeferimento>
-   - Motivo (carta): <reproduzir>
-
-II. TEMPESTIVIDADE
-
-III. FUNDAMENTOS DA REFORMA
-   III.1 — <fundamento 1>
-     A decisao se equivocou ao <ponto>.
-     Conforme dispoe o art. <X> da Lei 8.213/91 [c/c art. <Y> Dec
-     3.048/99] [c/c art. <Z> IN 128/2022]:
-       "<reproduzir dispositivo>"
-     No caso, <subsuncao>.
-     Sumula AGU n. <X> ainda dispoe:
-       "<reproduzir>"
-   III.2 — <fundamento 2>
-
-IV. DOCUMENTOS NOVOS (se houver)
-   Em sede de recurso, junta-se:
-   - <documento 1>
-   - <documento 2>
-
-V. PEDIDO
-   a) Conhecimento e provimento
-   b) REFORMA para conceder/restabelecer beneficio com DIB e efeitos
-   c) Subsidiariamente: nova pericia / instrucao complementar
-   d) Cumprimento da decisao apos transito
-
-Local, data.
-<recorrente ou advogado OAB>
-```
-
-**Linguagem:** formal-administrativa. Foco em DISPOSITIVOS (lei + decreto + IN). Sumulas AGU vinculantes ao INSS sao obrigatorias quando aplicaveis. Sem latim extensivo.
-
----
-
-## 4. RECURSO AS CAMARAS DE JULGAMENTO DO CRPS (2a instancia)
-
-**Cabivel (limitado):**
-- Divergencia entre Juntas de Recursos
-- Violacao a sumula CRPS / AGU vinculante
-- Materia constitucional
-
-**Prazo:** 30 dias da decisao da Junta de Recursos.
-
-**Estrutura:**
-
-```
-ILUSTRISSIMOS SRS. MEMBROS DA <X> CAMARA DE JULGAMENTO DO CRPS
-
-PROCESSO ADMINISTRATIVO N. <numero>
-
-RECURSO ESPECIAL
-
-I. SINTESE
-II. TEMPESTIVIDADE
-III. CABIMENTO
-   III.1 — Hipotese de cabimento
-   III.2 — Demonstracao da divergencia / violacao a sumula
-
-       A decisao recorrida diverge do entendimento da <outra Junta>
-       no processo <numero>:
-         "<reproduzir tese paradigma>"
-       OU
-       Violou a Sumula AGU/CRPS n. <X>:
-         "<reproduzir>"
-
-IV. FUNDAMENTOS DA REFORMA
-V. PEDIDO
-```
-
----
-
-## 5. DEFESA ADMINISTRATIVA (revisao de oficio do INSS)
-
-**Quando:** INSS notifica segurado para revisar beneficio de oficio (suspeita de irregularidade) ou pede devolucao por suposto erro.
-
-**Verificacao bloqueante PA-09 (decadencia do INSS):**
-
-```
-Lei 8.213/91 art. 103-A:
-  Decadencia DECENAL para INSS rever atos de oficio (apos 10 anos da
-  concessao, INSS nao pode rever — exceto FRAUDE comprovada).
-```
-
-Beneficio com mais de 10 anos -> DEFENDER COM DECADENCIA.
-
-**Estrutura:**
-
-```
-AO INSS — APS DE <cidade>
-
-PROCESSO ADMINISTRATIVO N. <numero>
-
-DEFESA ADMINISTRATIVA
-
-I. SINTESE DO PROCEDIMENTO
-   Em <data>, fui notificado para <descrever pedido administracao>.
-
-II. PRELIMINARMENTE — DECADENCIA DO INSS PARA REVER (art. 103-A)
-   [se aplicavel — beneficio com >10 anos]
-
-   O beneficio NB <numero> foi concedido em <data>. Decorrido lapso
-   superior a 10 anos, opera-se a DECADENCIA do direito do INSS de
-   rever-lo de oficio (art. 103-A da Lei 8.213/91), salvo comprovada
-   fraude — o que nao se verifica no caso.
-
-   Requer-se RECONHECIMENTO DA DECADENCIA e ARQUIVAMENTO.
-
-III. NO MERITO (subsidiariamente)
-
-   III.1 — Refutacao da pretensao do INSS
-     [FIRAC]
-
-   III.2 — Boa-fe objetiva e tutela da confianca
-     Se INSS pretende cobrar devolucao:
-     - Sumula 34 AGU — recebimento de boa-fe afasta repeticao
-     - Tema 979 STJ — boa-fe nos beneficios
-
-   III.3 — Documentacao probatoria
-
-IV. PEDIDO
-   a) Acolhimento da preliminar de decadencia + ARQUIVAMENTO
-   b) No merito: REJEICAO INTEGRAL
-   c) MANUTENCAO do beneficio nos termos atuais
-   d) Subsidiariamente: pericia / instrucao
-```
-
-**Sumulas relevantes:**
-- Sumula 34 AGU — recebimento de boa-fe
-- Tema 979 STJ — boa-fe nos beneficios
-
----
-
-## 6. PAS APLICAVEIS
-
-- **PA-02** — vedacao a alucinacao IN/Portaria/Sumula AGU
-- **PA-04** — adversarial (INSS e contraparte)
-- **PA-09** — decadencia do INSS em revisao de oficio (art. 103-A)
-- **PA-13** — CNIS para refutar divergencias
-- **PA-14** — requerimento administrativo cria DER (Tema 350 STF)
-- **PA-22** — Suprema Corte antes de entregar
-
----
-
-## 7. PROTOCOLOS ACIONADOS
-
-- **2.1** Jurisprudencial (Sumulas AGU + CRPS classificadas)
-- **2.2** Infralegal (IN 128/2022 vigente)
-- **2.5** Compartimentacao (escopo: documento administrativo)
-
----
-
-## 8. CHECKLIST DE SAIDA
-
-- [ ] Tipo de procedimento identificado (requerimento / Junta / Camaras / defesa)
-- [ ] Tempestividade verificada
-- [ ] Lei + Decreto + IN citados com vigencia
-- [ ] Sumulas AGU/CRPS Nivel 1
-- [ ] Linguagem administrativa adequada (sem latim excessivo)
-- [ ] Pedido especifico (concessao / reforma / arquivamento)
-- [ ] Documentos anexos listados
-- [ ] Rodape OAB (se via advogado)
-
----
-
-*Skill administrativa universal. Acionar conforme procedimento.*
+## Assinatura (fora da peca)
+No rodape da resposta ao advogado, nunca dentro do documento:
+`Entregue pela skill administrativo-inss-crps - plugin previdenciario-adv-os v2.0.0`.
+Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

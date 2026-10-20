@@ -1,0 +1,453 @@
+{
+  "tabela": "vigencias-tema905",
+  "descricao": "Regime de correção monetária e juros de mora contra o INSS por faixa de competência: fase da condenação antes do requisitório (R1, Manual CJF julho/2026) e fase do requisitório (R2, Res. CJF 983/2026). Marcos do Tema 905 do STJ, da EC 113/2021 e da EC 136/2025, como os aplica o Manual.",
+  "nome_do_arquivo": "O inventário F1 (docs/F1-dossie/03, 'Tabelas que os scripts consomem') renomeia esta tabela para regime-atualizacao-prev.json e separa taxa-legal-inpc.json; o BUILD-CONTRACT e o DESIGN-SPEC mantêm vigencias-tema905.json. O conteúdo aqui é o do inventário (as duas tabelas); a troca de nome é decisão do coordenador.",
+  "fonte": [
+    {
+      "norma": "Manual de Cálculos da Justiça Federal, edição julho/2026, itens 4.2.1.1, 4.2.2, 4.3.1.1 (Notas 4 e 5) e 4.3.2 (Nota 3)",
+      "arquivo": "context/lei/manual-cjf-2026-calculos-prev.md",
+      "url": "https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/corregedoria-geral-da-justica-federal/manual-de-calculos-da-justica-federal-edicao-julho-de-2026.pdf"
+    },
+    {
+      "norma": "Resolução CJF 983/2026, art. 7º, §§1º a 4º e 6º",
+      "arquivo": "context/lei/res-cjf-983-2026.md",
+      "url": "https://www.cjf.jus.br/publico/biblioteca/Res_983-2026.pdf"
+    },
+    {
+      "norma": "Lei 11.430/2006, art. 1º (art. 41-A da Lei 8.213: reajuste pelo INPC), DOU 27/12/2006",
+      "arquivo": "context/lei/lei-11430-2006.md"
+    },
+    {
+      "norma": "Lei 11.960/2009, art. 5º (nova redação do art. 1º-F da Lei 9.494/1997), DOU 30/06/2009",
+      "arquivo": "context/lei/lei-11960-2009.md"
+    }
+  ],
+  "data_captura": "2026-10-14",
+  "intervalo": {
+    "inicio": "1964",
+    "fim": "2026-05 (última competência da taxa legal com dedução do INPC publicada pelo CJF)"
+  },
+  "validade": "Faixas: até nova edição do Manual de Cálculos ou nova resolução do CJF. Taxa legal com dedução do INPC: competências depois de 2026-05 = null até nova tabela do CJF (item I-8). Reverificar a ADI 7.873 (EC 136) antes de cada publicação.",
+  "convencoes": {
+    "marcos": "competências mensais (AAAA-MM), não dias; não se fraciona set./2025 por dias",
+    "aplicacao_selic_e_taxa_legal": "aplicada no mês posterior ao da competência, inclusive no mês do pagamento (Manual 2026, item 4.3.1.1, Nota 4, 'b'; item 4.3.2, Nota 3)",
+    "selic": "capitalização simples; vedada a incidência cumulada com juros de mora e correção monetária (item 4.3.1.1, Nota 4, 'a')",
+    "juros": "desde a citação, salvo decisão judicial em contrário (itens 4.2.2 e 4.3.2)",
+    "decisao_judicial": "o título com determinação específica prevalece sobre o Manual (item 4.1)",
+    "percentuais": "string decimal (ler com Decimal); 'taxa_mensal_pct' em % ao mês"
+  },
+  "previdenciario": {
+    "correcao": [
+      {
+        "de": "1964-01",
+        "ate": "1986-02",
+        "indexador": "ORTN"
+      },
+      {
+        "de": "1986-03",
+        "ate": "1989-01",
+        "indexador": "OTN",
+        "obs": "débitos anteriores a jan./1989 multiplicados, neste mês, por 6,17"
+      },
+      {
+        "de": "1989-01",
+        "ate": "1989-01",
+        "indexador": "IPC/IBGE de 42,72%",
+        "obs": "expurgo, em substituição ao BTN"
+      },
+      {
+        "de": "1989-02",
+        "ate": "1989-02",
+        "indexador": "IPC/IBGE de 10,14%",
+        "obs": "expurgo, em substituição ao BTN"
+      },
+      {
+        "de": "1989-03",
+        "ate": "1990-03",
+        "indexador": "BTN"
+      },
+      {
+        "de": "1990-03",
+        "ate": "1991-02",
+        "indexador": "IPC/IBGE",
+        "obs": "expurgo, em substituição ao BTN e ao INPC de fev./1991"
+      },
+      {
+        "de": "1991-03",
+        "ate": "1992-12",
+        "indexador": "INPC/IBGE",
+        "obs": "art. 41, §6º, da Lei 8.213/1991"
+      },
+      {
+        "de": "1993-01",
+        "ate": "1994-02",
+        "indexador": "IRSM",
+        "obs": "art. 9º, §2º, da Lei 8.542/1992"
+      },
+      {
+        "de": "1994-03",
+        "ate": "1994-06",
+        "indexador": "conversão em URV",
+        "obs": "46,0150% em mar./1994; 42,1964% em abr./1994; 44,1627% em maio/1994; 44,0846% em jun./1994 (MP 434/1994; Lei 8.880/1994, art. 20, §5º)"
+      },
+      {
+        "de": "1994-07",
+        "ate": "1995-06",
+        "indexador": "IPC-R",
+        "obs": "art. 20, §6º, da Lei 8.880/1994"
+      },
+      {
+        "de": "1995-07",
+        "ate": "1996-04",
+        "indexador": "INPC/IBGE",
+        "obs": "art. 8º, §3º, da MP 1.053/1995, e Lei 10.192/2001"
+      },
+      {
+        "de": "1996-05",
+        "ate": "2006-08",
+        "indexador": "IGP-DI",
+        "obs": "MP 1.415/1996 e Lei 10.192/2001"
+      },
+      {
+        "de": "2006-09",
+        "ate": "2021-11",
+        "indexador": "INPC/IBGE",
+        "obs": "Lei 10.741/2003, MP 316/2006 e Lei 11.430/2006; Tema 810 do STF; Tema 905 do STJ"
+      },
+      {
+        "de": "2021-12",
+        "ate": "2025-08",
+        "indexador": "Selic",
+        "obs": "art. 3º da EC 113/2021 (redação original); engloba juros e correção"
+      },
+      {
+        "de": "2025-09",
+        "ate": null,
+        "indexador": "INPC/IBGE",
+        "obs": "Tema 1.419 do STF (ARE 1.557.312/SP); Lei 11.430/2006"
+      }
+    ],
+    "correcao_fonte": "context/lei/manual-cjf-2026-calculos-prev.md, item 4.3.1.1 (Manual, p. 56–57)",
+    "juros": [
+      {
+        "de": null,
+        "ate": "2009-06",
+        "taxa": "1,0% ao mês, simples",
+        "taxa_mensal_pct": "1.0",
+        "obs": "Decreto-Lei 2.322/1987 (pelo Manual; não pela literalidade do Tema 905 — ponto P7)"
+      },
+      {
+        "de": "2009-07",
+        "ate": "2012-04",
+        "taxa": "0,5% ao mês, simples",
+        "taxa_mensal_pct": "0.5",
+        "obs": "art. 1º-F da Lei 9.494/1997, redação da Lei 11.960/2009, c/c Lei 8.177/1991"
+      },
+      {
+        "de": "2012-05",
+        "ate": "2021-11",
+        "taxa": "juros da caderneta de poupança, simples: 0,5% ao mês se a Selic anual for superior a 8,5%; senão 70% da Selic anual, mensalizada",
+        "taxa_mensal_pct": null,
+        "obs": "art. 1º-F da Lei 9.494/1997, redação da Lei 11.960/2009, c/c Lei 8.177/1991 e MP 567/2012 (Lei 12.703/2012); série mensal não capturada (o cache do Engine A não tem a série da poupança)"
+      },
+      {
+        "de": "2021-12",
+        "ate": "2025-08",
+        "taxa": "Selic (na correção)",
+        "taxa_mensal_pct": null,
+        "obs": "art. 3º da EC 113/2021; Selic de ago./2025 (1,16%) computada em set./2025"
+      },
+      {
+        "de": "2025-09",
+        "ate": null,
+        "taxa": "taxa legal (Selic com dedução do INPC)",
+        "taxa_mensal_pct": "ver taxa_legal_inpc",
+        "obs": "Tema 1.419 do STF; CC, art. 406 (redação da Lei 14.905/2024); taxa legal de set./2025 (1,377047%) computada em out./2025"
+      }
+    ],
+    "juros_fonte": "context/lei/manual-cjf-2026-calculos-prev.md, item 4.3.2 (Manual, p. 59–60)",
+    "consolidacao_dez_2021": {
+      "inpc_nov_2021_pct": "0.84",
+      "juros_dez_2021_pct": "0.4412",
+      "regra": "crédito consolidado em dez./2021 pelos critérios até então aplicáveis; sobre o consolidado, sem exclusão de parcela, a Selic desde jan./2022 (competência dez./2021); o resultado ('juros Selic') soma-se aos 'juros até 12/2021'",
+      "fonte": "context/lei/manual-cjf-2026-calculos-prev.md, item 4.3.1.1, Nota 5"
+    },
+    "taxa_legal_inpc": {
+      "descricao": "Taxa legal da condenação previdenciária, apurada a partir da Selic com dedução do INPC, em metodologia similar à da Res. CMN 5.171/2024. Usar a tabela; não subtrair percentuais.",
+      "fonte": "context/lei/manual-cjf-2026-calculos-prev.md, item 4.3.2, Nota 3 (Manual, p. 60); dados do Bacen (SGS)",
+      "linhas": [
+        {
+          "competencia": "2025-09",
+          "aplicacao": "2025-10",
+          "fator_selic_mensal": "1.01164156",
+          "fator_inpc": "0.9979",
+          "taxa_legal_pct_am": "1.377047"
+        },
+        {
+          "competencia": "2025-10",
+          "aplicacao": "2025-11",
+          "fator_selic_mensal": "1.01219929",
+          "fator_inpc": "1.0052",
+          "taxa_legal_pct_am": "0.696308"
+        },
+        {
+          "competencia": "2025-11",
+          "aplicacao": "2025-12",
+          "fator_selic_mensal": "1.01275733",
+          "fator_inpc": "1.0003",
+          "taxa_legal_pct_am": "1.245359"
+        },
+        {
+          "competencia": "2025-12",
+          "aplicacao": "2026-01",
+          "fator_selic_mensal": "1.01052703",
+          "fator_inpc": "1.0003",
+          "taxa_legal_pct_am": "1.022396"
+        },
+        {
+          "competencia": "2026-01",
+          "aplicacao": "2026-02",
+          "fator_selic_mensal": "1.01219929",
+          "fator_inpc": "1.0021",
+          "taxa_legal_pct_am": "1.007812"
+        },
+        {
+          "competencia": "2026-02",
+          "aplicacao": "2026-03",
+          "fator_selic_mensal": "1.01164156",
+          "fator_inpc": "1.0039",
+          "taxa_legal_pct_am": "0.771148"
+        },
+        {
+          "competencia": "2026-03",
+          "aplicacao": "2026-04",
+          "fator_selic_mensal": "1.00997022",
+          "fator_inpc": "1.0056",
+          "taxa_legal_pct_am": "0.434588"
+        },
+        {
+          "competencia": "2026-04",
+          "aplicacao": "2026-05",
+          "fator_selic_mensal": "1.01212054",
+          "fator_inpc": "1.0091",
+          "taxa_legal_pct_am": "0.299330"
+        },
+        {
+          "competencia": "2026-05",
+          "aplicacao": "2026-06",
+          "fator_selic_mensal": "1.01090058",
+          "fator_inpc": "1.0081",
+          "taxa_legal_pct_am": "0.277807"
+        }
+      ],
+      "depois_de_2026_05": null,
+      "nota_null": "competência posterior a 2026-05 sem tabela do CJF: null → fórmula, exit 3 (item I-8)"
+    }
+  },
+  "assistencial": {
+    "aplica_se_a": "BPC/LOAS e demais condenações de natureza assistencial: seguem as ações condenatórias em geral, devedor Fazenda Pública (Manual 2026, item 4.3.1.1, Nota 3); nunca o 1% previdenciário",
+    "correcao": [
+      {
+        "de": "1964-01",
+        "ate": "1986-02",
+        "indexador": "ORTN"
+      },
+      {
+        "de": "1986-03",
+        "ate": "1989-01",
+        "indexador": "OTN",
+        "obs": "débitos anteriores a jan./1989 multiplicados, neste mês, por 6,17"
+      },
+      {
+        "de": "1989-01",
+        "ate": "1989-01",
+        "indexador": "IPC/IBGE de 42,72%",
+        "obs": "expurgo, em substituição ao BTN"
+      },
+      {
+        "de": "1989-02",
+        "ate": "1989-02",
+        "indexador": "IPC/IBGE de 10,14%",
+        "obs": "expurgo, em substituição ao BTN"
+      },
+      {
+        "de": "1989-03",
+        "ate": "1990-03",
+        "indexador": "BTN"
+      },
+      {
+        "de": "1990-03",
+        "ate": "1991-02",
+        "indexador": "IPC/IBGE",
+        "obs": "expurgo, em substituição ao BTN e ao INPC de fev./1991"
+      },
+      {
+        "de": "1991-03",
+        "ate": "1991-11",
+        "indexador": "INPC"
+      },
+      {
+        "de": "1991-12",
+        "ate": "1991-12",
+        "indexador": "IPCA série especial",
+        "obs": "art. 2º, §2º, da Lei 8.383/1991"
+      },
+      {
+        "de": "1992-01",
+        "ate": "2000-12",
+        "indexador": "Ufir",
+        "obs": "Lei 8.383/1991"
+      },
+      {
+        "de": "2001-01",
+        "ate": "2021-11",
+        "indexador": "IPCA-E/IBGE",
+        "obs": "em jan./2001, IPCA-E acumulado de jan. a dez./2000; desde jan./2001, IPCA-E mensal (IPCA-15/IBGE); Tema 810 do STF; Tema 905 do STJ"
+      },
+      {
+        "de": "2021-12",
+        "ate": "2025-08",
+        "indexador": "Selic",
+        "obs": "devedor Fazenda Pública; art. 3º da EC 113/2021"
+      },
+      {
+        "de": "2025-09",
+        "ate": null,
+        "indexador": "IPCA-15/IBGE",
+        "obs": "Tema 1.419 do STF; CC, art. 389, parágrafo único (Lei 14.905/2024); Res. CMN 5.171/2024"
+      }
+    ],
+    "correcao_fonte": "context/lei/manual-cjf-2026-calculos-prev.md, item 4.2.1.1 (Manual, p. 47–48)",
+    "juros": [
+      {
+        "de": null,
+        "ate": "2002-12",
+        "taxa": "0,5% ao mês, simples",
+        "taxa_mensal_pct": "0.5",
+        "obs": "arts. 1.062 a 1.064 do Código Civil de 1916"
+      },
+      {
+        "de": "2003-01",
+        "ate": "2009-06",
+        "taxa": "Selic",
+        "taxa_mensal_pct": null,
+        "obs": "CC, art. 406"
+      },
+      {
+        "de": "2009-07",
+        "ate": "2012-04",
+        "taxa": "0,5% ao mês, simples",
+        "taxa_mensal_pct": "0.5",
+        "obs": "devedor Fazenda Pública; art. 1º-F da Lei 9.494/1997, redação da Lei 11.960/2009"
+      },
+      {
+        "de": "2012-05",
+        "ate": "2021-11",
+        "taxa": "juros da caderneta de poupança, simples: 0,5% ao mês se a Selic anual for superior a 8,5%; senão 70% da Selic anual, mensalizada",
+        "taxa_mensal_pct": null,
+        "obs": "devedor Fazenda Pública; série mensal não capturada"
+      },
+      {
+        "de": "2021-12",
+        "ate": "2025-08",
+        "taxa": "Selic",
+        "taxa_mensal_pct": null,
+        "obs": "devedor Fazenda Pública; art. 3º da EC 113/2021; Selic de ago./2025 (1,16%) computada em set./2025"
+      },
+      {
+        "de": "2025-09",
+        "ate": null,
+        "taxa": "taxa legal (Selic com dedução do IPCA-15)",
+        "taxa_mensal_pct": null,
+        "obs": "Tema 1.419 do STF; CC, art. 406 (Lei 14.905/2024); taxa legal de set./2025 (1,305984%) computada em out./2025; demais competências não transcritas neste arquivo (cache taxa-legal-cc406.json do Engine A)"
+      }
+    ],
+    "juros_fonte": "context/lei/manual-cjf-2026-calculos-prev.md, item 4.2.2 (Manual, p. 52–54)",
+    "consolidacao_dez_2021": {
+      "ipca_e_nov_2021_pct": "1.17",
+      "juros_dez_2021_pct": "0.4412",
+      "fonte": "context/lei/manual-cjf-2026-calculos-prev.md, item 4.2.1.1, Nota 5"
+    }
+  },
+  "requisitorio": {
+    "descricao": "R2 — da data-base informada pelo juízo ao pagamento, precatórios e RPVs não tributários",
+    "fonte": "context/lei/res-cjf-983-2026.md, art. 7º",
+    "regras": [
+      {
+        "data_base": "até 2021-12",
+        "regra": "Selic sobre o valor consolidado, principal e juros, em dez./2021",
+        "dispositivo": "art. 7º, §3º, I"
+      },
+      {
+        "data_base": "2021-12 a 2025-08",
+        "regra": "Selic apenas sobre o principal e os juros consolidados em dez./2021, se existirem, somando-se o valor encontrado aos juros Selic indicados na requisição",
+        "dispositivo": "art. 7º, §3º, II"
+      },
+      {
+        "data_base": "a partir de 2025-09",
+        "regra": "IPCA + juros simples de 2% ao ano sobre o principal atualizado, ou Selic sobre o valor consolidado (principal e juros), o que for menor",
+        "dispositivo": "art. 7º, §3º, III"
+      }
+    ],
+    "juros_de_mora": "incidem entre a data-base e nov./2021 e a partir de set./2025, quando incidente a atualização pelo IPCA (art. 7º, §1º)",
+    "periodo_de_graca": "sem juros de mora quando o precatório é pago até o final do exercício seguinte à expedição pelo tribunal em 1º de fevereiro (art. 7º, §2º); RPV sem juros nos 60 dias (Manual 2026, cap. 5, Nota 2)",
+    "vedacao": "vedada a capitalização composta da Selic sobre os juros Selic (art. 7º, §4º)",
+    "pagamento_apos_prazo": [
+      {
+        "periodo": "até 2025-08",
+        "regra": "Selic sobre o consolidado, principal e juros, posicionado na data de inscrição em proposta orçamentária",
+        "dispositivo": "art. 7º, §6º, I"
+      },
+      {
+        "periodo": "a partir de 2025-09",
+        "regra": "IPCA + juros simples de 2% ao ano sobre o principal atualizado, ou Selic sobre o consolidado, o que for menor, posicionado na data de inscrição",
+        "dispositivo": "art. 7º, §6º, II"
+      }
+    ]
+  },
+  "marcos_legais": [
+    {
+      "marco": "2006-12-27",
+      "o_que": "Lei 11.430/2006 publicada (art. 41-A da Lei 8.213: INPC)",
+      "arquivo": "context/lei/lei-11430-2006.md",
+      "nota": "o Manual faz o INPC começar em set./2006; o Tema 905 fala em 'período posterior à vigência da Lei 11.430/2006'. Em set. a dez./2006 o produto segue o Manual e expõe a diferença (ponto P7)."
+    },
+    {
+      "marco": "2009-06-30",
+      "o_que": "Lei 11.960/2009 publicada (art. 1º-F da Lei 9.494/1997); no Manual, juros de 0,5% a partir da competência jul./2009",
+      "arquivo": "context/lei/lei-11960-2009.md"
+    },
+    {
+      "marco": "2021-12",
+      "o_que": "EC 113/2021, art. 3º, redação original: Selic (competência dez./2021)",
+      "arquivo": "context/lei/ec-113-2021.md"
+    },
+    {
+      "marco": "2025-09",
+      "o_que": "EC 136/2025 (vigente desde 10/09/2025): fim da Selic única; marco mensal set./2025",
+      "arquivo": "context/lei/ec-136-2025.md"
+    }
+  ],
+  "pendencias": [
+    {
+      "id": "I-6",
+      "o_que": "precatório apresentado antes de set./2025: Selic do §3º, II, dentro do período de graça (§2º), e mês de início da graça",
+      "efeito": "duas contas, exit 3"
+    },
+    {
+      "id": "I-8",
+      "o_que": "taxa legal com dedução do INPC depois de maio/2026",
+      "efeito": "fórmula, exit 3"
+    },
+    {
+      "id": "poupanca",
+      "o_que": "série de juros da poupança (maio/2012 a nov./2021) não capturada",
+      "efeito": "fórmula para esse trecho"
+    },
+    {
+      "id": "ADI-7873",
+      "o_que": "andamento da ADI 7.873 (EC 136) não certificado",
+      "efeito": "reverificar antes de cada publicação"
+    }
+  ]
+}

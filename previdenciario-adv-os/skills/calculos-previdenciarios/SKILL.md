@@ -1,268 +1,150 @@
 ---
 name: calculos-previdenciarios
-description: >
-  CALCULOS PREVIDENCIARIOS — Skill consolidada que cobre tempo de contribuicao, RMI (Renda Mensal Inicial) e liquidacao de sentenca. Aplica Protocolo 2.4 INTEGRAL (5 etapas: mapear regime + apurar tempo/carencia + salario-de-beneficio + memoria detalhada + auto-ataque). Cobre regras pre-Lei 13.846/2019, pos-Lei 13.846, regras de transicao EC 103/2019 (pedagio 50%, pedagio 100%, pontos, idade minima progressiva, professores), Tema 1102 STF (vida toda), Tema 1041 STJ (conversao especial pos-EC 103), liquidacao com IPCA-E ate 12/2021 + SELIC pos (Lei 14.439/2022), Sumula 111 STJ (honorarios), RPV vs precatorio (Lei 10.259/2001 art. 17). Use para qualquer calculo previdenciario.
+description: "Hub de calculo previdenciario: identifica a conta pedida, colhe os campos de entrada, roda o script local certo (cnis, tempo, transicao, incapacidade, rmi, valor-causa, rpv) e devolve o numero com memoria, regra e fonte, ou a conta aberta quando o script nao fecha. Nunca numero de cabeca. Use quando o operador disser calcular tempo de contribuicao, quanto falta para aposentar, qual regra de transicao, RMI, carencia, qualidade de segurado, valor da causa, atrasados, RPV ou precatorio, ou /calculo-previdenciario. Nao use para calculo judicial generico fora do previdenciario (calculosjudiciais-adv-os) nem para tese que o plugin declara inviavel (STF Tema 1.102)."
 ---
 
-# CALCULOS PREVIDENCIARIOS — Skill Tier 2 D (consolidada)
+# CALCULOS-PREVIDENCIARIOS
 
-> Aplica Protocolo 2.4 integral. **PA-20:** sem dado, parar — nunca estimar silenciosamente.
+> Camada C2. Porta do calculo avulso: escolhe o script, monta a entrada, interpreta o exit e entrega a memoria.
 
----
+## Entradas
+- Recebe: a conta pedida e os dados do caso (CNIS, CTPS, PPP, carta do INSS, datas, salarios) (obrigatorio) · `previdenciario/casos/<slug>.md` (opcional)
+- Chamada por: previdenciario-master · estrategia-de-caso-previdenciario | Chama: nenhuma (roda os scripts de `scripts/calc/`)
 
-## 1. PROTOCOLO 2.4 — 5 ETAPAS
+## Anexos obrigatorios (context/)
+- `context/metodologia-previdenciario.md` (secao 13 Scripts, secao 9 Relogio - grep a secao e leia a faixa)
+- `context/calculo-tempo.md`, `context/calculo-transicao.md`, `context/calculo-rmi.md` (secao CAMPOS e o caso resolvido)
+- `context/calculo-cnis.md`, `context/calculo-incapacidade.md`, `context/calculo-valor-causa.md`, `context/calculo-rpv.md` (secao CAMPOS)
+- `context/lei/ec-103-2019.md` (arts. 25, 26 - grep o artigo e leia a faixa)
 
-### Etapa 1 — Mapear regime e marco temporal
-- Regime: RGPS / RPPS / Complementar (PA-06 — nao misturar)
-- Data de filiacao do segurado
-- DER, DIB, DCB
-- Regra aplicavel: pre-EC 103/2019? regra de transicao? regra permanente?
+## Objetivo
+Entregar o numero conferido por script, ou a formula preenchida ate onde os dados permitem, sempre com a fonte de cada termo.
 
-### Etapa 2 — Apurar tempo + carencia (separadamente)
-- Tempo bruto + tempo especial convertido + concomitancia + tempo rural + justificacao
-- Carencia (meses com contribuicao OK) — separadamente do tempo
+## Roteamento
+| Pedido | Script | Conta aberta | Skill do dominio |
+|---|---|---|---|
+| carencia, qualidade de segurado, indicadores | `calc_previdenciario_cnis.py` | `calculo-cnis.md` | analise-cnis |
+| tempo comum, especial convertido, concomitancia | `calc_previdenciario_tempo.py` | `calculo-tempo.md` | analise-ppp-ltcat-aposentadoria-especial |
+| qual regra, quando cumpre, direito adquirido | `calc_previdenciario_transicao.py` | `calculo-transicao.md` | planejamento-previdenciario |
+| incapacidade, auxilio-acidente, DIB | `calc_previdenciario_incapacidade.py` | `calculo-incapacidade.md` | pericia-medica-previdenciaria |
+| RMI, revisao, decadencia, prescricao | `calc_previdenciario_rmi.py` | `calculo-rmi.md` | acao-revisional-rmi |
+| valor da causa, alcada do JEF | `calc_previdenciario_valor_causa.py` | `calculo-valor-causa.md` | peticao-inicial-previdenciaria |
+| atrasados, honorarios, RPV ou precatorio | `calc_previdenciario_rpv.py` | `calculo-rpv.md` | cumprimento-sentenca-inss |
 
-### Etapa 3 — Salario-de-beneficio + RMI
-- Aplicar regra correta (Secao 2 desta skill)
-- Aplicar fator previdenciario se cabivel
-- Aplicar coeficiente
+Aposentadoria: ordem fixa cnis -> tempo -> transicao -> rmi; o resultado de um entra no seguinte.
 
-### Etapa 4 — Memoria de calculo detalhada
-- Fundamento legal de cada parcela
-- Base de calculo com valor utilizado
-- Indices de correcao (IPCA-E ate 12/2021, SELIC apos)
-- Juros conforme decisao
-- Subtotais e total geral
+## Metodologia
+1. Identificar a conta pela tabela acima. Pedido de mais de uma conta: rodar na ordem fixa.
+2. Ler a secao CAMPOS do `context/calculo-<x>.md`. Perguntar so o campo obrigatorio que falta, 1 a 3 por turno. "Nao sei" e lacuna, nunca suposicao: campo obrigatorio sem valor nao vai ao script (seria exit 2, entrada invalida); a conta sai aberta pelo `calculo-<x>.md` ate onde da, com a lista do que falta. Exit 3 e outra coisa: o script recebeu entrada valida e a conta nao fecha (tabela, fator, duas leituras).
+3. Montar o JSON so com os campos da lista (campo desconhecido o script recusa). Gravar em `previdenciario/casos/<slug>-calc-<x>.json`, no computador do advogado. CNIS e laudo sao dado sensivel: nunca colar em ferramenta externa.
+4. Achar e rodar o script conforme a secao 13 da metodologia: `<pasta-base>/../../scripts/calc/calc_previdenciario_<x>.py --entrada <arquivo>`; sem o arquivo, busca pelo nome e `--versao` igual a 2.0.0.
+5. Ler o exit:
+   - 0: mostrar o resultado, a `memoria` passo a passo, a `regra` e a `fonte` de cada numero. Duas leituras com `[VERIFICAR]`: mostrar as duas, nunca escolher em silencio.
+   - 2: dizer qual campo foi recusado e perguntar de novo so esse campo.
+   - 3: entregar a `formula_aberta` preenchida ate onde da, com `[VERIFICAR]` e o dado que falta.
+   - outro exit, sem Python ou sem script: conta aberta pelo `context/calculo-<x>.md`, passo a passo, com o aviso "conta nao conferida por script".
+6. Conferir o resultado contra as verdades duras antes de entregar (abaixo). Divergencia: nao entregar o numero; mostrar a divergencia ao advogado.
+7. Devolver ao chamador o resultado e o arquivo de entrada usado, para a `memoria-de-caso-previdenciario` registrar.
 
-### Etapa 5 — Auto-ataque (assumir papel da PFE/INSS)
-- Algum salario fora do PBC?
-- Indice de correcao incorreto?
-- Fator previdenciario aplicavel mesmo?
-- Regra de transicao mais benefica preterida?
-- Compensacao com pagamentos administrativos?
+## Verdades que o resultado tem de respeitar
+- Conversao de especial em comum so do tempo trabalhado ate 13/11/2019; vinculo que cruza a data e fatiado (`context/lei/ec-103-2019.md`, art. 25, par. 2).
+- PBC de 100% desde 07/1994 vem da EC 103, art. 26, nao da Lei 13.846/2019. Coeficiente acima de 100% e devido; o limite e o teto em reais.
+- Divisor minimo de 108 para o filiado ate 07/1994 nas aposentadorias com fato gerador desde 05/05/2022, exceto incapacidade permanente; o descarte nao o elimina.
+- Fator previdenciario sem a tabua do IBGE: formula e lista de dados faltantes, nunca numero. No direito adquirido, a opcao sem fator (`context/lei/lei-8213-1991.md`, art. 29-C; `context/lei/in-128-2022-inss.md`, art. 229, par. 2) nao depende da tabua: o script nao faz a regra anterior (exit 3); conta aberta por modalidade pelo `context/calculo-rmi.md` (secoes 1 e 4; no art. 29-C, conferir se os pontos fecham), avisando "conta nao conferida por script".
+- Atualizacao e juros contra o INSS em fatias por competencia, so pelos scripts de valor da causa e RPV; nunca "IPCA-E ate 2021 e Selic depois".
+- Valor da causa: duas contas (com e sem abono nas 12 vincendas); nunca abono no BPC.
 
----
+## Calculo
+Os 7 scripts tem as mesmas flags. Abaixo os campos dos tres que este hub roda direto; para cnis, incapacidade, valor-causa e rpv, usar a lista CAMPOS do respectivo `context/calculo-<x>.md`.
 
-## 2. CALCULO DE TEMPO DE CONTRIBUICAO
-
-### 2.1 Tempo bruto
-
-Para cada vinculo do CNIS:
-- Tempo = data fim - data inicio
-- Em meses (com casas decimais)
-
-### 2.2 Tempo especial convertido
-
-Apos analise PPP/LTCAT:
-- Tempo especial × fator = tempo comum equivalente
-- Fatores: Homem 1.4, Mulher 1.2
-
-**Tema 1041 STJ pos-EC 103/2019:**
-- Filiacao pre-EC 103 -> conversao OK
-- Filiacao pos-EC 103 -> aposentadoria especial direta (sem conversao)
-
-### 2.3 Concomitancia
-
-Sobreposicao de vinculos:
-- Tempo NAO se duplica
-- Subtrair de um dos vinculos (manter o que oferece melhor calculo)
-- Aplicar art. 32 Decreto 3.048/99
-
-### 2.4 Tempo rural
-
-Pre-11/1991: inicio de prova material + testemunhas. Computa para tempo, NAO para carencia.
-Pos-11/1991: contribuicao OU comprovacao especifica. Pode computar para carencia (segurado especial).
-
-### 2.5 Carencia (separadamente)
-
+Script: `calc_previdenciario_tempo.py`
+```flags
+--entrada   arquivo   opcional   JSON; sem ele, entrada padrao
+--versao    flag      opcional   imprime a versao
 ```
-Lei 8.213/91 art. 24:
-  Aposentadoria por idade: 180 meses
-  BPI / aposentadoria por incapacidade: 12 meses (com excecoes art. 26)
-  Pensao por morte (Lei 13.135/15): 18 contribuicoes
-  Salario-maternidade: 10 (segurada especial / individual)
-  BPC: NAO exige carencia (Lei 8.742/93)
+```campos
+sexo   enum   obrigatoria   M|F
+periodos   lista   obrigatoria   ao menos 1 periodo
+periodos[].inicio   data   obrigatoria   AAAA-MM-DD
+periodos[].fim   data   obrigatoria   AAAA-MM-DD
+periodos[].tipo   enum   obrigatoria   comum|especial-15|especial-20|especial-25
+periodos[].fonte   enum   obrigatoria   CNIS|CTPS|sentenca|PPP
+periodos[].competencias_abaixo_do_minimo   lista   opcional   AAAA-MM desde 11/2019; padrao []
+novembro_2019_integral   bool   condicional   se algum periodo cruza 13/11/2019; false da exit 3
 ```
 
-Cada competencia com contribuicao OK = 1 mes de carencia.
-
----
-
-## 3. CALCULO DE RMI
-
-### 3.1 Evolucao das regras
-
-| Periodo | PBC | Salario-de-beneficio | Fator | Coeficiente |
-|---------|-----|---------------------|-------|-------------|
-| Pre-Lei 9.876/99 | 36 ultimas contribuicoes | media | n/a | conforme regra |
-| Lei 9.876/99 (1999) ate Lei 13.846/2019 (07/2019) | 07/1994 a DIB | media dos **80% maiores SC** | aplicado em algumas | conforme regra |
-| Lei 13.846/2019 ate EC 103/2019 (11/2019) | 07/1994 a DIB | media de **100% das contribuicoes** | mesmo | conforme regra |
-| EC 103/2019 (regra permanente) | TODAS as contribuicoes desde 07/1994 | media simples | n/a (nem fator) | 60% + 2% por ano alem de 20 (H) ou 15 (M) |
-
-### 3.2 Regras de transicao EC 103/2019
-
-| Regra | Tempo necessario | Idade minima | Pedagio | Calculo |
-|-------|------------------|--------------|---------|---------|
-| Pedagio 50% (faltava ate 2 anos) | original + 50% sobre faltante | (variavel) | 50% sobre tempo faltante | 60% + 2% por ano alem de 20 |
-| Pedagio 100% | original + 100% sobre faltante | (variavel) | 100% sobre faltante | media salarial integral |
-| Pontos | tempo + idade = pontuacao progressiva (105/100) | n/a | n/a | media + redutor |
-| Idade minima progressiva | tempo + idade minima crescente | progressao anual | n/a | 60% + 2% por ano alem de 20 |
-| Professores | reducao de 5 anos sobre tempo/idade | conforme | conforme | conforme regra escolhida |
-
-**PA-08:** analisar TODAS as 5 regras de transicao e indicar a MAIS BENEFICA ao segurado.
-
-### 3.3 Fator previdenciario
-
-Formula: `f = (Tc × a) / Es × [1 + (Id + Tc × a) / 100]`
-
-Onde:
-- Tc = tempo de contribuicao
-- a = aliquota (0.31)
-- Es = expectativa de sobrevida (tabela IBGE)
-- Id = idade
-
-**Aplicacao:** apenas em alguns casos (aposentadoria por tempo na regra anterior, opcionalmente).
-
-### 3.4 Tema 1102 STF — Vida toda
-
-Para beneficios concedidos pre-Lei 9.876/99 com PBC restritivo, possibilidade de incluir salarios pre-julho/1994 no calculo.
-
-**Atencao modulacao:** verificar acordao atualizado.
-
-### 3.5 Calculo passo-a-passo
-
+Script: `calc_previdenciario_transicao.py`
+```flags
+--entrada   arquivo   opcional   JSON; sem ele, entrada padrao
+--versao    flag      opcional   imprime a versao
 ```
-1. Identificar regra aplicavel (Secao 3.1 + 3.2)
-2. Listar PBC (CNIS)
-3. Corrigir salarios por competencia
-4. Calcular media (80% ou 100% ou simples conforme regra)
-5. Aplicar fator previdenciario (se cabivel)
-6. Aplicar coeficiente (% sobre SB = RMI)
-7. Comparar com piso (1 SM) e teto previdenciario
+```campos
+nascimento   data   obrigatoria   AAAA-MM-DD
+sexo   enum   obrigatoria   M|F
+data_filiacao   data   obrigatoria   primeira filiacao ao RGPS
+der   data   obrigatoria   data em que se verifica cada regra
+periodos   lista   obrigatoria   sub-campos iguais aos do script de tempo
+periodos[].inicio   data   obrigatoria   AAAA-MM-DD
+periodos[].fim   data   obrigatoria   AAAA-MM-DD
+periodos[].tipo   enum   obrigatoria   comum|especial-15|especial-20|especial-25
+periodos[].fonte   enum   obrigatoria   CNIS|CTPS|sentenca|PPP
+periodos[].competencias_abaixo_do_minimo   lista   opcional   AAAA-MM desde 11/2019
+novembro_2019_integral   bool   condicional   se algum periodo cruza 13/11/2019; false da exit 3
+professor   bool   opcional   padrao false; true com [VERIFICAR]
+projecao_continua   bool   opcional   padrao false
+projecao_ate   data   condicional   obrigatoria se projecao_continua = true
 ```
 
----
-
-## 4. LIQUIDACAO DE SENTENCA
-
-### 4.1 Periodo
-
-DIB ate data da liquidacao.
-
-### 4.2 Parcelas vencidas mes a mes
-
-Aplicar reajuste anual (Lei 8.213/91 art. 41-A).
-
-### 4.3 Correcao monetaria
-
+Script: `calc_previdenciario_rmi.py`
+```flags
+--entrada  arquivo  opcional  JSON; sem ele, entrada padrao
+--versao   flag    opcional  imprime a versao
 ```
-IPCA-E: jun/2009 ate 12/2021 (Tema 905 STJ)
-SELIC: 01/2022 em diante (Lei 14.439/2022 — substitui IPCA-E + juros)
-Pre-jun/2009: variacao conforme entendimento jurisprudencial vigente
+```campos
+modo  enum  obrigatoria  concessao|revisao
+especie  enum  obrigatoria  aposentadoria|incapacidade-permanente|outra
+regra  enum  condicional  no modo concessao: art15|art16|art17|art18|art19|art19-especial|art20|art21|adquirido-anterior|incapacidade-permanente|incapacidade-permanente-acidentaria
+sexo  enum  obrigatoria  M|F
+data_filiacao  data  obrigatoria  AAAA-MM-DD
+fato_gerador  data  obrigatoria  DER ou DII
+salarios_contribuicao  lista  condicional  forma de media 1; obrigatoria se descartar = true
+media  decimal  condicional  forma de media 2
+soma  decimal  condicional  forma de media 3, com quantidade
+quantidade  inteiro  condicional  com soma
+tempo_contribuicao_anos  inteiro  condicional  obrigatoria no modo concessao
+tempo_contribuicao_meses  inteiro  nao  meses do CNIS; descarte exato
+atividade_especial_anos  enum  condicional  15|20|25 quando regra = art19-especial ou art21
+descartar  bool  opcional  padrao false
+tempo_minimo_da_regra_anos  inteiro  condicional  obrigatoria se descartar = true
+fator  decimal  opcional  sem ele art17 e adquirido-anterior saem em exit 3
+teto  decimal  opcional  ausente = tabela pela DIB, nunca a DII
+salario_minimo  decimal  opcional  idem; sem DIB e com efeito, exit 3
+rmi_paga  decimal  condicional  obrigatoria no modo revisao
+rmi_devida  decimal  condicional  obrigatoria no modo revisao
+media_acima_do_teto  bool  condicional  revisao com DIB no periodo de incorporacao do teto
+datas_vencimento  objeto  nao  so revisao; AAAA-MM: AAAA-MM-DD do vencimento devido
+dib  data  condicional  revisao; em concessao, se a DIB muda os limites do art. 29, §2º
+data_primeiro_pagamento  data  condicional  obrigatoria no modo revisao
+data_ajuizamento  data  condicional  no modo revisao, salvo data_requerimento_revisao
+data_requerimento_revisao  data  condicional  alternativa a data_ajuizamento
+abono  bool  condicional  obrigatoria no modo revisao
 ```
+Uma so forma de media por entrada; duas ao mesmo tempo da exit 2.
 
-### 4.4 Juros
+## Se faltar anexo
+Seguir com o que ha no context/ e avisar em uma linha o que faltou e o que isso limita. Sem o `calculo-<x>.md`, nao ha conta aberta: entregar so a lista de dados e dizer que o numero ficou sem conferencia. Nunca preencher por suposicao.
 
-Pre-2022 (IPCA-E): juros separados (ex: 0.5% am ou taxa basica)
-Pos-2022 (SELIC): juros JA INCLUSOS (nao acumular)
+## Entrega obrigatoria final
+- Numero com memoria, regra e fonte (exit 0), ou formula aberta com `[VERIFICAR]` e o dado que falta (exit 3), ou conta aberta marcada "conta nao conferida por script".
+- Caminho do JSON de entrada usado.
 
-### 4.5 Honorarios sucumbenciais
+## Guard
+- Nunca numero de cabeca, nunca arredondar, nunca estimar o fator, o salario minimo ou o teto de um mes sem fonte.
+- Nunca calcular a revisao do art. 29 contra o art. 3 da Lei 9.876: a tese e inviavel (ADIs 2.110/2.111; STF Tema 1.102 em `context/lei/temas-sumulas-prev.md`). Se pedida, explicar e oferecer a analise da cobranca indevida pela `analise-trilateral-previdenciario`.
+- Selic contra a Fazenda: a fonte e a EC 113, art. 3 (`context/lei/ec-113-2021.md`), e nenhuma lei ordinaria.
+- Nunca editar o script nem a tabela para fazer a conta fechar.
 
-```
-Sumula 111 STJ:
-  Honorarios em previdenciario incidem APENAS sobre as prestacoes
-  VENCIDAS ATE A SENTENCA, NAO sobre as vincendas.
-```
-
-### 4.6 Custas
-
-Sumula 105 STJ — custas pelo INSS.
-
-### 4.7 RPV vs Precatorio
-
-```
-Lei 10.259/2001 art. 17:
-  Limite RPV = 60 SM × <SM atual>
-
-Total <= limite -> RPV (~60 dias)
-Total > limite -> precatorio (proximo ciclo)
-
-Cisao possivel: renunciar excedente para RPV.
-```
-
----
-
-## 5. RELATORIO FINAL
-
-```
-═══════════════════════════════════════════════════
-CALCULO PREVIDENCIARIO — RELATORIO
-═══════════════════════════════════════════════════
-
-SEGURADO: <nome> (NIT)
-TIPO: <tempo / RMI / liquidacao / comparativo>
-REGIME: <RGPS / RPPS / Complementar>
-
-ETAPA 1 — REGIME E MARCO TEMPORAL
-   Filiacao: <data>
-   Regra aplicavel: <descrever>
-
-ETAPA 2 — TEMPO + CARENCIA
-   Tempo bruto: <X> anos, <Y> meses
-   Tempo especial convertido: <X>
-   Tempo rural: <X>
-   TEMPO TOTAL: <X> anos, <Y> meses
-   Carencia (meses): <N> / <M> exigidos -> ATENDE / NAO ATENDE
-
-ETAPA 3 — SALARIO-DE-BENEFICIO + RMI
-   PBC: <inicio> a <fim>
-   Total contribuicoes: <N>
-   Salario-de-beneficio: R$ <SB>
-   Fator previdenciario: <fator ou n/a>
-   Coeficiente: <%>
-   RMI: R$ <valor>
-
-ETAPA 4 — MEMORIA DETALHADA
-   <tabela mes a mes com indice + correcao>
-
-ETAPA 5 — AUTO-ATAQUE
-   - Verificacao 1: <descricao>
-   - Verificacao 2: <descricao>
-   - Fragilidades detectadas: <listar>
-
-LIQUIDACAO (se cabivel):
-   Parcelas vencidas: R$ <X>
-   Correcao IPCA-E + SELIC: R$ <Y>
-   Juros (pre-2022): R$ <Z>
-   Honorarios (Sumula 111): R$ <W>
-   TOTAL: R$ <total>
-
-   Via: RPV (<= R$ <limite>) / PRECATORIO (> R$ <limite>) / RPV com cisao
-
-PONTOS DE OMISSAO (PA-20):
-   - <listar lacunas>
-═══════════════════════════════════════════════════
-```
-
----
-
-## 6. PAS APLICAVEIS
-
-- **PA-03** — sem invencao de valores
-- **PA-06** — nao misturar regimes
-- **PA-07** — nao aplicar EC 103 retroativamente
-- **PA-08** — todas as 5 regras de transicao
-- **PA-13** — sem CNIS, paralisar
-- **PA-20** — sem dado, sinalizar e parar
-- **PA-22** — Suprema Corte
-
----
-
-## 7. PROTOCOLOS ACIONADOS
-
-- **2.4** Calculos integral (Etapas 1 a 5)
-- **2.1** Jurisprudencial (Tema 1102 STF, Tema 1041 STJ, Tema 999 STJ, Sumula 111 STJ)
-
----
-
-*Skill calculos unificada. Cobre tempo + RMI + liquidacao.*
+## Assinatura (fora da peca)
+No rodape da resposta ao advogado, nunca dentro do documento:
+`Entregue pela skill calculos-previdenciarios - plugin previdenciario-adv-os v2.0.0`.
+Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

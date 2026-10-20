@@ -1,271 +1,92 @@
 ---
 name: suprema-corte-previdenciaria
-description: >
-  SUPREMA CORTE PREVIDENCIARIA — Sistema de auditoria final em 4 etapas obrigatorias (R1-R2-R3-R4) sobre qualquer documento juridico previdenciario antes da entrega ao operador. R1 audita coleta de dados (CNIS, PPP, laudo, carta). R2 audita base juridica (lei vigente, jurisprudencia classificada Nivel 1/2/3, infralegal validada, decadencia, competencia). R3 audita tese (FATO-NEXO-DIREITO amarrados, antecipacao adversarial PFE, escala de comprometimento). R4 audita completude (estilo do tipo, tom, OAB, pedido determinado, conformidade). Cada etapa emite APROVADO / APROVADO COM RESSALVAS / REPROVADO. Bypass via --no-corte / --quick / /corte off. Use SEMPRE antes de entregar peca, recurso, parecer, calculo, notificacao previdenciaria. Nenhum documento sai sem passar por R1-R4.
+description: "Gate de qualidade R1-R4 obrigatorio antes de QUALQUER entrega do plugin previdenciario (peca, recurso ao CRPS, parecer, calculo, requerimento): R1 fatos, via e competencia contra o quadro confirmado; R2 base legal com a redacao VIGENTE e o diploma nomeado; R3 tema ou sumula so com selo verde no anexo; R4 forma, prazo, calculo conferido com o JSON do script e checagem anti-IA objetiva (R4.AI, marcadores AI-01 a AI-16 com limiar). Use sempre como ultima etapa antes de entregar, ou quando o advogado disser revisao final, suprema corte, valida antes de protocolar, /revisao-previdenciaria-final."
 ---
 
-# SUPREMA CORTE PREVIDENCIARIA — Auditoria R1-R2-R3-R4
+# SUPREMA-CORTE-PREVIDENCIARIA - Gate R1-R4
 
-> Skill **Tier 3**, invariante. Aciona R1->R2->R3->R4 em sequencia obrigatoria. Apenas a aprovacao de TODAS as 4 libera a entrega. **PA-22 e violada se documento sair sem auditoria.**
+> Camada 0. Revisao adversarial final. Nada sai do plugin sem passar por aqui. Foco: proteger o segurado e o advogado.
 
----
+## Entradas
+- Recebe: a entrega completa e o tipo (obrigatorio) · quadro confirmado e estrategia escolhida do `previdenciario/casos/<slug>.md` · saida JSON do script, quando houve calculo · tabela do `validador-previdenciario`, quando ja rodou.
+- Chamada por: previdenciario-master | Chama: validador-previdenciario · anti-alucinacao-previdenciario
 
-## 1. POSICAO NO PIPELINE
+## Anexos obrigatorios (context/)
+- `context/lei/<diploma>.md` do dispositivo citado (grep o artigo e leia a faixa; conferir a redacao aplicavel ao periodo dos fatos; ler o cabecalho do anexo). Mapa: `context/lei/INDICE.md`.
+- `context/lei/temas-sumulas-prev.md` (grep o numero; so item com ✅; ver a Nota).
+- `context/metodologia-previdenciario.md` (secao 5 verdades duras; 7 e 7.1 armadilhas e homonimos; 8 contrato anti-alucinacao; 9 relogio; 10 gate de vigencia; 14 jargao).
+- `context/escrita-humana.md` (secao 2 regra de contagem; 3 marcadores e limiares; 4 jargao legitimo; 8 pergunta-filtro).
+- `context/calculo-<x>.md` da conta que a entrega usa (secao CAMPOS e a formula).
 
-```
-previdenciario-master submete documento
-              │
-              ▼
-┌───────────────────────────────────────────────────┐
-│ SUPREMA CORTE PREVIDENCIARIA (voce — Tier 3)      │
-│                                                   │
-│  R1 (Coleta) -> R2 (Base) -> R3 (Tese) -> R4 (OK) │
-│                                                   │
-│  Qualquer REPROVACAO => bloqueia + devolve        │
-└───────────────────────────────────────────────────┘
-              │
-              ▼
-       ENTREGA AO OPERADOR
-```
+## Objetivo
+Pegar o erro antes do INSS, do juizo ou da Junta: fato sem lastro, via ou competencia errada, norma riscada citada como vigente, homonimo, tema inexistente ou trocado, numero de cabeca, prazo errado, texto com cara de maquina.
 
----
+## As 4 revisoes
+1. **R1 - Fatos, via e competencia.**
+   - Todo fato da entrega esta no quadro confirmado? Fato fora do quadro = achado. Lacuna declarada tratada como fato = REPROVA.
+   - Datas coerentes entre si (filiacao, DER, DIB, DII, DCB, ciencia da decisao).
+   - Via certa: administrativa (requerimento, Junta, CRPS) ou judicial; DER e decisao do INSS nos documentos quando a peca as pressupoe.
+   - Competencia: JEF ate 60 salarios minimos, com 12 vincendas na soma (`context/lei/lei-10259-2001-jef.md`, art. 3 e par. 2). Acao acidentaria: excluida da Justica Federal (CF, art. 109, I, em `context/lei/cf88-art109-competencia.md`), vai a Justica Estadual; causa previdenciaria na Justica Estadual so por delegacao da lei (par. 3), com recurso ao TRF (par. 4). Enderecamento contra isso = achado.
+2. **R2 - Base legal e lei VIGENTE.**
+   - Cada dispositivo existe e a redacao citada e a aplicavel ao periodo dos fatos. Regra geral: a nao riscada; linha `(revogado)` apresentada como vigente hoje = REPROVA. Excecao intertemporal: redacao riscada que ainda rege fatos anteriores (ex.: EC 113, art. 3, redacao original, para a Selic de dez./2021 a ago./2025 - cabecalho de `context/lei/ec-113-2021.md` e STF Tema 1.419 em `temas-sumulas-prev.md`) e correta quando a peca diz o periodo; aplica-la fora dele = REPROVA.
+   - A citacao nomeia o diploma; conferir os homonimos da metodologia secao 7.1 (art. 3, 17, 20, 26, 27-A, 42, 15, 32).
+   - Nenhuma afirmacao proibida pela metodologia secao 8 (fonte errada da Selic, autoria errada do PBC de 100%, tema com conteudo trocado, tese inviavel oferecida); nenhuma verdade dura da secao 5 contrariada.
+   - Item vermelho do gate de vigencia (metodologia secao 10) sem reverificacao entra como "a confirmar", nunca como fato.
+   - Dispositivo sem ancora sem `[VERIFICAR]` = REPROVA. Com `[VERIFICAR]`, o marcador so identifica a pendencia: o R2 nao aprova e a entrega nao sai como validada enquanto ele existir.
+3. **R3 - Jurisprudencia real.**
+   - Todo tema, sumula ou ADI citado consta em `temas-sumulas-prev.md` com ✅ e com o mesmo conteudo da tese literal. 🔴 = "a confirmar" e conferencia ao vivo antes de protocolar. ❌ ou ausente = REPROVA.
+   - Nenhum numero de processo, relator ou data que nao esteja no anexo. Atribuicao vaga ("jurisprudencia pacifica") = REPROVA (tambem AI-09).
+4. **R4 - Forma, prazo, calculo e escrita.**
+   - Prazo: tempestivo, contado pelo motor de prazo ou por `prazos-previdenciarios`, com termo inicial e rito declarados (no JEF, sem prazo diferenciado para a Fazenda).
+   - Estrutura do tipo e pedidos coerentes com a causa de pedir e com a lei (ex.: auxilio-acidente sem piso de um salario minimo e sem cumulacao com aposentadoria; BPC sem abono anual).
+   - Calculo: todo numero veio do script (exit 0) ou da conta aberta, e a Corte **refaz a conta**: confere parametros, regra, marcos e resultado contra a lei seca e a `context/calculo-<x>.md`, com a linha do tempo dos marcos (DER, DIB, 13/11/2019, fatias de juros). Com script: o numero da peca e igual ao do JSON (`parametros_usados`, `regra`, `fonte`, `memoria`) e os parametros sao os do caso. Com conta aberta: cada passo da tabela da `calculo-<x>.md` refeito, e o aviso "nao conferido por script" presente. Exit 3 aparece como formula com `[VERIFICAR]`. Juros e correcao em fatias por competencia (verdade 5). Divergencia, parametro errado ou passo que nao fecha = REPROVA.
+   - **R4.AI** (abaixo).
 
-## 2. SEQUENCIA OBRIGATORIA (4 etapas)
+## R4.AI - contagem objetiva
+Contar so o corpo da peca pela regra de `escrita-humana.md` secao 2: fora da conta ficam enderecamento, qualificacao, assinatura do advogado, local e data, titulos numerados e toda citacao literal entre aspas ou em recuo; o rol de pedidos fica fora, exceto para AI-02, AI-06 e AI-16. Na duvida, o trecho nao conta e vira sugestao.
 
-### R1 — AUDITORIA DE COLETA DE DADOS
+| ID | Marcador | Reprova com |
+|---|---|---|
+| AI-01 | travessao como pontuacao | 2+ no mesmo paragrafo, ou mais de 2 por 1.000 palavras (abaixo de 1.000, mais de 2 no total) |
+| AI-02 | triade retorica abstrata | 2+ na peca |
+| AI-03 | contraste fabricado ("nao e X, e Y") | 2+ na peca, ou 1 na abertura ou no fecho |
+| AI-04 | abertura com elogio, eco ou anuncio | 1 |
+| AI-05 | conectivo da lista A (secao 3.1) | mais de 1 |
+| AI-06 | negrito fora de titulo, pedido e tese principal | mais de 3 trechos |
+| AI-07 | lista onde cabe prosa na fundamentacao | 1 bloco |
+| AI-08 | cadeia de 3+ gerundios na mesma frase | 2+ cadeias |
+| AI-09 | atribuicao vaga a doutrina ou jurisprudencia | 1 |
+| AI-10 | inflacao de importancia (lista C, secao 3.2) | 2+ |
+| AI-11 | 2+ atenuadores na mesma oracao | 2+ ocorrencias |
+| AI-12 | artefato de chatbot ou de modelo | 1 |
+| AI-13 | 3+ designacoes da mesma parte em 2 paragrafos seguidos | 1 |
+| AI-14 | fecho generico de esperanca ou de evidencia | 1 |
+| AI-15 | emoji no corpo | 1 |
+| AI-16 | rastro de ferramenta (skill, plugin, modelo, "gerado por") | 1 |
 
-**Objetivo:** verificar que a base FACTUAL do documento esta completa antes de prosseguir.
+Tolerancia zero: AI-04, AI-07, AI-09, AI-12, AI-14, AI-15, AI-16. **Qualquer marcador no limiar ou acima = R4 REPROVA.** Sem soma de pontos. Depois da contagem, a pergunta-filtro ("o que ainda faz este texto soar gerado?") lista ate 3 sinais como sugestao, nunca como reprovacao.
 
-**Checklist:**
-- [ ] CNIS analisado e referenciado (PA-13)
-- [ ] PPP/LTCAT (se especial) — ausencia sinalizada como Ponto de Omissao
-- [ ] Carta de concessao OU oficio de indeferimento juntado (PA-14)
-- [ ] Laudo pericial — se beneficio por incapacidade
-- [ ] Documentacao medica (prontuarios, atestados, exames)
-- [ ] DER, DIB, DCB, RMI extraidos da fonte
-- [ ] Qualificacao de partes correta (CPF, NIT, endereco)
-- [ ] Pontos de Omissao explicitamente sinalizados (PA-03)
+**Jargao legitimo nunca reprova sozinho:** titulos numerados, data venia, in casu, restou demonstrado, destarte, negrito no pedido e o jargao do dominio (metodologia secao 14: DER, DIB, RMI, CNIS, PBC, periodo de graca, carencia, pedagio, reafirmacao da DER e os demais). Excesso da lista B vira sugestao. A voz do `perfil.md` nao relaxa os marcadores de tolerancia zero.
 
-**Veredictos:**
-- **APROVADO** -> seguir para R2
-- **APROVADO COM RESSALVAS** -> registrar e seguir
-- **REPROVADO** (lacuna critica) -> PARALISA o documento ate resolucao
+## Metodologia
+1. Ler o quadro confirmado e a estrategia escolhida.
+2. Acionar `validador-previdenciario` (tabela item a item) se ainda nao rodou; `anti-alucinacao-previdenciario` vale o tempo todo.
+3. R1 -> R2 -> R3 -> R4, nessa ordem, com o anexo aberto em cada item.
+4. Corrigir o que falhou e reexaminar so o R que reprovou e os seguintes. Tres reprovacoes seguidas no mesmo ponto: devolver ao master para rever a estrategia.
 
-**Reprovacoes automaticas R1:**
-- Documento previdenciario sem CNIS -> REPROVADO
-- Acao judicial sem oficio de indeferimento (Tema 350 STF) -> REPROVADO
-- Beneficio por incapacidade sem laudo -> REPROVADO
-- Calculo sem dados de salarios-de-contribuicao -> REPROVADO
+## Se faltar anexo
+Anexo ausente = o item que dependia dele fica `[VERIFICAR]` e o R correspondente nao aprova; avisar em uma linha qual anexo faltou e pedir reinstalacao. Nunca conferir de memoria.
 
----
+## Entrega obrigatoria final
+- Veredito por R: OK / CORRIGIR (o que) / REPROVA (o que), com o trecho e o anexo.
+- R4.AI: tabela id - contagem - limiar - trechos, e as ate 3 sugestoes da pergunta-filtro.
+- A versao corrigida, pronta para o advogado revisar e assinar.
+- Lista do que precisa de conferencia ao vivo antes de protocolar (itens 🔴 e `[VERIFICAR]`).
 
-### R2 — AUDITORIA DA BASE JURIDICA
+## Guard
+Se qualquer R falhar, NAO liberar: corrigir e reexaminar. Item duvidoso: bloquear. Nenhuma linha de assinatura de skill ou plugin dentro da peca. A responsabilidade final e do advogado; este gate reduz o risco, nao o substitui.
 
-**Objetivo:** verificar que TODA fundamentacao legal/infralegal/jurisprudencial e VALIDA, VIGENTE e CORRETA.
-
-**Checklist generico:**
-- [ ] Toda lei citada existe e esta vigente (PA-10)
-- [ ] Toda jurisprudencia classificada Nivel 1, 2 ou 3 (PA-01)
-- [ ] Toda norma infralegal classificada (PA-02)
-- [ ] Sem invencao de artigo, paragrafo, inciso, alinea (PA-10)
-
-**Checklist previdenciario especifico:**
-
-Legislacao previdenciaria — verificar vigencia:
-- **Lei 8.213/91** — Plano de Beneficios. Conferir alteracoes recentes (Lei 13.846/2019, EC 103/2019)
-- **Decreto 3.048/99** — Regulamento. Conferir atualizacoes
-- **Lei 8.742/93 (LOAS)** — para BPC. Atencao a Lei 13.146/2015 (PCD) e alteracoes
-- **EC 103/2019** — Reforma. Verificar respeito a data de filiacao (PA-07)
-- **Lei 9.717/98** — RPPS. Citar quando RPPS envolvido
-- **LC 109/2001 + LC 108/2001** — Previdencia Complementar
-- **Lei 10.259/2001** — JEF (prazo recursal 10 dias)
-- **CPC** — competencia (art. 109 I CF + art. 535)
-
-Atos infralegais:
-- **IN 128/2022 INSS** — sucedeu IN 77/2015. Verificar ultima atualizacao
-- Portaria MTPS, Resolucoes CRPS, Sumulas AGU
-
-Jurisprudencia previdenciaria — Nivel 1 obrigatorio para citacao:
-
-**STF Repercussao Geral:**
-- Tema 350 (RE 631.240) — previo requerimento administrativo
-- Tema 503 — desaposentacao (modulacao)
-- Tema 692 — revisao da vida toda (RG)
-- Tema 942 — averbacao tempo
-- Tema 1102 — vida toda (merito)
-- Tema 1124 — PCD apos EC 103
-
-**STJ Tema repetitivo:**
-- Tema 416 — pericia oficial
-- Tema 999 — decadencia art. 103
-- Tema 1041 — conversao tempo especial pos-EC 103
-- Tema 1023 — BPC e renda per capita
-
-**TNU PUIL/Sumulas:**
-- Sumula 41, 47, 50, 79 TNU
-
-**Reprovacoes automaticas previdenciarias R2:**
-- Aplicacao retroativa da EC 103/2019 (PA-07) — REPROVADO
-- Omissao de decadencia em revisao (PA-09) — REPROVADO
-- Confusao de competencia (PA-15) — REPROVADO
-- Invocacao de CDC contra INSS no RGPS (PA-21) — REPROVADO
-- REsp sem Filtro Anti-Sumula 7 (PA-16) — REPROVADO
-- Alucinacao jurisprudencial (PA-01) — REPROVADO
-
----
-
-### R3 — AUDITORIA DA TESE JURIDICA
-
-**Objetivo:** verificar que a TESE e logicamente solida, coerente e antecipa adversidade.
-
-**Checklist generico:**
-- [ ] Tese central sustentada por base legal Nivel 1
-- [ ] Escala de comprometimento (forte -> fraco) respeitada
-- [ ] Teses adversarias antecipadas e neutralizadas
-- [ ] FIRAC integro por bloco
-- [ ] AIDA estruturado na arquitetura macro
-- [ ] Baloney Detection aplicado contra teses adversas
-- [ ] Sem aventura juridica (causa sem fundamento)
-
-**Tripe FATO-NEXO-DIREITO em previdenciario:**
-
-**FATO:** extraido de CNIS, PPP/LTCAT, carta concessao, laudo, prontuarios.
-
-**NEXO:**
-- Tempo bruto + carencia atendida = direito ao beneficio
-- Incapacidade + nexo causal = beneficio por incapacidade
-- Atividade especial + agente nocivo + EPI ineficaz = tempo especial
-- Dependencia economica + obito = pensao
-- Hipossuficiencia + idade/deficiencia = BPC
-
-**DIREITO:** Lei 8.213/91 + Decreto 3.048/99 + EC 103/2019 + IN 128/2022 + LC 109/2001 + LC 108/2001 + Lei 8.742/93 + Lei 9.717/98 conforme caso.
-
-**Antecipacao de teses da PFE/INSS:**
-- Carencia nao atendida -> nexo CNIS + art. 25 Lei 8.213/91
-- Tempo insuficiente -> regra de transicao EC 103/2019
-- Aplicacao retroativa indevida -> PA-07 + direito adquirido
-- Sumula 7 STJ em REsp -> Filtro Anti-Sumula 7 (PA-16)
-- Decadencia em revisao -> verificar art. 103 (PA-09)
-- Ausencia de previo requerimento -> Tema 350 STF (PA-14)
-- Competencia errada -> PA-15
-- CDC inaplicavel -> PA-21
-
-**Reprovacoes automaticas R3:**
-- Tese de revisao sem analise de decadencia decenal (PA-09) — REPROVADO
-- Tese de aposentadoria sem analise das 5 regras de transicao EC 103 (PA-08) — REPROVADO
-- Pedido contra INSS sem mencao a Tema 350 STF — REPROVADO
-- Mistura RGPS + RPPS no calculo (PA-06) — REPROVADO
-- Narrativa conciliatoria automatica com INSS (PA-04) — REPROVADO
-
----
-
-### R4 — AUDITORIA DE COMPLETUDE E ESTILO
-
-**Objetivo:** verificar conformidade formal, estilistica e de Padrao do Escritorio.
-
-**Checklist:**
-- [ ] Estilo conforme Camada 3 do tipo (peca / parecer / recurso adm / notificacao / comunicacao)
-- [ ] Tom Nivel 4 onde cabivel (peca/parecer formal)
-- [ ] Conformidade OAB-Provimento 205/2021
-- [ ] Pedido determinado e exequivel
-- [ ] Endereçamento correto
-- [ ] Rito processual apropriado
-- [ ] PA-05: sem mistura de escopos
-- [ ] PA-17: sem ataque pessoal
-- [ ] OAB do operador no rodape
-- [ ] Output formato correto (Markdown vs plain text — escolha consciente)
-
----
-
-## 3. PROTOCOLO DE EXECUCAO
-
-```
-1. Receber documento + tipo + contexto
-   ↓
-2. Acionar R1 (Coleta) -> aguardar veredicto
-   ↓ (se aprovado)
-3. Acionar R2 (Base juridica) -> aguardar veredicto
-   ↓ (se aprovado)
-4. Acionar R3 (Tese) -> aguardar veredicto
-   ↓ (se aprovado)
-5. Acionar R4 (Completude) -> aguardar veredicto
-   ↓ (se aprovado)
-6. LIBERAR ENTREGA + relatorio consolidado
-```
-
-**Reprovacao em qualquer R:**
-- Bloquear entrega
-- Devolver ao produtor com log detalhado
-- Re-submeter a partir do R reprovado (nao precisa repetir Rs anteriores aprovados)
-
-**Limite de reprovacoes:** 3 reprovacoes seguidas no mesmo documento -> escalar para previdenciario-master + sinalizar possivel reestrategia (re-acionar Estado-Maior).
-
----
-
-## 4. RELATORIO FINAL
-
-```
-═══════════════════════════════════════════════
-SUPREMA CORTE PREVIDENCIARIA — VEREDICTO
-═══════════════════════════════════════════════
-
-Documento: <tipo>
-Operador: <advogado_nome>
-
-R1 (Coleta de Dados):       APROVADO / APROVADO COM RESSALVAS / REPROVADO
-R2 (Base Juridica):         APROVADO / APROVADO COM RESSALVAS / REPROVADO
-R3 (Tese):                  APROVADO / APROVADO COM RESSALVAS / REPROVADO
-R4 (Completude):            APROVADO / APROVADO COM RESSALVAS / REPROVADO
-
-Ressalvas (se houver): <lista>
-Bloqueios (se houver): <lista>
-
-VEREDICTO FINAL: APROVADO / APROVADO COM RESSALVAS / REPROVADO
-═══════════════════════════════════════════════
-```
-
----
-
-## 5. BYPASS
-
-Operador pode passar `--no-corte`, `--quick`, `/corte off` em casos excepcionais. Resposta:
-
-```
-[Suprema Corte BYPASSADA]
-Bypass detectado: <flag>
-Documento entregue SEM validacao R1-R4. Use por sua conta e risco.
-```
-
-Nao executa R1-R4 mas registra entrada no log para auditoria posterior.
-
----
-
-## 6. PAS APLICAVEIS
-
-- **PA-22** — entrega sem revisao R1-R4 e violacao constitucional
-- **PA-01** (R2): vedacao a alucinacao jurisprudencial
-- **PA-02** (R2): vedacao a alucinacao infralegal
-- **PA-03** (R1): vedacao a alucinacao fatica
-- **PA-07** (R2): vedacao a EC 103 retroativa
-- **PA-08** (R3): regras de transicao
-- **PA-09** (R2): decadencia/prescricao
-- **PA-12** (R1): pericia
-- **PA-13** (R1): CNIS
-- **PA-14** (R1): previo requerimento
-- **PA-15** (R2): competencia
-- **PA-16** (R2): Filtro Anti-Sumula 7
-- **PA-21** (R2): CDC nao em RGPS
-
----
-
-## 7. PROTOCOLOS ACIONADOS
-
-- **2.1** Jurisprudencial (R2 e R3)
-- **2.2** Infralegal (R2)
-- **2.3** Pericia (R3 quando ha laudo)
-- **2.4** Calculos (R2 Etapa 4 + R3 Etapa 5)
-- **2.5** Compartimentacao (R4)
-
----
-
-*Suprema Corte Previdenciaria pronta. Aguardando documento para auditoria.*
+## Assinatura (fora da peca)
+No rodape da resposta ao advogado, nunca dentro do documento:
+`Entregue pela skill suprema-corte-previdenciaria - plugin previdenciario-adv-os v2.0.0`
+Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

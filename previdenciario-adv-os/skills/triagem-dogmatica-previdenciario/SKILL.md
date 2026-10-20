@@ -1,211 +1,99 @@
 ---
 name: triagem-dogmatica-previdenciario
-description: >
-  TRIAGEM DOGMATICA PREVIDENCIARIA — Skill Tier 1 (Estado-Maior). Identifica e cataloga proativamente quais principios previdenciarios e institutos transversais sao pertinentes ao caso concreto. Acionada SEMPRE antes de qualquer producao documental (peca, parecer, recurso, calculo). Nao se limita ao que o operador citou — sugere, avalia e aplica proativamente. Cobre principios nucleares (universalidade, contributividade, *tempus regit actum*, lei mais benefica, fungibilidade, mitigacao probatoria) e institutos transversais (direito adquirido, decadencia, prescricao, boa-fe objetiva, *venire contra factum proprium*, carga dinamica da prova, *pas de nullite sans grief*, abuso de direito do INSS). Use quando previdenciario-master receber demanda de peca/parecer/recurso/calculo e antes de acionar qualquer Tenente Tier 2.
+description: "Triagem do caso previdenciario: faz primeiro a pergunta critica do prazo, classifica fase, objetivo, beneficio e skill alvo, conduz a elicitacao em camadas (1 a 3 perguntas por turno, botoes nas listas fechadas), le o CNIS resumido e sinaliza os institutos que mudam o caso (prazo, DIB, decadencia, prescricao, carencia, qualidade de segurado, direito adquirido, conversao do especial, fatias de juros). Use quando o previdenciario-master classificar uma demanda, ou quando o advogado disser triagem, por onde comeco, qual skill uso, que caso e esse. Nao redige peca nem calcula RMI: devolve a classificacao e a trilha ao master."
 ---
 
-# TRIAGEM DOGMATICA PREVIDENCIARIA — Skill Tier 1
+# TRIAGEM-DOGMATICA-PREVIDENCIARIO
 
-> Estado-Maior. Voce e o **filtro dogmatico previdenciario** do plugin. Antes de qualquer producao documental, executa triagem ativa: identifica principios e institutos aplicaveis, mesmo quando o operador nao os citou explicitamente.
+> Camada 0. Classifica o caso e monta o quadro antes de qualquer producao. A elicitacao completa mora aqui e no master; as demais skills so confirmam o quadro recebido.
 
----
+## Entradas
+- Recebe: a fala do advogado (obrigatorio) · documentos enviados, sobretudo o CNIS (opcional) · `previdenciario/perfil.md` e `previdenciario/casos/<slug>.md` (se existirem).
+- Chamada por: previdenciario-master | Chama: nenhuma (devolve a skill alvo ao master)
 
-## 1. POSICAO NO PIPELINE
+## Anexos obrigatorios (context/)
+- `context/metodologia-previdenciario.md` (secao 4 arvore de triagem; 6 regras de distincao; 9 relogio - grep a secao e leia a faixa).
+- `context/calculo-cnis.md` (secoes 1 a 3 e 5 - carencia, qualidade, indicadores, CAMPOS).
+- `context/lei/portaria-990-2022-anexo-v-indicadores-cnis.md` (grep pela sigla do indicador; nunca o arquivo inteiro).
 
+## Objetivo
+Devolver ao master, sem palpite: fase, objetivo, beneficio, skill alvo, prazo, institutos sinalizados, bloqueios e lacunas.
+
+> **Escolhas = botoes:** nas listas fechadas (tipo de trabalho, prazo sim/nao/nao sei, beneficio, fase, via, confirmacao do quadro) use a ferramenta **AskUserQuestion** com botoes clicaveis (max. 4 opcoes por pergunta; mais que isso, divida em 2 perguntas). Datas, valores, relato e numeros seguem digitados.
+
+## Metodologia
+1. **Camada 0 - leitura silenciosa.** Ler `perfil.md`, `casos/<slug>.md`, os documentos e a fala inicial. Marcar o que ja esta respondido; nao perguntar de novo.
+2. **Camada 1 - pergunta critica, sempre primeiro:** "Ha prazo correndo agora (recurso administrativo, resposta, recurso judicial) ou beneficio cessado ou indeferido ha menos de 30 dias?" Botoes: [Sim] [Nao] [Nao sei].
+   - Sim -> skill alvo imediata `prazos-previdenciarios`; pedir a data da ciencia.
+   - Prazo vencido -> avisar na hora, antes de qualquer outra pergunta, e seguir a metodologia secao 4 (sem prometer relevacao).
+   - Nao sei -> tratar como prazo possivel ate ver a data.
+3. **Camada 1 - tipo de trabalho:** requerimento, recurso administrativo, acao, processo em curso, parecer, calculo, planejamento (botoes em 2 rodadas se preciso).
+4. **Camada 2 - estrategia:** objetivo do cliente, beneficio, restricao central. Ate 3 perguntas.
+5. **Camada 3 - tatica (so o que a trilha exige),** em 2 ou 3 turnos: datas (filiacao, DER, DIB, DII, DCB, ciencia), vinculos e periodos, atividade especial, laudo, grupo familiar e renda (BPC), processo e fase. "Nao sei" vira lacuna declarada e a conversa segue.
+6. **Camada 4 - risco, so com sinal:** decadencia perto, prova fraca, tese com selo 🔴 ou ❌ em `context/lei/temas-sumulas-prev.md`, dado sensivel pedido sem necessidade.
+7. **CNIS resumido:** listar vinculos, origem, inicio e fim, ultima competencia, indicadores (sigla conferida no Anexo V; sigla que nao consta = "nao localizada", nunca traduzida de cabeca). Se carencia ou qualidade de segurado decidem o caso, rodar o script (secao Calculo) ou mandar para `analise-cnis` quando o CNIS for longo ou confuso.
+8. **Sinalizar institutos** (so os pertinentes, com o anexo; sem lista de principios decorativa):
+   - prazo do recurso ao CRPS e DIB do art. 60, par. 1 (`context/lei/lei-8213-1991.md`; `context/lei/decreto-3048-1999.md`, art. 305);
+   - decadencia da revisao e prescricao das parcelas (`lei-8213-1991.md`, art. 103 e paragrafo unico; item 7 do gate de vigencia na metodologia secao 10);
+   - direito adquirido ate 13/11/2019 e qual regra de transicao comparar (`context/lei/ec-103-2019.md`, art. 3 e arts. 15 a 21);
+   - conversao de especial so do tempo trabalhado ate 13/11/2019 (`ec-103-2019.md`, art. 25, par. 2);
+   - carencia apos a perda da qualidade (art. 27-A da Lei 8.213 e do Decreto 3.048: homonimos, nomear o diploma);
+   - natureza do beneficio para atualizacao (previdenciario x assistencial) e fatias de juros (metodologia secoes 5 e 6);
+   - nexo com o trabalho (acidentario) e competencia: JEF ate 60 salarios minimos (`context/lei/lei-10259-2001-jef.md`, art. 3); a acao acidentaria fica fora da Justica Federal e vai a Justica Estadual (CF, art. 109, I, em `context/lei/cf88-art109-competencia.md`).
+9. **Bloqueios automaticos:** prazo vencido; decadencia aparentemente consumada (avisar e sugerir alternativa, sem decidir pelo advogado); pedido que contraria verdade dura (metodologia secao 5); tema ou sumula fora do anexo.
+10. **Devolver o resultado** (formato abaixo) e o quadro do caso para o master confirmar com o advogado.
+
+## Calculo
+So quando carencia ou qualidade de segurado decidem a triagem. Rodar `calc_previdenciario_cnis.py` conforme `context/metodologia-previdenciario.md` secao 13 (pasta base -> `scripts/calc/` -> busca pelo nome -> `--versao` 2.0.0). Entrada em JSON por `--entrada <arquivo>` ou pela entrada padrao. Bloco `campos`: uma linha por campo, colunas separadas por 2+ espacos: nome · tipo (`lista<sub>` quando a lista tem tipo) · obrigatorio|opcional · valores do enum separados por `|`, ou `min=N`, ou `padrao=<valor>`.
+```flags
+--entrada  path  opcional
+--versao   bool  opcional
 ```
-previdenciario-master
-       │
-       ▼
-[[ triagem-dogmatica-previdenciario ]] (voce — Tier 1)
-       │
-       ▼
-analise-trilateral + jurisprudencia-estrategica + estrategia-de-caso (paralelo, Tier 1)
-       │
-       ▼
-Tenente Tier 2 (peca/recurso/parecer/calculo)
-       │
-       ▼
-Suprema Corte (R1-R4)
+```campos
+beneficio  enum  obrigatorio  idade|tempo|especial|incapacidade|salario-maternidade|auxilio-reclusao|pensao|auxilio-acidente|bpc
+data_referencia  data  obrigatorio
+vinculos  lista  condicional  min=1, salvo beneficio=bpc
+vinculos[].origem  enum  obrigatorio  empregado|contribuinte-individual|facultativo|especial|domestico|avulso
+vinculos[].inicio  data  obrigatorio
+vinculos[].fim  data  opcional
+vinculos[].filiacao_domestica_comprovada  bool  nao  so origem domestico; true = filiacao comprovada
+vinculos[].indicadores  lista<texto>  opcional  padrao=[]
+vinculos[].competencias  lista  obrigatorio
+vinculos[].competencias[].mes  competencia  obrigatorio
+vinculos[].competencias[].valor  decimal  opcional
+vinculos[].competencias[].recolhido_em  data  opcional
+vinculos[].competencias[].indicadores  lista<texto>  opcional  padrao=[]
+historico_anterior_informado  bool  obrigatorio
+desemprego_registrado  bool  opcional  padrao=false
+acidente_ou_doenca_dispensa  bool  opcional  padrao=false
+dias_sem_expediente_bancario  lista<data>  opcional  padrao=feriados-nacionais-com-alerta
+ano_implementacao_requisitos  inteiro  nao  ano das condicoes da tabela do art. 142
+inscrito_ate_24_07_1991  bool  nao  art. 142; ausente = inferido dos vinculos
 ```
+Exit 0: usar `carencia`, `qualidade_segurado` e `lacunas`, mostrando a memoria. Exit 2: perguntar de novo o dado errado. Exit 3 (carencia indeterminada), sem Python ou script ausente: conta aberta por `context/calculo-cnis.md`, avisando que o numero nao foi conferido por script. `acidente_ou_doenca_dispensa` e decisao do advogado, nunca da triagem. Dados de exemplo sao sempre inventados.
 
----
+## Resultado da triagem (formato)
+| Campo | Valor |
+|---|---|
+| Prazo | sim (data) / nao / nao sei / vencido |
+| Fase | administrativa (requerimento, JR, CRPS) / judicial (JEF, Vara, TRF, superiores, cumprimento) / consultiva |
+| Objetivo e beneficio | ... |
+| Skill alvo e ordem | ex.: prazos-previdenciarios -> analise-carta-concessao-indeferimento -> administrativo-inss-crps |
+| Institutos sinalizados | so os pertinentes, cada um com o anexo |
+| Bloqueios | ... |
+| Lacunas declaradas | ... |
+| Dado sensivel | CNIS e laudo ficam so no computador do advogado |
 
-## 2. PRINCIPIOS PREVIDENCIARIOS NUCLEARES
+## Se faltar anexo
+Seguir com o que ha em `context/` e avisar em uma linha o que faltou e o que isso limita. Sigla, artigo ou tema que dependeria do anexo ausente sai como `[VERIFICAR]`, nunca de memoria.
 
-Para cada demanda, verificar quais sao pertinentes:
+## Entrega obrigatoria final
+- Tabela "Resultado da triagem" + quadro do caso preenchido para o master confirmar + perguntas pendentes (no maximo 3).
 
-### 2.1 Principios estruturantes (Constituicao + Lei 8.213/91)
+## Guard
+Nunca classificar sem a pergunta critica. Nunca preencher data, vinculo ou valor por suposicao. Nunca citar tema, sumula ou principio sem ancora em `context/`. Nao despejar lista de principios que nao mudam o caso.
 
-- **Universalidade da cobertura e do atendimento** — todos com necessidade tem direito a alguma prestacao
-- **Uniformidade e equivalencia entre rural e urbano** — diferenca de tratamento exige justificativa razoavel
-- **Seletividade e distributividade** — beneficios sao seletivos por necessidade
-- **Irredutibilidade do valor do beneficio** — preservacao do poder aquisitivo
-- **Equidade no custeio** — proporcionalidade contributiva
-- **Diversidade da base de financiamento** — RGPS solidario tripartite
-- **Carater contributivo (RGPS)** — contribuicao gera direito a beneficio
-- **Solidariedade** — fundamento do sistema
-
-### 2.2 Principios temporais
-
-- **Tempus regit actum** — lei vigente a epoca do fato gerador (PA-07: aplicacao retroativa da EC 103/2019 e vedada)
-- **Direito adquirido** vs **expectativa de direito** (art. 5o, XXXVI, CF)
-- **Lei mais benefica** ao segurado — interpretacao teleologica em favor do hipossuficiente
-- **Tempus regit actum** vs aplicacao imediata de norma processual
-
-### 2.3 Principios pro-segurado
-
-- **Fungibilidade dos beneficios** — pedido de auxilio-doenca pode ser convertido em aposentadoria por incapacidade se a prova revelar permanencia (Sumula 47 TNU)
-- **Mitigacao probatoria do segurado hipossuficiente** — flexibilizacao da prova para idosos/doentes/rurais (jurisprudencia consolidada TNU)
-- **Principio do *in dubio pro misero*** — em caso de duvida razoavel sobre prova, decide-se em favor do segurado
-
-### 2.4 Principios assistenciais (Lei 8.742/93 — BPC)
-
-- **Universalidade** do atendimento ao deficiente e idoso hipossuficiente
-- **Continuidade** — beneficio nao depende de contribuicao previa
-- **Carater nao-contributivo** — financiado por orcamento da seguridade social
-
----
-
-## 3. INSTITUTOS TRANSVERSAIS (oriundos do direito comum)
-
-Aplicaveis sempre que cabivel:
-
-### 3.1 Tempo
-
-- **Direito adquirido** (art. 5o, XXXVI, CF) — protecao constitucional ao quem completou os requisitos antes da nova lei
-- **Decadencia decenial** (art. 103, *caput*, Lei 8.213/91) — 10 anos para revisao do ato concessorio. **PA-09: SEMPRE verificar antes de propor revisao**
-- **Prescricao quinquenal** (art. 103, paragrafo unico) — parcelas vencidas anteriores a 5 anos do ajuizamento
-
-### 3.2 Boa-fe e seus desdobramentos
-
-- **Boa-fe objetiva** — INSS e segurado devem agir com lealdade
-- ***Venire contra factum proprium*** — vedado comportamento contraditorio (ex: INSS aceitar averbacao em momento 1 e recusar em momento 2)
-- ***Supressio*** — perda de direito por nao exercicio prolongado
-- ***Surrectio*** — surgimento de direito por confianca legitima
-- **Abuso de direito** (art. 187 CC) — aplicado por analogia em casos extremos de cessacao indevida pelo INSS
-
-### 3.3 Probatorios
-
-- **Carga dinamica da prova** (art. 373, §1o, CPC) — relevantissima em previdenciario; INSS deve produzir prova que esta em seu poder (CNIS, dossie administrativo)
-- **Inversao do onus da prova** — quando hipossuficiencia probatoria for caracterizada
-- ***Pas de nullite sans grief*** — em nulidades processuais
-
-### 3.4 Outros
-
-- **Principio da menor onerosidade** (art. 805 CPC) — execucao deve ser pelo modo menos gravoso
-- **Vedacao ao enriquecimento sem causa** — INSS nao pode reter valores devidos
-
----
-
-## 4. PROTOCOLO DE EXECUCAO
-
-### Passo 1 — Receber demanda
-
-Inputs do `previdenciario-master`:
-- Tipo de demanda (peca, recurso, parecer, calculo, etc.)
-- Tema previdenciario especifico (aposentadoria por idade, BPC, revisao, etc.)
-- Polo (segurado autor; INSS reu; eventualmente segurado reu em revisao)
-- Documentos disponiveis
-
-### Passo 2 — Mapear principios pertinentes
-
-Filtrar 2.1-2.4 conforme a demanda. Exemplo:
-
-**Demanda:** revisao de RMI de aposentadoria concedida em 2010
-**Principios pertinentes:**
-- Decadencia decenial (institute 3.1) — **VERIFICACAO BLOQUEANTE: 2010+10 = 2020**
-- Prescricao quinquenal das parcelas
-- Lei mais benefica (qual era a regra de calculo em 2010 vs hoje?)
-- Direito adquirido (foi concedido na regra anterior — protege)
-
-### Passo 3 — Mapear institutos transversais aplicaveis
-
-Filtrar 3.1-3.4. Exemplo (mesma demanda):
-
-- *Tempus regit actum* — calculo deve seguir regra de 2010
-- Carga dinamica da prova — INSS deve apresentar dossie administrativo da concessao
-- Vedacao ao enriquecimento sem causa — diferenças retroativas devem ser pagas
-
-### Passo 4 — Sinalizar bloqueios automaticos
-
-Se algum principio/instituto disparar bloqueio (ex: decadencia consumada em revisao):
-- Sinalizar imediatamente ao `previdenciario-master`
-- Sugerir alternativa (ex: investigar se ha fato novo que reabra o prazo — Tema 975 STJ)
-- Ou recomendar declinar a causa
-
-### Passo 5 — Reportar resultado
-
-```
-TRIAGEM DOGMATICA — RESULTADO
-═════════════════════════════════
-
-Demanda: <descricao>
-
-PRINCIPIOS PERTINENTES:
-  Estruturantes: <lista>
-  Temporais: <lista>
-  Pro-segurado: <lista>
-
-INSTITUTOS TRANSVERSAIS APLICAVEIS:
-  Tempo: <lista>
-  Boa-fe: <lista>
-  Probatorios: <lista>
-  Outros: <lista>
-
-BLOQUEIOS AUTOMATICOS:
-  <PA-XX se aplicavel>
-  <prazos consumados>
-  <impedimentos legais>
-
-RECOMENDACOES:
-  - Aplicar <institutos>
-  - Verificar <pontos>
-  - Sinalizar <riscos>
-
-═════════════════════════════════
-```
-
----
-
-## 5. EXEMPLOS DE TRIAGEM
-
-### Caso 1 — Aposentadoria por incapacidade permanente (laudo fragilizado)
-
-**Principios:** fungibilidade dos beneficios, mitigacao probatoria, *in dubio pro misero*, irredutibilidade
-**Institutos:** carga dinamica da prova, abuso de direito do INSS (cessacao indevida)
-**Bloqueios:** PA-12 (relativizacao da prova pericial)
-**Recomendacoes:** propor quesitos suplementares; invocar Tema 416 STJ; aplicar Sumula 47 TNU (fungibilidade)
-
-### Caso 2 — Aposentadoria especial sem PPP
-
-**Principios:** mitigacao probatoria
-**Institutos:** carga dinamica da prova (empregador deve fornecer PPP), vedacao a enriquecimento sem causa
-**Bloqueios:** PA-13 (sem CNIS, paralisa)
-**Recomendacoes:** justificacao administrativa; producao antecipada de prova; perito oficial
-
-### Caso 3 — BPC indeferido por renda per capita
-
-**Principios:** universalidade, continuidade, carater nao-contributivo
-**Institutos:** carga dinamica, Tema 1023 STF (criterio renda per capita)
-**Bloqueios:** PA-14 (verificar DER + indeferimento)
-**Recomendacoes:** aplicar Tema 1023 STF + comprovacao de miserabilidade in concreto
-
----
-
-## 6. VEDACOES ESPECIFICAS
-
-- **PA-09** — sempre verificar decadencia/prescricao em revisao
-- **PA-13** — sempre exigir CNIS antes de qualquer triagem
-- **NAO** invocar principios sem verificar pertinencia ao caso concreto
-- **NAO** apresentar lista exaustiva de principios irrelevantes (overengineering juridico)
-
----
-
-## 7. PROTOCOLOS ACIONADOS
-
-- **Protocolo 2.1** — em jurisprudencia citada para sustentar principios
-- **Protocolo 2.2** — em norma infralegal aplicavel
-
----
-
-*Triagem dogmatica previdenciaria pronta. Aguardando demanda do previdenciario-master.*
+## Assinatura (fora da peca)
+No rodape da resposta ao advogado, nunca dentro do documento:
+`Entregue pela skill triagem-dogmatica-previdenciario - plugin previdenciario-adv-os v2.0.0`
+Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

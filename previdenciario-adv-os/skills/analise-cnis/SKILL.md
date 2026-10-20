@@ -1,176 +1,92 @@
 ---
 name: analise-cnis
-description: >
-  ANALISE DE CNIS — Skill Tier 2 C. Le e analisa Cadastro Nacional de Informacoes Sociais (CNIS) do segurado, mapeando vinculos empregaticios, contribuicoes, periodos concomitantes, lacunas, pendencias administrativas (PE, PVI, IREC), e integridade do registro. Output: mapa de tempo de contribuicao bruto + carencia + sinalizacao de problemas. ALICERCE de qualquer demanda previdenciaria — PA-13 obriga analise antes de qualquer peca/calculo. Use quando operador anexar CNIS ou pedir analise de tempo, vinculos, ou conferencia de dados previdenciarios.
+description: "Le o CNIS do segurado e devolve vinculos, competencias validas, carencia (com a regra da metade apos perda da qualidade), qualidade de segurado com data da perda, indicadores pelo Anexo V da Portaria DIRBEN/INSS 990/2022 e lacunas, rodando o script de CNIS. Use quando o advogado anexar o CNIS, perguntar se o cliente tem carencia ou qualidade de segurado, pedir leitura de indicador (IEAN, PREM-EXT, PEXT, familia PVIN-* e outros) ou antes de qualquer calculo de tempo, transicao ou RMI. Nao use para converter tempo especial (analise-ppp-ltcat-aposentadoria-especial) nem para calcular RMI (calculos-previdenciarios)."
 ---
 
-# ANALISE DE CNIS — Skill Tier 2 C
+# ANALISE DE CNIS
 
-> Le o CNIS, mapeia vinculos e tempo, sinaliza pendencias. **PA-13 obriga esta analise antes de qualquer producao.**
+> Camada 3 (analise e prova). Primeira leitura de prova de quase todo caso: sem CNIS lido, nenhuma conta de tempo, carencia ou RMI sai.
 
----
+## Entradas
+- Recebe: CNIS completo do segurado (obrigatorio; PDF, imagem ou texto) · beneficio pretendido e data de referencia (DER, DII ou obito) (obrigatorio) · CTPS, guias, carnes (opcional)
+- Chamada por: previdenciario-master · triagem-dogmatica-previdenciario · administrativo-inss-crps · planejamento-previdenciario · analise-carta-concessao-indeferimento | Chama: analise-ppp-ltcat-aposentadoria-especial (vinculo com IEAN ou atividade especial) · memoria-de-caso-previdenciario
 
-## 1. O QUE EXTRAIR DO CNIS
+## Anexos obrigatorios (context/)
+- `context/calculo-cnis.md` (secoes 1 a 7 - conta aberta, CAMPOS e caso CNIS-04)
+- `context/lei/portaria-990-2022-anexo-v-indicadores-cnis.md` (grep pela SIGLA e leia a linha da tabela: tipo, grupo, descricao, esclarecimentos)
+- `context/lei/lei-8213-1991.md` (arts. 15, 24, 25, 26, 27 e 27-A - grep o artigo e leia a faixa; descarte linhas `(revogado)`)
+- `context/lei/decreto-3048-1999.md` (arts. 14 e 27-A - grep o artigo e leia a faixa)
+- `context/lei/lei-8212-1991.md` (art. 30, II e par. 2o, I - vencimento)
+- `context/lei/in-128-2022-inss.md` (arts. 208, 209 e 210 - atraso e competencia abaixo do minimo)
+- `context/metodologia-previdenciario.md` (secoes 5, 7, 7.1, 8 e 13)
 
-### 1.1 Identificacao
-- NIT (Numero de Inscricao do Trabalhador)
-- Nome completo
-- Data de nascimento
-- Filiacao
+## Objetivo
+Mapa do CNIS com carencia, qualidade de segurado e indicadores apurados pelo script (ou pela conta aberta, marcada como nao conferida), e a lista do que falta sanear antes de qualquer pedido.
 
-### 1.2 Vinculos
-Para cada vinculo (empregaticio, contribuinte individual, facultativo, etc.):
-- Empregador (nome + CNPJ)
-- Categoria (empregado, contribuinte individual, facultativo, etc.)
-- Data de admissao
-- Data de saida (se ja encerrado)
-- Salario-de-contribuicao (mes a mes ou faixas)
-- Indicadores administrativos (PE, PVI, IREC, IPESC, etc.)
+## Metodologia
+1. Dado sensivel: o CNIS fica no computador do advogado; nunca colar em ferramenta externa. Registrar no caso so o necessario.
+2. Extrair identificacao minima (NIT, nascimento) e, por vinculo: origem (empregado, contribuinte individual, facultativo, especial, domestico, avulso), inicio, fim, competencias com salario de contribuicao, data de recolhimento (CI, especial e facultativo) e siglas de indicador do vinculo e da competencia. Nada inventado: campo ilegivel vira lacuna.
+3. Confirmar com o advogado, em 3 a 6 linhas, o beneficio pretendido, a data de referencia e se o CNIS traz todo o historico anterior a eventual perda da qualidade. "Nao sei" = lacuna, nunca presuncao.
+4. Indicadores: cada sigla e procurada no Anexo V e sai com descricao e tipo oficiais (`CsPendencia` = pendencia; `CsIndicador` = alerta; `CsAcerto` = acerto). Sigla nao localizada sai como "sigla nao localizada no Anexo V", nunca com descricao de memoria.
+   - IEAN = exposicao a agente nocivo informada pelo empregador, passivel de comprovacao. Indica possivel enquadramento especial; nao converte tempo sozinho e nao dispensa PPP amparado em laudo (verdade 11). Sufixos 15/20/25 do IEAN nao tem ancora: nao automatizar. Vinculo com IEAN -> analise-ppp-ltcat-aposentadoria-especial.
+   - Indicador de pendencia (`CsPendencia`): o efeito sobre a carencia sai dos esclarecimentos da propria sigla no Anexo V, nunca so do tipo. Efeito nao demonstrado: registrar a pendencia, listar o saneamento e marcar a carencia afetada como `indeterminada` com `[VERIFICAR]`. O script exclui por tipo (`context/calculo-cnis.md`, secao 1.1): havendo pendencia, conferir a saida dele contra o esclarecimento da sigla.
+5. Carencia: exigida pelo art. 25 ou dispensa pelo art. 26 da Lei 8.213 (doenca da lista so quando o advogado marcar). Salario-maternidade sem carencia (ADI 2.110); BPC sem carencia. Atraso de CI, especial e facultativo: conta so a partir do primeiro pagamento sem atraso (art. 27, II). Nunca usar a regra do atraso para TEMPO (IN 128, art. 208) como se fosse de carencia.
+6. Perda da qualidade antes da data de referencia: aplicar o art. 27-A (Lei 8.213 e Decreto 3.048, que tem redacao propria: citar o diploma). A metade so reabre o computo das anteriores; a carencia total continua a do art. 25. Sem historico anterior: `indeterminada`. Aposentadorias do art. 25, II: regra da perda nao esta no corpus -> `indeterminada` com `[VERIFICAR]`.
+7. Qualidade de segurado. Antes da conta, perguntar se houve beneficio em manutencao (exceto auxilio-acidente), segregacao compulsoria, reclusao ou servico militar (Lei 8.213, art. 15, I, III, IV e V). Havendo qualquer um, a qualidade se mantem pela regra do inciso proprio e o script nao representa esses fatos: nao usar a `data_perda` dele; declarar a qualidade como `indeterminada` pela conta automatica e conferir a mao pelo inciso. Sem essas hipoteses: graca de 12 meses; +12 com MAIS de 120 contribuicoes sem perda na primeira aquisicao (ai exatamente 120 nao estende); se a prorrogacao ja foi adquirida em bloco anterior e a qualidade se perdeu, bastam 120 NOVAS (IN 128, art. 184, par. 4o, segunda parte; campo `prorrogacao_reaquisicao`); +12 com desemprego registrado; 6 para o facultativo; vencimento no dia 15 do mes seguinte a competencia posterior ao fim da graca (dia util seguinte se nao houver expediente bancario); perda no dia seguinte. Feriado local nao e considerado sem calendario do caso.
+8. Concomitancia: dia sobreposto conta uma vez para tempo; soma de salarios e assunto do salario de beneficio (Lei 8.213, art. 32), nao desta skill.
+9. Rodar o script (secao Calculo) e mostrar a memoria. Exit 3: entregar a formula aberta com `[VERIFICAR]`.
+10. Omissoes a sinalizar: CNIS desatualizado; vinculo conhecido pelo cliente e ausente (reconhecimento de vinculo -> fronteira `trabalhista-adv-os`); periodo rural nao registrado; competencia sem salario; competencia abaixo do minimo (listada em `excluidas`, nunca presumida). Tempo rural: so com dispositivo conferido no anexo; sem ele, lacuna.
+11. Gravar o resultado pela memoria-de-caso-previdenciario.
 
-### 1.3 Indicadores administrativos comuns
+## Calculo
+Script `calc_previdenciario_cnis.py`, localizado e rodado conforme `context/metodologia-previdenciario.md` (secao 13). Entrada em JSON.
 
-| Indicador | Significado | Acao |
-|-----------|-------------|------|
-| **PE** | Pendencia | INSS suspendeu computacao por divergencia |
-| **PVI** | Pendencia de vinculo | Vinculo nao confirmado pelo empregador |
-| **IREC** | Indicador de recolhimento extemporaneo | Recolhimento fora do prazo |
-| **IEAN** | Indicador de Empresa de Atividade Nao Identificada | Empresa nao localizada |
-| **IPESC** | Indicador de Pendencia de Salario de Contribuicao | Salario sem comprovacao |
-| **IGFIP** | Indicador de divergencia GFIP | Recolhimento divergente |
-
-**Tarefa:** identificar todos os indicadores e propor estrategia para sanea-los.
-
----
-
-## 2. MAPA DE TEMPO
-
-Gerar tabela:
-
-| Vinculo | Inicio | Fim | Tempo bruto | Especial? | Concomitante? | Pendencias |
-|---------|--------|-----|-------------|-----------|---------------|------------|
-| Empresa A | 01/1990 | 06/1996 | 6a 6m | Nao | Nao | Nenhuma |
-| Empresa B | 03/1996 | 12/2002 | 6a 10m | Nao | **Sim** (sobreposicao 03-06/1996) | PVI |
-| Especial C | 01/2003 | 04/2008 | 5a 4m | **Sim** (LTCAT) | Nao | PE |
-| ... | ... | ... | ... | ... | ... | ... |
-
-**Tempo bruto total:** <somar>
-**Tempo apos resolver concomitancia:** <descontar sobreposicao>
-**Tempo especial convertido (1.4x homem / 1.2x mulher):** <calcular>
-**Carencia (meses com contribuicao valida):** <contar separadamente>
-
----
-
-## 3. CARENCIA — CALCULAR SEPARADAMENTE
-
-```
-Lei 8.213/91 art. 24 — carencia:
-  Numero MINIMO de contribuicoes para concessao do beneficio,
-  CONTADO MES A MES (nao se confunde com tempo).
-
-  Aposentadoria por idade: 180 meses (15 anos)
-  BPI temporario: 12 meses (com excecoes — Lei 8.213/91 art. 26)
-  Aposentadoria por incapacidade permanente: 12 meses (com excecoes)
-  Pensao por morte: pelo menos 18 contribuicoes para regra Lei 13.135/15
-  Salario-maternidade: 10 contribuicoes (segurada especial e contribuinte
-    individual)
+```flags
+--entrada   arquivo   opcional   caminho do JSON de entrada; ausente = stdin
+--versao    flag      opcional   imprime a versao (2.0.0)
 ```
 
-Verificar:
-- Total de contribuicoes mes a mes (apenas competencias com indicadores OK)
-- Nao incluir pendencias nao saneadas
-
----
-
-## 4. CONCOMITANCIA
-
-Quando dois vinculos se sobrepoem temporalmente:
-- O tempo NAO se duplica
-- Mas as contribuicoes podem aumentar o salario-de-beneficio (PBC)
-- Aplicar regras do art. 32 do Decreto 3.048/99
-
----
-
-## 5. RECONHECIMENTO DE TEMPO RURAL
-
-Se houver vinculo rural:
-- Anterior a 11/1991: pode ser comprovado por inicio de prova material (ITR, escola, sindicato, certidao escolar) + testemunhas
-- Apos 11/1991: precisa de contribuicao ou comprovacao especifica (Lei 8.213/91 art. 26 + 39)
-
----
-
-## 6. PROTOCOLO DE EXECUCAO
-
-### Passo 1 — Extrair dados
-Ler CNIS anexado (PDF / imagem / texto). Estruturar conforme Secao 1.
-
-### Passo 2 — Detectar pendencias
-Listar todos os indicadores administrativos e propor saneamento.
-
-### Passo 3 — Mapear vinculos
-Tabela conforme Secao 2.
-
-### Passo 4 — Resolver concomitancia
-Aplicar Secao 4. Identificar sobreposicoes.
-
-### Passo 5 — Apurar tempo bruto
-Somar tempo de cada vinculo, descontando concomitancia.
-
-### Passo 6 — Apurar carencia
-Contar meses com contribuicao OK (Secao 3).
-
-### Passo 7 — Sinalizar pontos de Omissao (PA-03)
-- CNIS desatualizado? sinalizar
-- Vinculo nao informado mas conhecido pelo segurado? sinalizar
-- Periodos rurais nao registrados? sinalizar
-- Salarios-de-contribuicao ausentes em alguma competencia? sinalizar
-
-### Passo 8 — Reportar
-
-```
-ANALISE DE CNIS — RELATORIO
-═══════════════════════════════════════
-
-SEGURADO: <nome> (NIT <numero>)
-
-VINCULOS MAPEADOS: <N>
-TEMPO BRUTO TOTAL: <X> anos, <Y> meses
-TEMPO APOS CONCOMITANCIA: <X> anos, <Y> meses
-TEMPO ESPECIAL CONVERTIDO: <X> anos, <Y> meses (se aplicavel)
-TEMPO TOTAL (bruto + especial convertido): <X> anos, <Y> meses
-
-CARENCIA (meses): <N>
-
-PENDENCIAS DETECTADAS:
-  - <indicador 1> em <vinculo X> — saneamento: <acao>
-  - <indicador 2> em <vinculo Y> — saneamento: <acao>
-
-PONTOS DE OMISSAO (PA-03):
-  - <ponto 1>
-  - <ponto 2>
-
-VINCULOS COM POTENCIAL DE TEMPO ESPECIAL:
-  - <vinculo X — solicitar PPP/LTCAT>
-
-RECOMENDACAO:
-  - Antes de propor <beneficio>, sanear pendencias e completar dados.
-
-═══════════════════════════════════════
+```campos
+beneficio                                   enum           sim   idade,tempo,especial,incapacidade,salario-maternidade,auxilio-reclusao,pensao,auxilio-acidente,bpc
+data_referencia                             data           sim   DER, DII ou data do obito
+vinculos                                    lista          condicional   ao menos 1 vinculo, salvo beneficio = bpc (LOAS, art. 20)
+vinculos[].origem                           enum           sim   empregado,contribuinte-individual,facultativo,especial,domestico,avulso
+vinculos[].inicio                           data           sim   -
+vinculos[].fim                              data           nao   ausente = vinculo sem fim (vai para lacunas)
+vinculos[].filiacao_domestica_comprovada  bool  nao  so origem domestico; true = filiacao comprovada
+vinculos[].indicadores                      lista[texto]   nao   siglas do Anexo V; padrao []
+vinculos[].competencias                     lista          sim   uma entrada por competencia
+vinculos[].competencias[].mes               competencia    sim   -
+vinculos[].competencias[].valor             decimal        nao   salario de contribuicao
+vinculos[].competencias[].recolhido_em      data           nao   data do pagamento (atraso de CI, especial, facultativo)
+vinculos[].competencias[].indicadores       lista[texto]   nao   siglas do Anexo V; padrao []
+historico_anterior_informado                bool           sim   false leva a carencia apos a perda a indeterminada
+desemprego_registrado                       bool           nao   padrao false
+acidente_ou_doenca_dispensa                 bool           nao   padrao false; decisao do advogado
+dias_sem_expediente_bancario                lista[data]    nao   ausente = feriados nacionais do motor de prazos, com alerta
+ano_implementacao_requisitos  inteiro  nao  ano das condicoes da tabela do art. 142
+inscrito_ate_24_07_1991  bool  nao  art. 142; ausente = inferido dos vinculos
 ```
 
----
+Exit 0: usar o resultado e mostrar a memoria. Exit 2: perguntar de novo o dado errado. Exit 3: formula aberta com `[VERIFICAR]`. Sem Python, script ausente ou outro exit: conta aberta por `context/calculo-cnis.md`, passo a passo, avisando que o numero nao foi conferido por script.
 
-## 7. PAS APLICAVEIS
+## Se faltar anexo
+Seguir com o que ha no context/ e avisar em uma linha o que faltou e o que isso limita (ex.: sem o Anexo V, indicadores saem sem descricao). Nunca preencher o que faltou por suposicao.
 
-- **PA-03** — sem invencao de vinculos / datas / valores
-- **PA-13** — analise de CNIS e PRE-REQUISITO
-- **PA-20** — sem calculo de tempo silencioso
+## Entrega obrigatoria final
+- Tabela de vinculos (origem, inicio, fim, competencias validas, indicadores, pendencias).
+- Carencia: exigidas, contadas, cumprida (sim / nao / indeterminada), excluidas com motivo; apos perda, novas, metade e anteriores reaproveitadas.
+- Qualidade de segurado: ultima competencia, graca, vencimento, data da perda.
+- Indicadores com descricao oficial e acao de saneamento; lacunas; proximo passo (ppp, calculos-previdenciarios ou planejamento-previdenciario).
+- Memoria do script ou a marca "conta nao conferida por script".
 
----
+## Guard
+- Nunca IEAN como "empresa nao identificada"; nunca sigla que nao conste do Anexo V (as erradas da 0.1.0 estao na secao 7 da metodologia).
+- Nunca tratar a metade do art. 27-A como carencia cumprida; nunca presumir historico anterior.
+- Nunca carencia de pensao (independe) nem de salario-maternidade.
+- Nunca numero de carencia, graca ou data de perda de cabeca: script ou conta aberta.
 
-## 8. PROTOCOLOS ACIONADOS
-
-- **2.4** Etapa 2 (apurar tempo + carencia separadamente)
-
----
-
-*Analise de CNIS pronta.*
+## Assinatura (fora da peca)
+No rodape da resposta ao advogado, nunca dentro do documento:
+`Entregue pela skill analise-cnis - plugin previdenciario-adv-os v2.0.0`.
+Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

@@ -1,122 +1,20 @@
 ---
-description: Produz parecer juridico previdenciario formal com estrutura I-VI obrigatoria + Suprema Corte.
-allowed-tools: Read, Write, Edit, Bash, Glob, Grep, Task
-argument-hint: [tema opcional]
+description: Redige parecer juridico previdenciario (viabilidade, risco ou estrategia) na estrutura I a VI, com fatos confirmados, numeros por script e conclusao em cenarios, sem percentual de exito.
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, Skill, AskUserQuestion
+argument-hint: [tema ou pergunta da consulta, opcional]
 ---
 
-Voce foi acionado pelo comando `/parecer-previdenciario` do plugin Previdenciario-Adv-OS.
+Voce foi acionado pelo comando `/parecer-previdenciario` do plugin previdenciario-adv-os.
 
 Argumento recebido: `$ARGUMENTS`
 
-**Objetivo:** produzir parecer juridico previdenciario com estrutura formal I-VI e auditoria R1-R4.
+**Objetivo:** entregar o parecer pronto para o papel timbrado do escritorio, respondendo cada questao da consulta.
 
-## PROTOCOLO DE EXECUCAO
+## PROTOCOLO
+1. Acionar `parecer-previdenciario` - ele confirma o quadro de fatos com o advogado, monta as questoes e redige nas secoes I a VI.
+2. Parecer nao e peca: sem enderecamento a juizo, sem pedidos. A conclusao vem em 2 ou 3 cenarios concretos com ganho, risco e prazo; nenhum percentual de exito.
+3. Todo numero sai de script pela `calculos-previdenciarios` ou como conta aberta; toda citacao precisa de ancora em `context/`. Tese que o plugin declara inviavel nao entra como caminho.
+4. Passada anti-IA com `context/escrita-humana.md` antes do gate.
+5. Fechar pelo `validador-previdenciario` e pela `suprema-corte-previdenciaria`.
 
-### 1. Verificar plugin ativo
-
-`previdenciario/cowork-state.json` existe? Se nao, sugerir `/start-previdenciario`.
-
-### 2. Levantar tema e contexto
-
-Se argumento fornecido, usar como tema. Caso contrario:
-
-```
-Sobre o que e o parecer?
-
-Exemplos comuns:
-- Viabilidade de aposentadoria por tempo de contribuicao apos EC 103/2019
-- Cabimento de revisao da vida toda (Tema 1102 STF)
-- Conversao de tempo especial em comum
-- Reconhecimento de tempo rural
-- Acumulacao de beneficios
-- Migracao entre regimes (RGPS ↔ RPPS)
-- Calculo de salario-de-beneficio
-- Outro: descrever
-```
-
-Coletar tambem:
-- Cliente (nome, qualificacao, CNIS, vinculos)
-- Pergunta especifica a ser respondida
-- Contexto factual relevante
-- Documentos disponiveis
-
-### 3. Compartimentacao de escopo (PA-05)
-
-**ATENCAO:** parecer NAO e peca processual. Linguagem de parecer:
-- Estrutura formal obrigatoria (I a VI)
-- Tom tecnico-elegante
-- Doutrina autorizada com autoria identificada
-- Conclusao categorica indicando o caminho seguro
-
-NAO usar:
-- Endereco a juizo
-- Pedidos determinados
-- Cabecalho de peticao
-- Linguagem demolidora estilo combate
-
-### 4. Estrutura I-VI obrigatoria
-
-```
-I. INTRODUCAO
-   - Identificacao do consulente
-   - Tema e pergunta
-   - Metodologia adotada
-   - Estrutura do parecer
-
-II. FATOS
-   - Narrativa factual fluida
-   - Dados objetivos do CNIS, contratos, periodos
-   - Pontos de Omissao sinalizados (PA-03)
-
-III. QUESTOES
-   - Lista das perguntas a responder
-   - Hierarquia entre elas (principal vs subsidiarias)
-
-IV. FUNDAMENTACAO
-   - Por bloco tematico, aplicar FIRAC
-   - Cada Questao tem sua secao
-   - Legislacao classificada (Lei + Decreto + IN)
-   - Jurisprudencia classificada Nivel 1/2/3 (PA-01)
-   - Doutrina autorizada com autoria
-
-V. ANALISE CRITICA
-   - Pontos de risco identificados
-   - Teses adversarias antecipadas (PFE/INSS)
-   - Cenarios alternativos
-   - Probabilidade de exito (sem chute — fundamentar)
-
-VI. CONCLUSAO
-   - Resposta direta a cada Questao do bloco III
-   - Caminho recomendado (estrategico)
-   - Documentos a providenciar
-   - Prazos relevantes (decadencia, prescricao)
-```
-
-### 5. Cadeia de skills
-
-```
-1. triagem-dogmatica-previdenciario (Tier 1)
-2. jurisprudencia-estrategica-previdenciario (Tier 1)
-3. parecer-juridico-previdenciario (Tier 2 F) — skill principal
-4. analise-cnis (Tier 2 C) — se cliente anexou CNIS
-5. estilo-juridico-previdenciario (transversal)
-6. suprema-corte-previdenciario (R1-R4)
-```
-
-### 6. Verificacoes obrigatorias
-
-- **PA-05:** linguagem de parecer, nao peca
-- **PA-09:** se discutir revisao, abrir com decadencia
-- **PA-10:** zero invencao de dispositivo
-- **PA-11:** firmeza Nivel 4 nas conclusoes (sem "talvez")
-- **PA-21:** zero CDC em RGPS
-
-### 7. Entrega
-
-Parecer pronto com:
-- Estrutura I-VI integral
-- Citacoes de doutrina com autoria
-- Jurisprudencia classificada
-- Conclusao categorica
-
-**Skill a acionar:** `previdenciario-master` + `parecer-juridico-previdenciario`.
+**Skill a acionar:** `parecer-previdenciario`.

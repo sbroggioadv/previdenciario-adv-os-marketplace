@@ -1,0 +1,569 @@
+{
+  "tabela": "teto-rgps",
+  "descricao": "Limite máximo (teto) e mínimo do salário de benefício e do salário de contribuição do RGPS por vigência.",
+  "fonte": [
+    {
+      "norma": "série 07/1994–2025, um ato por vigência (ver campo 'norma' de cada linha)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.in.gov.br/"
+    },
+    {
+      "norma": "Portaria Interministerial MPS/MF 13, de 09/01/2026, art. 2º (DOU 12/01/2026)",
+      "arquivo": "context/lei/portaria-interministerial-mps-mf-13-2026.md",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-interministerial-mps/mf-n-13-de-9-de-janeiro-de-2026-680382603"
+    }
+  ],
+  "conferencia": "AEPS 2017, Tabela 1.1 (mensal, 282 meses de 07/1994 a 12/2017: 279 iguais, 1 diferença só de granularidade em 12/1998, 2 divergências reais em lacunas) e INSS 'Tabela de contribuição – histórico' (2012–2021, 10 de 10), em 2026-10-15; 2022–2025 sem tabela oficial consolidada",
+  "data_captura": "2026-10-15",
+  "intervalo": {
+    "inicio": "1994-07-01",
+    "fim": "2026-12-31"
+  },
+  "validade": "2026-12-31 (vale até a portaria interministerial de janeiro de 2027)",
+  "unidade": "BRL, string decimal com 2 casas (ler com Decimal); 07/1994 a 08/1994 o ato está em URV (1 URV = R$ 1,00 desde 01/07/1994)",
+  "regra_de_consulta": "Usar a linha cuja vigência contém a data pedida. Data fora de todas as linhas cai em 'lacunas' (teto e piso null). Valor null = não verificado ou divergente entre fontes oficiais. O script não estima: devolve exit 3 com a fórmula aberta.",
+  "linhas": [
+    {
+      "vigencia_inicio": "1994-07-01",
+      "vigencia_fim": "1994-08-31",
+      "teto": "582.86",
+      "piso": "64.79",
+      "norma": "Portaria MPS 929, de 02/03/1994, art. 2º (valores em URV desde 01/03/1994; em 01/07/1994 1 URV = R$ 1,00: Lei 9.069/1995, art. 1º, §3º)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00000929&seqAto=000&valorAno=1994&orgao=MPS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "piso_fonte": "Portaria MPS 929/1994, art. 2º (64,79 URV)",
+      "texto": "Art. 2º A partir de 1º de março de 1994, o salário-de benefício não poderá ser inferior a 64,79 URV, nem superior a 582,86 URV."
+    },
+    {
+      "vigencia_inicio": "1994-09-01",
+      "vigencia_fim": "1995-04-30",
+      "teto": "582.86",
+      "piso": "70.00",
+      "norma": "Portaria MPS 929, de 02/03/1994, art. 2º (valores em URV desde 01/03/1994; em 01/07/1994 1 URV = R$ 1,00: Lei 9.069/1995, art. 1º, §3º)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00000929&seqAto=000&valorAno=1994&orgao=MPS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "piso_fonte": "salário mínimo vigente (Lei 9.063, de 14/06/1995 (conversão da MP 1.002/1995; origem: MP 598, de 31/08/1994), art. 1º), por força da Lei 8.213/1991, art. 29, §2º, e da Lei 8.212/1991, art. 28, §3º",
+      "texto": "Art. 2º A partir de 1º de março de 1994, o salário-de benefício não poderá ser inferior a 64,79 URV, nem superior a 582,86 URV."
+    },
+    {
+      "vigencia_inicio": "1995-05-01",
+      "vigencia_fim": "1996-04-30",
+      "teto": "832.66",
+      "piso": "100.00",
+      "norma": "Portaria MPAS 2.005, de 08/05/1995, art. 3º (DOU 09/05/1995, Seção 1, p. 18); salário-de-contribuição: Portaria MPAS 2.006/1995, art. 2º (mesma edição, p. 19)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=18&data=09/05/1995&captchafield=firstAccess",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 3º. A partir de 1º de maio de 1995, o salário-de-benefício não poderá ser inferior a R$ 100,00 (cem reais), nem superior a R$ 832,66 (oitocentos e trinta e dois reais e sessenta e seis centavos)."
+    },
+    {
+      "vigencia_inicio": "1996-05-01",
+      "vigencia_fim": "1997-04-30",
+      "teto": "957.56",
+      "piso": "112.00",
+      "norma": "Portaria MPAS 3.253, de 13/05/1996, art. 3º",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.legisweb.com.br/legislacao/?legislacao=181430",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 3º. A partir de 1º de maio de 1996, o salário-de-benefício não poderá ser inferior a R$ 112,00 (cento e doze reais), nem superior a R$ 957,56 (novecentos e cinqüenta e sete reais e cinqüenta e seis centavos)."
+    },
+    {
+      "vigencia_inicio": "1997-05-01",
+      "vigencia_fim": "1997-05-31",
+      "teto": "957.56",
+      "piso": "120.00",
+      "norma": "Portaria MPAS 3.253, de 13/05/1996, art. 3º",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.legisweb.com.br/legislacao/?legislacao=181430",
+      "piso_fonte": "salário mínimo vigente (Lei 9.971/2000, art. 2º), por força da Lei 8.213/1991, art. 29, §2º, e da Lei 8.212/1991, art. 28, §3º",
+      "texto": "Art. 3º. A partir de 1º de maio de 1996, o salário-de-benefício não poderá ser inferior a R$ 112,00 (cento e doze reais), nem superior a R$ 957,56 (novecentos e cinqüenta e sete reais e cinqüenta e seis centavos)."
+    },
+    {
+      "vigencia_inicio": "1997-06-01",
+      "vigencia_fim": "1998-04-30",
+      "teto": "1031.87",
+      "piso": "120.00",
+      "norma": "Portaria MPAS 3.971, de 05/06/1997, art. 4º (DOU 06/06/1997, Seção 1, p. 53); salário-de-contribuição: Portaria MPAS 3.964/1997, art. 2º",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=53&data=06/06/1997&captchafield=firstAccess",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 4º. A partir de 1º de junho de 1997, o salário-de-benefício não poderá ser inferior a R$ 120,00, nem superior a R$ 1.031,87."
+    },
+    {
+      "vigencia_inicio": "1998-05-01",
+      "vigencia_fim": "1998-05-31",
+      "teto": "1031.87",
+      "piso": "130.00",
+      "norma": "Portaria MPAS 3.971, de 05/06/1997, art. 4º (DOU 06/06/1997, Seção 1, p. 53); salário-de-contribuição: Portaria MPAS 3.964/1997, art. 2º",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=53&data=06/06/1997&captchafield=firstAccess",
+      "piso_fonte": "salário mínimo vigente (Lei 9.971/2000, art. 3º), por força da Lei 8.213/1991, art. 29, §2º, e da Lei 8.212/1991, art. 28, §3º",
+      "texto": "Art. 4º. A partir de 1º de junho de 1997, o salário-de-benefício não poderá ser inferior a R$ 120,00, nem superior a R$ 1.031,87."
+    },
+    {
+      "vigencia_inicio": "1998-06-01",
+      "vigencia_fim": "1998-12-15",
+      "teto": "1081.50",
+      "piso": "130.00",
+      "norma": "Portaria MPAS 4.478, de 04/06/1998, art. 4º; salário-de-contribuição: Portaria MPAS 4.479/1998, art. 2º (DOU 05/06/1998)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00004478&seqAto=000&valorAno=1998&orgao=MPAS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 4º A partir de 1º de junho de 1998, o salário-de-benefício não poderá ser inferior a R$130.00 (cento e trinta reais), nem superior a R$ 1.081,50 (um mil, oitenta e um reais e cinqüenta centavos)."
+    },
+    {
+      "vigencia_inicio": "1998-12-16",
+      "vigencia_fim": "1999-04-30",
+      "teto": "1200.00",
+      "piso": "130.00",
+      "norma": "EC 20, de 15/12/1998, art. 14 (DOU 16/12/1998; vigência na publicação, art. 16)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/constituicao/emendas/emc/emc20.htm",
+      "piso_fonte": "salário mínimo vigente (Lei 9.971/2000, art. 3º), por força da Lei 8.213/1991, art. 29, §2º, e da Lei 8.212/1991, art. 28, §3º",
+      "texto": "Art. 14 - O limite máximo para o valor dos benefícios do regime geral de previdência social de que trata o art. 201 da Constituição Federal é fixado em R$ 1.200,00 (um mil e duzentos reais), devendo, a partir da data da publicação desta Emenda, ser reajustado de forma a preservar, e"
+    },
+    {
+      "vigencia_inicio": "1999-05-01",
+      "vigencia_fim": "1999-05-31",
+      "teto": "1200.00",
+      "piso": "136.00",
+      "norma": "EC 20, de 15/12/1998, art. 14 (DOU 16/12/1998; vigência na publicação, art. 16)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/constituicao/emendas/emc/emc20.htm",
+      "piso_fonte": "salário mínimo vigente (Lei 9.971/2000, art. 4º), por força da Lei 8.213/1991, art. 29, §2º, e da Lei 8.212/1991, art. 28, §3º",
+      "texto": "Art. 14 - O limite máximo para o valor dos benefícios do regime geral de previdência social de que trata o art. 201 da Constituição Federal é fixado em R$ 1.200,00 (um mil e duzentos reais), devendo, a partir da data da publicação desta Emenda, ser reajustado de forma a preservar, e"
+    },
+    {
+      "vigencia_inicio": "1999-06-01",
+      "vigencia_fim": "2000-04-02",
+      "teto": "1255.32",
+      "piso": "136.00",
+      "norma": "Portaria MPAS 5.188, de 06/05/1999, art. 8º (salário-de-contribuição: art. 14) (DOU 10/05/1999); o art. 3º, I, mantém R$ 1.200,00 com piso R$ 136,00 em maio de 1999",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00005188&seqAto=000&valorAno=1999&orgao=MPAS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 8º A partir de 1º de junho de 1999, o salário-de-benefício não poderá ser inferior a R$ 136,00 (cento e trinta e seis reais), nem superior a R$ 1.255,32 (um mil duzentos e cinqüenta e cinco reais e trinta e dois centavos)."
+    },
+    {
+      "vigencia_inicio": "2000-04-03",
+      "vigencia_fim": "2000-05-31",
+      "teto": "1255.32",
+      "piso": "151.00",
+      "norma": "Portaria MPAS 5.188, de 06/05/1999, art. 8º (salário-de-contribuição: art. 14) (DOU 10/05/1999); o art. 3º, I, mantém R$ 1.200,00 com piso R$ 136,00 em maio de 1999",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00005188&seqAto=000&valorAno=1999&orgao=MPAS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "piso_fonte": "salário mínimo vigente (Lei 9.971/2000, art. 5º), por força da Lei 8.213/1991, art. 29, §2º, e da Lei 8.212/1991, art. 28, §3º",
+      "texto": "Art. 8º A partir de 1º de junho de 1999, o salário-de-benefício não poderá ser inferior a R$ 136,00 (cento e trinta e seis reais), nem superior a R$ 1.255,32 (um mil duzentos e cinqüenta e cinco reais e trinta e dois centavos)."
+    },
+    {
+      "vigencia_inicio": "2000-06-01",
+      "vigencia_fim": "2001-03-31",
+      "teto": "1328.25",
+      "piso": "151.00",
+      "norma": "Portaria MPAS 6.211, de 25/05/2000, art. 4º (salário-de-contribuição: art. 9º) (DOU 26/05/2000)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00006211&seqAto=000&valorAno=2000&orgao=MPAS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 4º A partir de 1º de junho de 2000, o salário-de-benefício não poderá ser inferior a R$ 151,00 (cento e cinqüenta e um reais), nem superior a R$ 1.328,25 (um mil trezentos e vinte e oito reais e vinte e cinco centavos)."
+    },
+    {
+      "vigencia_inicio": "2001-04-01",
+      "vigencia_fim": "2001-05-31",
+      "teto": "1328.25",
+      "piso": "180.00",
+      "norma": "Portaria MPAS 6.211, de 25/05/2000, art. 4º (salário-de-contribuição: art. 9º) (DOU 26/05/2000)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00006211&seqAto=000&valorAno=2000&orgao=MPAS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "piso_fonte": "salário mínimo vigente (Medida Provisória 2.194-6, de 23/08/2001, art. 1º (em vigor pelo art. 2º da EC 32/2001 até a revogação pela Lei 11.321/2006) — origem: MP 2.142, de 29/03/2001), por força da Lei 8.213/1991, art. 29, §2º, e da Lei 8.212/1991, art. 28, §3º",
+      "texto": "Art. 4º A partir de 1º de junho de 2000, o salário-de-benefício não poderá ser inferior a R$ 151,00 (cento e cinqüenta e um reais), nem superior a R$ 1.328,25 (um mil trezentos e vinte e oito reais e vinte e cinco centavos)."
+    },
+    {
+      "vigencia_inicio": "2001-06-01",
+      "vigencia_fim": "2002-03-31",
+      "teto": "1430.00",
+      "piso": "180.00",
+      "norma": "Portaria MPAS 1.987, de 04/06/2001, art. 4º (salário-de-contribuição: art. 9º) (DOU 05/06/2001)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00001987&seqAto=000&valorAno=2001&orgao=MPAS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 4° A partir de 1° de junho de 2001, o salário-de-benefício não poderá ser inferior a R$ 180,00 (cento e oitenta reais), nem superior a R$ 1.430,00 (um mil quatrocentos e trinta reais)."
+    },
+    {
+      "vigencia_inicio": "2002-04-01",
+      "vigencia_fim": "2002-05-31",
+      "teto": "1430.00",
+      "piso": "200.00",
+      "norma": "Portaria MPAS 1.987, de 04/06/2001, art. 4º (salário-de-contribuição: art. 9º) (DOU 05/06/2001)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00001987&seqAto=000&valorAno=2001&orgao=MPAS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "piso_fonte": "salário mínimo vigente (Lei 10.525, de 06/08/2002 (conversão da MP 35/2002), art. 1º), por força da Lei 8.213/1991, art. 29, §2º, e da Lei 8.212/1991, art. 28, §3º",
+      "texto": "Art. 4° A partir de 1° de junho de 2001, o salário-de-benefício não poderá ser inferior a R$ 180,00 (cento e oitenta reais), nem superior a R$ 1.430,00 (um mil quatrocentos e trinta reais)."
+    },
+    {
+      "vigencia_inicio": "2002-06-01",
+      "vigencia_fim": "2003-03-31",
+      "teto": "1561.56",
+      "piso": "200.00",
+      "norma": "Portaria MPAS 525, de 29/05/2002, art. 4º (salário-de-contribuição: art. 9º) (DOU 31/05/2002)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00000525&seqAto=000&valorAno=2002&orgao=MPAS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 4º A partir de 1º de junho de 2002, o salário-de-benefício não poderá ser inferior a R$ 200,00 (duzentos reais), nem superior a R$ 1.561,56 (um mil quinhentos e sessenta e um reais e cinqüenta e seis centavos)."
+    },
+    {
+      "vigencia_inicio": "2003-04-01",
+      "vigencia_fim": "2003-05-31",
+      "teto": "1561.56",
+      "piso": "240.00",
+      "norma": "Portaria MPAS 525, de 29/05/2002, art. 4º (salário-de-contribuição: art. 9º) (DOU 31/05/2002)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00000525&seqAto=000&valorAno=2002&orgao=MPAS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "piso_fonte": "salário mínimo vigente (Lei 10.699, de 09/07/2003 (conversão da MP 116/2003), art. 1º), por força da Lei 8.213/1991, art. 29, §2º, e da Lei 8.212/1991, art. 28, §3º",
+      "texto": "Art. 4º A partir de 1º de junho de 2002, o salário-de-benefício não poderá ser inferior a R$ 200,00 (duzentos reais), nem superior a R$ 1.561,56 (um mil quinhentos e sessenta e um reais e cinqüenta e seis centavos)."
+    },
+    {
+      "vigencia_inicio": "2003-06-01",
+      "vigencia_fim": "2003-12-30",
+      "teto": "1869.34",
+      "piso": "240.00",
+      "norma": "Portaria MPS 727, de 30/05/2003, art. 4º (salário-de-contribuição: art. 10) (DOU 02/06/2003)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://anttlegis.antt.gov.br/action/ActionDatalegis.php?acao=abrirTextoAto&tipo=POR&numeroAto=00000727&seqAto=000&valorAno=2003&orgao=MPS&nomeTitulo=codigos&desItem=&desItemFim=&cod_modulo=420&cod_menu=7145",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 4º A partir de 1º de junho de 2003, o salário-de-benefício não poderá ser inferior a R$ 240,00 (duzentos e quarenta reais), nem superior a R$ 1.869,34 (um mil oitocentos e sessenta e nove reais e trinta e quatro centavos)."
+    },
+    {
+      "vigencia_inicio": "2004-02-01",
+      "vigencia_fim": "2004-04-30",
+      "teto": "2400.00",
+      "piso": "240.00",
+      "norma": "EC 41, de 19/12/2003, art. 5º (DOU 31/12/2003) e Portaria MPS 12, de 06/01/2004, art. 2º (DOU 08/01/2004, p. 17; revogou a Portaria MPS 1/2004, de igual teor)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=17&data=08/01/2004&captchafield=firstAccess",
+      "piso_fonte": "salário mínimo vigente (Lei 10.699, de 09/07/2003 (conversão da MP 116/2003), art. 1º), por força da Lei 8.213/1991, art. 29, §2º, e da Lei 8.212/1991, art. 28, §3º",
+      "texto": "Art. 2o O limite máximo do valor dos benefícios do RGPS, a serem concedidos a partir de 31 de dezembro de 2003, é de R$ 2.400,00 (dois mil e quatrocentos reais)."
+    },
+    {
+      "vigencia_inicio": "2004-05-01",
+      "vigencia_fim": "2005-04-30",
+      "teto": "2508.72",
+      "piso": "260.00",
+      "norma": "Portaria MPS 479, de 07/05/2004, art. 2º (DOU 10/05/2004, p. 35)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=35&data=10/05/2004&captchafield=firstAccess",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de maio de 2004, o salário-de-benefício e o salário-de-contribuição não poderão ser inferiores a R$ 260,00 (duzentos e sessenta reais), nem superiores a R$ 2.508,72 (dois mil quinhentos e oito reais e setenta e dois centavos)."
+    },
+    {
+      "vigencia_inicio": "2005-05-01",
+      "vigencia_fim": "2006-03-31",
+      "teto": "2668.15",
+      "piso": "300.00",
+      "norma": "Portaria MPS 822, de 11/05/2005, art. 2º (DOU 12/05/2005, p. 36)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=36&data=12/05/2005&captchafield=firstAccess",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de maio de 2005, o salário-de-benefício e o salário-de-contribuição não poderão ser inferiores a R$ 300,00 (trezentos reais), nem superiores a R$ 2.668,15 (dois mil seiscentos e sessenta e oito reais e quinze centavos)."
+    },
+    {
+      "vigencia_inicio": "2006-04-01",
+      "vigencia_fim": "2006-07-31",
+      "teto": "2801.56",
+      "piso": "350.00",
+      "norma": "Portaria MPS 119, de 18/04/2006, art. 2º (DOU 19/04/2006, p. 43)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=43&data=19/04/2006&captchafield=firstAccess",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de abril de 2006, o salário-de-benefício e o salário-de-contribuição não poderão ser inferiores a R$ 350,00 (trezentos cinqüenta reais), nem superiores a R$ 2.801,56 (dois mil oitocentos e um reais e cinqüenta e seis centavos)."
+    },
+    {
+      "vigencia_inicio": "2006-08-01",
+      "vigencia_fim": "2007-03-31",
+      "teto": "2801.82",
+      "piso": "350.00",
+      "norma": "Portaria MPS 342, de 16/08/2006, art. 2º (DOU 17/08/2006, p. 38)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=38&data=17/08/2006&captchafield=firstAccess",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de agosto de 2006, o salário-de-benefício e o salário-de-contribuição não poderão ser inferiores a R$ 350,00 (trezentos cinqüenta reais), nem superiores a R$ 2.801,82 (dois mil oitocentos e um reais e oitenta e dois centavos)."
+    },
+    {
+      "vigencia_inicio": "2007-04-01",
+      "vigencia_fim": "2008-02-29",
+      "teto": "2894.28",
+      "piso": "380.00",
+      "norma": "Portaria MPS 142, de 11/04/2007, art. 2º (DOU 12/04/2007, p. 45)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=45&data=12/04/2007&captchafield=firstAccess",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2 o- A partir de 1 o- de abril de 2007, o salário-de-benefício e o salário-de-contribuição não poderão ser inferiores a R$ 380,00 (trezentos e oitenta reais), nem superiores a R$ 2.894,28 (dois mil oitocentos e noventa e quatro reais e vinte e oito centavos)."
+    },
+    {
+      "vigencia_inicio": "2008-03-01",
+      "vigencia_fim": "2009-01-31",
+      "teto": "3038.99",
+      "piso": "415.00",
+      "norma": "Portaria Interministerial MPS/MF 77, de 11/03/2008, art. 2º (DOU 12/03/2008, p. 42)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=42&data=12/03/2008&captchafield=firstAccess",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de março de 2008, o salário-de-benefício e o salário-de-contribuição não poderão ser inferiores a R$ 415,00 (quatrocentos e quinze reais), nem superiores a R$ 3.038,99 ( três mil e trinta e oito reais e noventa e nove centavos)."
+    },
+    {
+      "vigencia_inicio": "2009-02-01",
+      "vigencia_fim": "2009-12-31",
+      "teto": "3218.90",
+      "piso": "465.00",
+      "norma": "Portaria Interministerial MPS/MF 48, de 12/02/2009, art. 2º (DOU 13/02/2009, p. 53)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=53&data=13/02/2009&captchafield=firstAccess",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2 o- A partir de 1 o- de fevereiro de 2009, o salário-de-benefício e o salário-de-contribuição não poderão ser inferiores a R$ 465,00 (quatrocentos e sessenta e cinco reais), nem superiores a R$ 3.218,90 (três mil duzentos e dezoito reais e noventa centavos)."
+    },
+    {
+      "vigencia_inicio": "2010-01-01",
+      "vigencia_fim": "2010-12-31",
+      "teto": "3467.40",
+      "piso": "510.00",
+      "norma": "Portaria Interministerial MPS/MF 333, de 29/06/2010, art. 2º (DOU 30/06/2010, p. 95), retroativa a 01/01/2010; revogou a PI 350/2009, que fixara R$ 3.416,54 para a mesma data (DOU 31/12/2009, p. 51)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=95&data=30/06/2010&captchafield=firstAccess",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de janeiro de 2010, o salário-de-benefício e o salário-de-contribuição não poderão ser inferiores a R$ 510,00 (quinhentos e dez reais), nem superiores a R$ 3.467,40 (três mil quatrocentos e sessenta e sete reais e quarenta centavos)."
+    },
+    {
+      "vigencia_inicio": "2011-03-01",
+      "vigencia_fim": "2011-12-31",
+      "teto": "3691.74",
+      "piso": "545.00",
+      "norma": "Portaria Interministerial MPS/MF 407, de 14/07/2011, art. 2º (DOU 15/07/2011, p. 54), retroativa a 01/01/2011; revogou a PI 568/2010 (R$ 3.689,66 a partir de 01/01/2011; DOU 03/01/2011, p. 32) e a PI 115/2011 (não capturada)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=54&data=15/07/2011&captchafield=firstAccess",
+      "piso_fonte": "salário mínimo vigente (Lei 12.382, de 25/02/2011, art. 1º e art. 7º (vigência no primeiro dia do mês seguinte à publicação; DOU 28/02/2011)), por força da Lei 8.213/1991, art. 29, §2º, e da Lei 8.212/1991, art. 28, §3º",
+      "texto": "Art. 2o A partir de 1o de janeiro de 2011 o salário-de-benefício e o salário-de-contribuição não poderão ser superiores a R$ 3.691,74 (três mil, seiscentos e noventa e um reais e setenta e quatro centavos), nem inferiores a R$ 540,00 (quinhentos e quarenta reais)"
+    },
+    {
+      "vigencia_inicio": "2012-01-01",
+      "vigencia_fim": "2012-12-31",
+      "teto": "3916.20",
+      "piso": "622.00",
+      "norma": "Portaria Interministerial MPS/MF 2, de 06/01/2012, art. 2º (DOU 09/01/2012, p. 59)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=59&data=09/01/2012&captchafield=firstAccess",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de janeiro de 2012, o salário-de-benefício e o salário-de-contribuição não poderão ser inferiores a R$ 622,00 (seiscentos e vinte e dois reais), nem superiores a R$ 3.916,20 (três mil novecentos e dezesseis reais e vinte centavos)."
+    },
+    {
+      "vigencia_inicio": "2013-01-01",
+      "vigencia_fim": "2013-12-31",
+      "teto": "4159.00",
+      "piso": "678.00",
+      "norma": "Portaria Interministerial MPS/MF 15, de 10/01/2013, art. 2º (DOU 11/01/2013, p. 46); revogou a PI 11/2013 (não capturada)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=46&data=11/01/2013&captchafield=firstAccess",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de janeiro de 2013, o salário-de-benefício e o salário-de-contribuição não poderão ser inferiores a R$ 678,00 (seiscentos e setenta e oito reais), nem superiores a R$ 4.159,00 (quatro mil cento e cinquenta e nove reais)."
+    },
+    {
+      "vigencia_inicio": "2014-01-01",
+      "vigencia_fim": "2014-12-31",
+      "teto": "4390.24",
+      "piso": "724.00",
+      "norma": "Portaria Interministerial MPS/MF 19, de 10/01/2014, art. 2º (DOU 13/01/2014, p. 21)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://pesquisa.in.gov.br/imprensa/servlet/INPDFViewer?jornal=1&pagina=21&data=13/01/2014&captchafield=firstAccess",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de janeiro de 2014, o salário-debenefício e o salário-de-contribuição não poderão ser inferiores a R$ 724,00 (setecentos e vinte e quatro reais), nem superiores a R$ 4.390,24 (quatro mil, trezentos e noventa reais e vinte e quatro centavos)."
+    },
+    {
+      "vigencia_inicio": "2015-01-01",
+      "vigencia_fim": "2015-12-31",
+      "teto": "4663.75",
+      "piso": "788.00",
+      "norma": "Portaria Interministerial MPS/MF 13, de 09/01/2015, art. 2º (DOU 12/01/2015, p. 15)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-interministerial-n-13-de-9-de-janeiro-de-2015-32103739",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de janeiro de 2015, o salário-debenefícioe o salário-de-contribuição não poderão ser inferiores a R$788,00 (setecentos e oitenta e oito reais), nem superiores a R$4.663,75 (quatro mil seiscentos e sessenta e três reais e setenta ecinco centavos)."
+    },
+    {
+      "vigencia_inicio": "2016-01-01",
+      "vigencia_fim": "2016-12-31",
+      "teto": "5189.82",
+      "piso": "880.00",
+      "norma": "Portaria Interministerial MTPS/MF 1, de 08/01/2016, art. 2º (DOU 11/01/2016, p. 67)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-interministerial-n-1-de-8-de-janeiro-de-2016-22173569",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de janeiro de 2016, o salário-debenefícioe o salário-de-contribuição não poderão ser inferiores a R$880,00 (oitocentos e oitenta reais), nem superiores a R$ 5.189,82(cinco mil cento e oitenta e nove reais e oitenta e dois centavos)."
+    },
+    {
+      "vigencia_inicio": "2017-01-01",
+      "vigencia_fim": "2017-12-31",
+      "teto": "5531.31",
+      "piso": "937.00",
+      "norma": "Portaria MF 8, de 13/01/2017, art. 2º (DOU 16/01/2017, p. 12)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-n-8-de-13-de-janeiro-de-2017-20350798",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de janeiro de 2017, o salário debenefício e o salário de contribuição não poderão ser inferiores a R$937,00 (novecentos e trinta e sete reais), nem superiores a R$5.531,31 (cinco mil quinhentos e trinta e um reais e trinta e umcentavos)."
+    },
+    {
+      "vigencia_inicio": "2018-01-01",
+      "vigencia_fim": "2018-12-31",
+      "teto": "5645.80",
+      "piso": "954.00",
+      "norma": "Portaria MF 15, de 16/01/2018, art. 2º (DOU 17/01/2018)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-n-15-de-16-de-janeiro-de-2018-1897292",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de janeiro de 2018, o salário de benefício e o salário de contribuição não poderão ser inferiores a R$ 954,00 (novecentos e cinquenta e quatro reais), nem superiores a R$ 5.645,80 (cinco mil seiscentos e quarenta e cinco reais e oitenta centavos)."
+    },
+    {
+      "vigencia_inicio": "2019-01-01",
+      "vigencia_fim": "2019-12-31",
+      "teto": "5839.45",
+      "piso": "998.00",
+      "norma": "Portaria ME 9, de 15/01/2019, art. 2º (DOU 16/01/2019, p. 25)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-n-9-de-15-de-janeiro-de-2019-59253472",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de janeiro de 2019, o salário de benefício e o salário de contribuição não poderão ser inferiores a R$ 998,00 (novecentos e noventa e oito reais), nem superiores a R$ 5.839,45 (cinco mil oitocentos e trinta e nove reais e quarenta e cinco centavos)"
+    },
+    {
+      "vigencia_inicio": "2020-01-01",
+      "vigencia_fim": "2020-01-31",
+      "teto": "6101.06",
+      "piso": "1039.00",
+      "norma": "Portaria SEPRT/ME 914, de 13/01/2020, art. 2º (DOU 14/01/2020, p. 6)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-n-914-de-13-de-janeiro-de-2020-237937443",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de janeiro de 2020, o salário de benefício e o salário de contribuição não poderão ser inferiores a R$ 1.039,00 (um mil e trinta e nove reais), nem superiores a R$ 6.101,06 (seis mil, cento e um reais e seis centavos)."
+    },
+    {
+      "vigencia_inicio": "2020-02-01",
+      "vigencia_fim": "2020-12-31",
+      "teto": "6101.06",
+      "piso": "1045.00",
+      "norma": "Portaria SEPRT/ME 3.659, de 10/02/2020, art. 2º (DOU 11/02/2020, p. 20)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-n-3.659-de-10-de-fevereiro-de-2020-242573505",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de fevereiro de 2020, o salário de benefício e o salário de contribuição não poderão ser inferiores a R$ 1.045,00 (um mil e quarenta e cinco reais), nem superiores a R$ 6.101,06 (seis mil, cento e um reais e seis centavos)."
+    },
+    {
+      "vigencia_inicio": "2021-01-01",
+      "vigencia_fim": "2021-12-31",
+      "teto": "6433.57",
+      "piso": "1100.00",
+      "norma": "Portaria SEPRT/ME 477, de 12/01/2021, art. 2º (DOU 13/01/2021, p. 23)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-seprt/me-n-477-de-12-de-janeiro-de-2021-298858991",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de janeiro de 2021, o salário de benefício e o salário de contribuição não poderão ser inferiores a R$ 1.100,00 (um mil e cem reais), nem superiores a R$ 6.433,57 (seis mil quatrocentos e trinta e três reais e cinquenta e sete centavos)."
+    },
+    {
+      "vigencia_inicio": "2022-01-01",
+      "vigencia_fim": "2022-12-31",
+      "teto": "7087.22",
+      "piso": "1212.00",
+      "norma": "Portaria Interministerial MTP/ME 12, de 17/01/2022, art. 2º (DOU 20/01/2022, p. 72)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-interministerial-mtp/me-n-12-de-17-de-janeiro-de-2022-375006998",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de janeiro de 2022, o salário de benefício e o salário de contribuição não poderão ser inferiores a R$ 1.212,00 (um mil duzentos e doze reais) nem superiores a R$ 7.087,22 (sete mil e oitenta e sete reais e vinte e dois centavos)."
+    },
+    {
+      "vigencia_inicio": "2023-01-01",
+      "vigencia_fim": "2023-04-30",
+      "teto": "7507.49",
+      "piso": "1302.00",
+      "norma": "Portaria Interministerial MPS/MF 26, de 10/01/2023, art. 2º (DOU 11/01/2023, p. 32)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-interministerial-mps/mf-n-26-de-10-de-janeiro-de-2023-457160869",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de janeiro de 2023, o salário de benefício e o salário de contribuição não poderão ser inferiores a R$ 1.302,00 (mil trezentos e dois reais) nem superiores a R$ 7.507,49 (sete mil quinhentos e sete reais e quarenta e nove centavos)."
+    },
+    {
+      "vigencia_inicio": "2023-05-01",
+      "vigencia_fim": "2023-12-31",
+      "teto": "7507.49",
+      "piso": "1320.00",
+      "norma": "Portaria Interministerial MPS/MF 27, de 04/05/2023, art. 2º-A (DOU 08/05/2023, p. 52)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-interministerial-mps/mf-n-27-de-4-de-maio-de-2023-481520415",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º-A A partir de 1º de maio de 2023, o salário de benefício e o salário de contribuição não poderão ser inferiores a R$ 1.320,00 (um mil trezentos e vinte reais) nem superiores a R$ 7.507,49 (sete mil quinhentos e sete reais e quarenta e nove centavos)."
+    },
+    {
+      "vigencia_inicio": "2024-01-01",
+      "vigencia_fim": "2024-12-31",
+      "teto": "7786.02",
+      "piso": "1412.00",
+      "norma": "Portaria Interministerial MPS/MF 2, de 11/01/2024, art. 2º (DOU 12/01/2024, p. 44)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-interministerial-mps/mf-n-2-de-11-de-janeiro-de-2024-537035232",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º A partir de 1º de janeiro de 2024, o salário de benefício e o salário de contribuição não poderão ser inferiores a R$ 1.412,00 (um mil quatrocentos e doze reais), nem superiores a R$ 7.786,02 (sete mil setecentos e oitenta e seis reais e dois centavos)."
+    },
+    {
+      "vigencia_inicio": "2025-01-01",
+      "vigencia_fim": "2025-12-31",
+      "teto": "8157.41",
+      "piso": "1518.00",
+      "norma": "Portaria Interministerial MPS/MF 6, de 10/01/2025, art. 2º (DOU 13/01/2025, p. 49)",
+      "arquivo": "context/lei/serie-teto-rgps-1994-2026.md",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-interministerial-mps/mf-n-6-de-10-de-janeiro-de-2025-606526848",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "Art. 2º O salário de benefício e o salário de contribuição, a partir de 1º de janeiro de 2025, não poderão ser inferiores a R$ 1.518,00 (mil quinhentos e dezoito reais) nem superiores a R$ 8.157,41 (oito mil cento e cinquenta e sete reais e quarenta e um centavos)."
+    },
+    {
+      "vigencia_inicio": "2026-01-01",
+      "vigencia_fim": null,
+      "teto": "8475.55",
+      "piso": "1621.00",
+      "norma": "Portaria Interministerial MPS/MF 13/2026, art. 2º",
+      "arquivo": "context/lei/portaria-interministerial-mps-mf-13-2026.md",
+      "url": "https://www.in.gov.br/web/dou/-/portaria-interministerial-mps/mf-n-13-de-9-de-janeiro-de-2026-680382603",
+      "piso_fonte": "mesmo dispositivo da norma do teto",
+      "texto": "O salário de benefício e o salário de contribuição, a partir de 1º de janeiro de 2026, não poderão ser inferiores a R$ 1.621,00 (mil seiscentos e vinte e um reais) nem superiores a R$ 8.475,55 (oito mil quatrocentos e setenta e cinco reais e cinquenta e cinco centavos)."
+    }
+  ],
+  "lacunas": [
+    {
+      "periodo": "antes de 1994-07-01",
+      "teto": null,
+      "piso": null,
+      "motivo": "fora do escopo (Plano Real); valores em cruzeiro real/URV anteriores não capturados"
+    },
+    {
+      "periodo": "2003-12-31 a 2004-01-31",
+      "teto": null,
+      "piso": null,
+      "teto_candidatos": {
+        "ato": "2400.00",
+        "aeps": "1869.34"
+      },
+      "piso_candidato": "240.00",
+      "motivo": "🔴 EC 41/2003, art. 5º, e Portaria MPS 12/2004, art. 2º, fixam R$ 2.400,00 para benefícios concedidos a partir de 31/12/2003 (a Portaria 12/2004, art. 4º, aplica a nova tabela de salário-de-contribuição 'a partir de janeiro de 2004'); o AEPS 2017, Tabela 1.1, registra R$ 1.869,34 em janeiro de 2004 e R$ 2.400,00 só a partir de fevereiro. Ver context/lei/serie-teto-rgps-1994-2026.md"
+    },
+    {
+      "periodo": "2011-01-01 a 2011-02-28",
+      "teto": null,
+      "piso": null,
+      "teto_candidatos": {
+        "ato": "3691.74",
+        "aeps": "3689.66"
+      },
+      "piso_candidato": "540.00",
+      "motivo": "🔴 a PI MPS/MF 407/2011 (DOU 15/07/2011) fixa R$ 3.691,74 'a partir de 1º de janeiro de 2011' e revoga a PI 568/2010, que fixara R$ 3.689,66 para a mesma data; o AEPS 2017, Tabela 1.1, registra R$ 3.689,66 em janeiro e fevereiro de 2011 e R$ 3.691,74 só a partir de março. Ver context/lei/serie-teto-rgps-1994-2026.md"
+    },
+    {
+      "periodo": "a partir de 2027-01-01",
+      "teto": null,
+      "piso": null,
+      "motivo": "portaria de 2027 não capturada"
+    }
+  ]
+}

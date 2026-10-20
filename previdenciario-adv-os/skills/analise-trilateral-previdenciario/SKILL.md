@@ -1,205 +1,58 @@
 ---
 name: analise-trilateral-previdenciario
-description: >
-  ANALISE TRILATERAL PREVIDENCIARIA — Skill Tier 1 (Estado-Maior). Antes de qualquer producao documental, analisa o caso pelas tres perspectivas obrigatorias: (1) Segurado/Operador — o que sustenta a tese; (2) INSS/PFE — qual sera a defesa adversarial mais forte; (3) Magistrado/Julgador — como o caso aparece para quem decide. Resultado e uma matriz de pontos fortes/fragilidades/contraveres que orienta a producao da peca/recurso/parecer com escala de comprometimento correta. Acionada apos triagem-dogmatica e antes do Tenente Tier 2 produzir.
+description: "Testa o caminho escolhido pelos tres lados antes de redigir: o que sustenta o segurado, o que o INSS vai alegar (preliminares e merito) e como o caso chega ao juizo ou ao CRPS. Devolve uma matriz de forcas, fragilidades e respostas, e o ponto que decide o caso. Use quando o operador disser o que o INSS vai alegar, pontos fracos do caso, antecipar a defesa, como o juiz vai ver, teste de estresse da tese, ou quando a estrategia pedir. Nao use para escolher a via (estrategia-de-caso-previdenciario) nem para redigir a peca."
 ---
 
-# ANALISE TRILATERAL PREVIDENCIARIA — Skill Tier 1
+# ANALISE-TRILATERAL-PREVIDENCIARIO
 
-> Estado-Maior. Voce e o **antecipador adversarial** do plugin. Sua funcao e olhar o caso por 3 perspectivas obrigatorias antes de qualquer producao: segurado, INSS/PFE, magistrado.
+> Camada C2. Antecipa a defesa do INSS e o olhar de quem decide, para a peca ja nascer respondendo.
 
----
+## Entradas
+- Recebe: quadro do caso confirmado e o caminho em analise (obrigatorio) · documentos, resultados de script, decisao do INSS (opcional)
+- Chamada por: previdenciario-master · estrategia-de-caso-previdenciario | Chama: jurisprudencia-estrategica-previdenciario
 
-## 1. AS 3 PERSPECTIVAS
+## Anexos obrigatorios (context/)
+- `context/metodologia-previdenciario.md` (secoes 5 Verdades, 6 Distincao, 7 Armadilhas, 9 Relogio - grep a secao e leia a faixa)
+- `context/lei/lei-8213-1991.md` (arts. 15, 25, 26, 27-A, 57, 86, 103 - grep o artigo e leia a faixa)
+- `context/lei/lei-8742-1993-loas.md` (art. 20) · `context/lei/ec-103-2019.md` (arts. 25 e 26)
+- `context/lei/temas-sumulas-prev.md` (so o que estiver la)
 
-### Perspectiva 1 — SEGURADO / OPERADOR
+## Objetivo
+Mostrar ao advogado, antes da redacao, onde o caso e forte, onde o INSS vai bater e qual fato decide.
 
-**Pergunta:** o que sustenta a tese do segurado?
+## Metodologia
+1. Partir do quadro confirmado. Se o quadro nao veio confirmado do master ou da estrategia, devolve-lo em 3 a 6 linhas e esperar.
+2. Lado do segurado: fatos incontroversos, documentos que provam cada requisito, numero conferido por script, dispositivo com ancora no context/. Requisito sem prova vira fragilidade, nao forca.
+3. Lado do INSS: listar o que um procurador alegaria neste caso, um item por linha, com a fonte. Checar sempre:
+   - Preliminares: falta de requerimento administrativo previo do mesmo pedido; decadencia da revisao (`lei-8213-1991.md`, art. 103; STF Tema 313); prescricao das parcelas anteriores a 5 anos (art. 103, par. unico); coisa julgada; incompetencia pelo valor (alcada do JEF).
+   - Merito: carencia ou qualidade de segurado (arts. 15, 25, 27-A; a metade do art. 27-A so reabre o computo, nao cumpre a carencia); tempo especial sem PPP amparado em laudo, ou conversao de tempo especial trabalhado depois de 13/11/2019 (`ec-103-2019.md`, art. 25, par. 2; o corte e a data do trabalho, nao a do pedido); capacidade residual na pericia; renda per capita acima de 1/4 no BPC (`lei-8742-1993-loas.md`, art. 20, par. 3); auxilio-acidente com aposentadoria (art. 86); coeficiente ou PBC errado (`ec-103-2019.md`, art. 26).
+   - Para cada alegacao: a resposta do segurado e a prova que a sustenta, ou "sem resposta hoje".
+4. Lado do juizo (ou do CRPS): o caso se explica em 30 segundos? Cada requisito tem documento indicado? O pedido e determinado e o valor saiu de script? Ha algo que gera desconfianca (tese ampla demais, numero sem memoria, jurisprudencia sem ancora)?
+5. Jurisprudencia de qualquer dos lados so pela `jurisprudencia-estrategica-previdenciario`, do que esta em `temas-sumulas-prev.md`. O que nao esta la nao entra na matriz como fundamento.
+6. Fechar com o ponto que decide o caso (o fato ou a prova de que tudo depende) e o que fazer antes de redigir para fortalece-lo.
 
-Mapear:
-- Direitos invocaveis (constitucional + infraconstitucional + infralegal)
-- Documentacao probatoria disponivel
-- Fatos incontroversos
-- Jurisprudencia favoravel (Nivel 1 obrigatorio)
-- Doutrina que apoia
-- Principios pro-segurado aplicaveis (mitigacao probatoria, fungibilidade, *in dubio pro misero*)
+## Caso modelo: cobranca depois da modulacao do STF Tema 1.102 (dados inventados)
+Segurada recebeu diferencas por tutela concedida numa revisao do art. 29 contra o art. 3 da Lei 9.876; a tutela caiu e o INSS cobra a devolucao.
+- Segurado: a modulacao (`temas-sumulas-prev.md`, STF Tema 1.102) torna irrepetiveis os valores percebidos por decisoes, definitivas ou provisorias, prolatadas ate 05/04/2024; e, nas acoes pendentes de conclusao nessa data, nao se cobram sucumbencia, custas e pericia. A data da decisao e a situacao da acao em 05/04/2024 decidem.
+- INSS: decisao prolatada depois de 05/04/2024; ou repeticao e pagamento ja feitos, que ficam mantidos.
+- Juizo: precisa ver a data da decisao que pagou e o andamento em 05/04/2024, com documento.
+- Ponto que decide: data em que a decisao foi prolatada. Os embargos de 17/03/2026 seguiam pendentes na captura: `[VERIFICAR]` antes da peca.
+- A tese de revisao em si nao se ajuiza: e inviavel (ADIs 2.110/2.111). A defesa e contra a cobranca.
 
-### Perspectiva 2 — INSS / PFE
+## Se faltar anexo
+Seguir com o que ha no context/ e avisar em uma linha o que faltou e o que isso limita na matriz. Alegacao sem fonte entra como `[VERIFICAR]`. Nunca preencher por suposicao.
 
-**Pergunta:** qual sera a defesa adversarial mais forte? Como pensa um Procurador Federal experiente?
+## Entrega obrigatoria final
+- Matriz em tres colunas (segurado, INSS, juizo) com forcas, fragilidades e resposta a cada alegacao do INSS, cada linha com a fonte.
+- Ponto que decide o caso e a providencia antes da redacao.
+- Lista do que ficou `[VERIFICAR]`.
 
-Mapear (BalONEY DETECTION aplicado a tese propria):
-- Pontos fragis da tese do segurado
-- Sumulas e jurisprudencia favoraveis ao INSS
-- Arguicoes processuais (preliminares):
-  - Inadequacao da via eleita
-  - Ausencia de previo requerimento administrativo (Tema 350 STF)
-  - Decadencia / prescricao
-  - Coisa julgada
-  - Litispendencia
-  - Ilegitimidade ativa/passiva
-- Arguicoes de merito:
-  - Ausencia de tempo de contribuicao
-  - Carencia nao atendida
-  - Ausencia de incapacidade
-  - Existencia de capacidade residual (em incapacidade)
-  - Renda familiar acima do limite (em BPC)
-  - PPP/LTCAT inadequado (em especial)
-- **Tese comum da PFE:** Sumula 7 STJ em REsp (PA-16 — Filtro Anti-Sumula 7)
+## Guard
+- Nunca esconder fragilidade do advogado; nunca estimar percentual de exito.
+- Nunca usar tema ou sumula fora de `temas-sumulas-prev.md` nem com conteudo diferente do que esta la.
+- Nunca montar argumento a favor da revisao do art. 29 contra o art. 3 da Lei 9.876.
 
-### Perspectiva 3 — MAGISTRADO / JULGADOR
-
-**Pergunta:** como o caso aparece para quem decide?
-
-Mapear:
-- Narrativa clara dos fatos? Conseguiria explicar em 30 segundos?
-- Nexo causal inequivoco?
-- Documentos probatorios bem indicados (com folhas/anexos)?
-- Pedido determinado e exequivel?
-- Algum ponto da peca gera estranheza ao magistrado?
-- A peca "respira" ou "sufoca"? (excesso de fundamentos pode ser sinal de fraqueza)
-- Volume de paginas adequado a complexidade do caso?
-- Tom respeitoso ao juizo (mesmo sendo combativo a parte adversa)?
-
----
-
-## 2. PROTOCOLO DE EXECUCAO
-
-### Passo 1 — Receber contexto da triagem dogmatica
-
-Input:
-- Demanda (tipo)
-- Principios e institutos pertinentes (da triagem-dogmatica)
-- Documentos disponiveis
-- Polo
-
-### Passo 2 — Construir a matriz trilateral
-
-Para cada ponto da tese:
-
-| Ponto | Perspectiva Segurado | Perspectiva INSS | Perspectiva Magistrado |
-|-------|---------------------|-------------------|----------------------|
-| <ponto 1> | argumento + fonte | contra-argumento + fonte | impressao + risco |
-| <ponto 2> | ... | ... | ... |
-
-### Passo 3 — Identificar pontos vulneraveis
-
-Marcar cada ponto:
-- 🟢 **Forte** — argumento consolidado, jurisprudencia firme, prova robusta
-- 🟡 **Moderado** — argumento defensavel, mas com contra-tese conhecida
-- 🔴 **Fragil** — argumento pode ser desmontado pela PFE; reforcar com outros ou abandonar
-
-### Passo 4 — Aplicar Escala de Comprometimento
-
-Reorganizar pontos:
-1. **Argumento mais forte primeiro** — abre a peca
-2. **Fortes em sequencia** — nucleo argumentativo
-3. **Moderados** — reforco
-4. **Fragis** — apenas se necessario, ao final, em tom de "ainda mais"
-5. **Nunca abrir por argumento fraco**
-
-### Passo 5 — Antecipar contra-argumentos
-
-Para cada ponto 🟡 e 🔴, redigir mentalmente:
-- O contra-argumento que a PFE vai usar
-- A resposta antecipada que NEUTRALIZA antes mesmo dele aparecer
-- Citacao especifica que sustenta a resposta
-
-Exemplo:
-
-```
-PONTO: Pretende a aplicacao do Tema 1102 STF (vida toda).
-CONTRA-ARGUMENTO ESPERADO DA PFE: a vida toda so se aplica a beneficios
-concedidos antes de 26/11/1999 (transicao da Lei 9.876/99); cliente
-foi concedido em 2005, fora da janela.
-
-RESPOSTA ANTECIPADA (a incluir na peca): "Embora o INSS possa argumentar
-que o Tema 1102 STF se aplica apenas a beneficios concedidos antes da
-Lei 9.876/99, esta tese nao prospera porque [analise especifica do
-caso + citacao da modulacao dos efeitos]."
-```
-
-### Passo 6 — Filtro do magistrado
-
-Reler o documento como julgador experiente:
-
-- O magistrado entende em 30 segundos qual e o pedido?
-- A narrativa e clara ou parece desorganizada?
-- Algum trecho gera duvida ou impressao de ma-fe?
-- O volume de paginas e adequado?
-- O tom e respeitoso ao juizo (mesmo combativo a contraparte)?
-- Ha pontos que parecem aventura juridica?
-
-### Passo 7 — Reportar matriz
-
-```
-ANALISE TRILATERAL — RESULTADO
-═════════════════════════════════
-
-PERSPECTIVA SEGURADO (pontos sustentadores):
-  🟢 <forte>
-  🟢 <forte>
-  🟡 <moderado>
-
-PERSPECTIVA INSS/PFE (defesas esperadas):
-  - <contra-argumento 1> + neutralizacao
-  - <contra-argumento 2> + neutralizacao
-  - <preliminar X>
-
-PERSPECTIVA MAGISTRADO:
-  - Narrativa: clara / confusa
-  - Nexo: inequivoco / fragilizado
-  - Risco de aventura: nao / sim (descrever)
-  - Tom adequado: sim / ajustar
-
-ESCALA DE COMPROMETIMENTO RECOMENDADA:
-  1. <argumento mais forte>
-  2. <segundo>
-  3. ...
-
-PONTOS A INCLUIR PARA NEUTRALIZAR PFE:
-  - <ponto 1>
-  - <ponto 2>
-
-═════════════════════════════════
-```
-
----
-
-## 3. EXEMPLOS
-
-### Caso — Aposentadoria especial com PPP fragilizado
-
-**Segurado:** atividade insalubre comprovada por testemunhas + LTCAT antigo + atestado medico de doenca ocupacional
-**INSS:** PPP nao apresenta agentes nocivos quantificados; EPI eficaz indicado; Tema 555 STF (EPI eficaz exclui especial)
-**Magistrado:** vai querer prova robusta de que EPI nao foi eficaz na pratica; testemunhas podem nao bastar
-
-**Recomendacoes:** producao antecipada de prova pericial; quesitos suplementares para perito oficial; juntada de prontuario medico que correlacione doenca a atividade.
-
-### Caso — Revisao da vida toda (Tema 1102 STF)
-
-**Segurado:** quer recalculo incluindo salarios pre-julho/1994
-**INSS:** modulacao do Tema 1102 (so aposentados pre-Lei 9.876/99); decadencia em alguns casos
-**Magistrado:** vai conferir DIB + decadencia + PBC
-
-**Recomendacoes:** abrir com decadencia (PA-09 sempre); explicitar DIB; mostrar calculo comparativo (regra atual vs vida toda).
-
----
-
-## 4. VEDACOES ESPECIFICAS
-
-- **PA-04** — manter postura adversarial; nao suavizar tese para parecer "balanceada"
-- **PA-17** — antecipar tese da PFE NAO e atacar a pessoa do procurador
-- **NAO** ignorar perspectiva do INSS — se tese nao se sustenta sob ataque adversarial, e fragil
-- **NAO** assumir magistrado favoravel; assumir cetico
-
----
-
-## 5. PROTOCOLOS ACIONADOS
-
-- **Protocolo 2.1** (Jurisprudencial) — para fundamentar cada perspectiva
-- **Tripe metodologico** — Baloney Detection aplicado contra a propria tese
-
----
-
-*Analise trilateral previdenciaria pronta.*
+## Assinatura (fora da peca)
+No rodape da resposta ao advogado, nunca dentro do documento:
+`Entregue pela skill analise-trilateral-previdenciario - plugin previdenciario-adv-os v2.0.0`.
+Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

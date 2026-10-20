@@ -18,7 +18,7 @@
 
 Marketplace oficial do plugin **Previdenciario Adv-OS** para Claude Code / Cowork.
 
-Sistema operacional do advogado previdenciarista — 26 skills consolidadas (RGPS + RPPS + Previdencia Complementar + Acidentario), 4 camadas hierarquicas com 22 Proibicoes Absolutas, 5 protocolos tecnicos e Suprema Corte R1-R4.
+Sistema operacional do advogado previdenciarista que atua para o segurado, o dependente e o beneficiário contra o INSS — 34 skills em 6 camadas, 9 comandos, 7 scripts de cálculo previdenciário + 2 motores auxiliares (atualização monetária e prazos), com fonte de cada número, lei seca anexada e revisão final R1–R4 (Suprema Corte).
 
 ---
 
@@ -42,27 +42,40 @@ Sistema operacional do advogado previdenciarista — 26 skills consolidadas (RGP
 
 ## Plugin disponivel
 
-### `previdenciario-adv-os` (v0.1.0)
+### `previdenciario-adv-os` (v2.0.0)
 
-Plugin Claude Code especializado em Direito Previdenciario Brasileiro.
+Plugin de Direito Previdenciário brasileiro para o advogado do segurado, do dependente e do beneficiário contra o INSS, do requerimento administrativo ao cumprimento de sentença.
 
 **Cobertura:**
-- RGPS (aposentadorias, beneficios por incapacidade, pensao, BPC/LOAS, salario-maternidade, revisao RMI)
-- RPPS (Uniao/Estados/Municipios, LC 173/2020, abono permanencia, CTC)
-- Previdencia Complementar (fechada LC 109 + aberta PGBL/VGBL)
-- Acidentario do Trabalho (Justica Comum estadual, NTEP, nexo)
+- RGPS: aposentadorias (regra permanente, direito adquirido e transições da EC 103/2019), aposentadoria especial e conversão de tempo, benefícios por incapacidade, auxílio-acidente, revisão de RMI
+- BPC/LOAS
+- Acidentário do trabalho
+- Via administrativa (INSS e recurso ao CRPS) e judicial: inicial, réplica, mandado de segurança, audiência, recursos (JEF, TRF, PEDILEF, REsp, RE) e cumprimento de sentença com RPV ou precatório
+- RPPS e previdência complementar: triagem e encaminhamento, sem cálculo
 
-**Skills (26 consolidadas em 4 tiers):**
-- Tier 0 — orquestrador (`previdenciario-master`)
-- Tier 1 (Estado-Maior) — triagem-dogmatica, analise-trilateral, jurisprudencia-estrategica, estrategia-de-caso
-- Tier 2 (Tenentes) — peticao-inicial, replica, recursos, MS, cumprimento, revisional, administrativo INSS/CRPS, analise-cnis, ppp-ltcat, pericia-medica, calculos, RPPS, complementar, acidentario, documentos extrajudiciais, audiencia
-- Tier 3 — Suprema Corte Previdenciaria R1-R4
-- Transversais — estilo-juridico, visual-law
-- Engine — onboarding (`/start-previdenciario`)
+**Skills (34 em 6 camadas):**
+- C0 Orquestração e QA — porta única (`previdenciario-master`), configuração, triagem, memória do caso, voz do escritório, revisão final R1–R4
+- C1 Fundação — lei seca, jurisprudência selada, validador de citações, guarda anti-alucinação
+- C2 Transversal — estratégia com 2 a 3 caminhos, cálculo, prazos, parecer, documentos e visual law
+- C3 Análise e prova — CNIS, PPP e LTCAT, carta de concessão ou indeferimento, perícia médica
+- C4 Benefícios e vias — planejamento previdenciário, acidentário, BPC, RPPS, complementar, administrativo
+- C5 Judicial e recursos — da inicial ao cumprimento de sentença
 
-**Comandos (8):** `/start-previdenciario`, `/previdenciario-master`, `/peticao-previdenciaria`, `/recurso-previdenciario`, `/parecer-previdenciario`, `/calculo-previdenciario`, `/revisao-previdenciaria-final`, `/status-previdenciario`.
+**Cálculo (7 scripts de cálculo previdenciário + 2 motores auxiliares, todos locais, sem internet):** CNIS e carência, tempo de contribuição, regras de transição da EC 103, incapacidade, RMI, valor da causa e RPV; os motores auxiliares cuidam da atualização monetária e dos prazos. Cada número sai com a regra e a fonte; o que não fecha sai como fórmula aberta marcada `[VERIFICAR]`, nunca como estimativa.
 
-Detalhes completos em [`previdenciario-adv-os/README.md`](./previdenciario-adv-os/README.md).
+**Citações:** a lei seca está anexada (EC 103/2019, Leis 8.213, 8.212, 8.742 e 10.259, Decreto 3.048, IN 128, Manual de Cálculos da Justiça Federal 2026) e toda citação é conferida contra os anexos.
+
+**Comandos (9):** `/start-previdenciario`, `/previdenciario-master`, `/status-previdenciario`, `/calculo-previdenciario`, `/planejamento-previdenciario`, `/peticao-previdenciaria`, `/recurso-previdenciario`, `/parecer-previdenciario`, `/revisao-previdenciaria-final`.
+
+**Para quem já instalou a versão 0.1:**
+- Atualize o plugin pelo mesmo marketplace e rode `/start-previdenciario` uma vez: ele encontra a configuração antiga e oferece converter para o novo `previdenciario/perfil.md` ou começar do zero.
+- Nenhum arquivo antigo é apagado, movido ou editado. O `CLAUDE.md` e o `.claude/settings.local.json` da 0.1 deixam de ser usados, mas o Claude ainda pode carregá-los; revise ou remova quando quiser.
+- Cada caso passa a ter arquivo próprio em `previdenciario/casos/<caso>.md`.
+- Nenhuma skill ou comando mudou de nome. Chegam 8 skills novas e o comando `/planejamento-previdenciario`; cinco comandos que apontavam para skill errada foram corrigidos.
+- A revisão da vida toda saiu como tese (ADIs 2.110 e 2.111; Tema 1.102).
+- A configuração do escritório não depende mais de Python, e os scripts auxiliares de estado saíram do plugin (os scripts de cálculo seguem rodando com Python 3).
+
+Tudo o que muda, com as correções de regra de cálculo, está em [`previdenciario-adv-os/CHANGELOG.md`](./previdenciario-adv-os/CHANGELOG.md). Detalhes completos em [`previdenciario-adv-os/README.md`](./previdenciario-adv-os/README.md).
 
 ---
 

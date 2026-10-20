@@ -1,0 +1,57 @@
+{
+  "tabela": "conversao-especial",
+  "descricao": "Multiplicadores para converter tempo de atividade especial em tempo comum.",
+  "fonte": [
+    {
+      "norma": "Decreto 3.048/1999, art. 188-P, §5º (incluído pelo Decreto 10.410/2020), tabela",
+      "arquivo": "context/lei/decreto-3048-art188p-tabela.md",
+      "url": "https://www.gov.br/previdencia/pt-br/assuntos/rpps/legislacao-dos-rpps/copy2_of_17CONSOLIDAOLEGISLAORPPSatualizadaat25deagostode2023.pdf",
+      "nota": "No Planalto a tabela é imagem; o texto vem da compilação oficial do Ministério da Previdência, p. 449."
+    },
+    {
+      "norma": "EC 103/2019, art. 25, §2º",
+      "arquivo": "context/lei/ec-103-2019.md"
+    },
+    {
+      "norma": "Decreto 3.048/1999, art. 70 (revogado pelo Decreto 10.410/2020; não usar)",
+      "arquivo": "context/lei/decreto-3048-1999.md"
+    }
+  ],
+  "data_captura": "2026-10-14",
+  "intervalo": {
+    "inicio": null,
+    "fim": "2019-11-13",
+    "nota": "aplica-se somente ao trabalho prestado até 13/11/2019, inclusive; o critério é a data em que o tempo foi trabalhado"
+  },
+  "validade": "Enquanto vigente o art. 188-P, §5º, do Decreto 3.048/1999; reverificar no gate de vigência antes de cada publicação.",
+  "data_limite_trabalho": "2019-11-13",
+  "regra_de_consulta": "Período trabalhado depois de 13/11/2019 não se converte (EC 103, art. 25, §2º; Decreto 3.048, art. 188-P, §5º). Vínculo que atravessa a data é fatiado; a contagem é do script (IN 128, art. 206).",
+  "cabecalho_da_fonte": {
+    "mulher": "MULHER (30 ANOS DE CONTRIBUIÇÃO)",
+    "homem": "HOMEM (35 ANOS DE CONTRIBUIÇÃO)"
+  },
+  "linhas": [
+    {
+      "tempo_a_converter_anos": 15,
+      "multiplicador": {
+        "mulher": "2.00",
+        "homem": "2.33"
+      }
+    },
+    {
+      "tempo_a_converter_anos": 20,
+      "multiplicador": {
+        "mulher": "1.50",
+        "homem": "1.75"
+      }
+    },
+    {
+      "tempo_a_converter_anos": 25,
+      "multiplicador": {
+        "mulher": "1.20",
+        "homem": "1.40"
+      }
+    }
+  ],
+  "unidade": "string decimal (ler com Decimal)"
+}

@@ -1,0 +1,446 @@
+{
+  "tabela": "salario-minimo",
+  "descricao": "Valor mensal do salário mínimo nacional por vigência.",
+  "fonte": [
+    {
+      "norma": "série 09/1994–2024, uma norma por vigência (ver campo 'norma' de cada linha)",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/"
+    },
+    {
+      "norma": "Decreto 12.342/2024, art. 1º",
+      "arquivo": "context/lei/decreto-12342-2024-salario-minimo.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/decreto/d12342.htm"
+    },
+    {
+      "norma": "Decreto 12.797/2025, art. 1º",
+      "arquivo": "context/lei/decreto-12797-2025-salario-minimo.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/decreto/d12797.htm"
+    }
+  ],
+  "conferencia": "Ipeadata MTE12_SALMIN12 (mensal, 388 meses de 09/1994 a 12/2026, 0 divergência) e TRT-MG 'Evolução do Salário Mínimo' (36 vigências, 0 divergência), em 2026-10-15",
+  "data_captura": "2026-10-15",
+  "intervalo": {
+    "inicio": "1994-09-01",
+    "fim": "2026-12-31"
+  },
+  "validade": "2026-12-31 (vale até o decreto do salário mínimo de 2027; recapturar antes de usar competência posterior)",
+  "unidade": "BRL, string decimal com 2 casas (ler com Decimal)",
+  "regra_de_consulta": "Usar a linha cuja vigência contém a data pedida. Data fora de todas as linhas cai em 'lacunas' (valor null). Valor null = não verificado em context/lei/. O script não estima: devolve exit 3 com a fórmula aberta.",
+  "linhas": [
+    {
+      "vigencia_inicio": "1994-09-01",
+      "vigencia_fim": "1995-04-30",
+      "valor": "70.00",
+      "valor_diario": "2.33",
+      "valor_horario": "0.32",
+      "norma": "Lei 9.063, de 14/06/1995 (conversão da MP 1.002/1995; origem: MP 598, de 31/08/1994), art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/l9063.htm",
+      "nota_vigencia_fim": "termo fixado na própria norma"
+    },
+    {
+      "vigencia_inicio": "1995-05-01",
+      "vigencia_fim": "1996-04-30",
+      "valor": "100.00",
+      "valor_diario": "3.33",
+      "valor_horario": "0.45",
+      "norma": "Lei 9.032, de 28/04/1995, art. 1º e §1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/l9032.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "1996-05-01",
+      "vigencia_fim": "1997-04-30",
+      "valor": "112.00",
+      "valor_diario": "3.73",
+      "valor_horario": "0.51",
+      "norma": "Lei 9.971, de 18/05/2000 (conversão da MP 2.019-1/2000), art. 1º — origem: MP 1.415, de 29/04/1996",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/l9971.htm",
+      "nota_vigencia_fim": "termo fixado na própria norma"
+    },
+    {
+      "vigencia_inicio": "1997-05-01",
+      "vigencia_fim": "1998-04-30",
+      "valor": "120.00",
+      "valor_diario": "4.00",
+      "valor_horario": "0.54",
+      "norma": "Lei 9.971/2000, art. 2º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/l9971.htm",
+      "nota_vigencia_fim": "termo fixado na própria norma"
+    },
+    {
+      "vigencia_inicio": "1998-05-01",
+      "vigencia_fim": "1999-04-30",
+      "valor": "130.00",
+      "valor_diario": "4.33",
+      "valor_horario": "0.59",
+      "norma": "Lei 9.971/2000, art. 3º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/l9971.htm",
+      "nota_vigencia_fim": "termo fixado na própria norma"
+    },
+    {
+      "vigencia_inicio": "1999-05-01",
+      "vigencia_fim": "2000-04-02",
+      "valor": "136.00",
+      "valor_diario": "4.53",
+      "valor_horario": "0.62",
+      "norma": "Lei 9.971/2000, art. 4º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/l9971.htm",
+      "nota_vigencia_fim": "termo fixado na própria norma"
+    },
+    {
+      "vigencia_inicio": "2000-04-03",
+      "vigencia_fim": "2001-03-31",
+      "valor": "151.00",
+      "valor_diario": "5.03",
+      "valor_horario": "0.69",
+      "norma": "Lei 9.971/2000, art. 5º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/l9971.htm",
+      "nota_vigencia_fim": "termo fixado na própria norma"
+    },
+    {
+      "vigencia_inicio": "2001-04-01",
+      "vigencia_fim": "2002-03-31",
+      "valor": "180.00",
+      "valor_diario": "6.00",
+      "valor_horario": "0.82",
+      "norma": "Medida Provisória 2.194-6, de 23/08/2001, art. 1º (em vigor pelo art. 2º da EC 32/2001 até a revogação pela Lei 11.321/2006) — origem: MP 2.142, de 29/03/2001",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/mpv/2194-6.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2002-04-01",
+      "vigencia_fim": "2003-03-31",
+      "valor": "200.00",
+      "valor_diario": "6.67",
+      "valor_horario": "0.91",
+      "norma": "Lei 10.525, de 06/08/2002 (conversão da MP 35/2002), art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/2002/l10525.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2003-04-01",
+      "vigencia_fim": "2004-04-30",
+      "valor": "240.00",
+      "valor_diario": "8.00",
+      "valor_horario": "1.09",
+      "norma": "Lei 10.699, de 09/07/2003 (conversão da MP 116/2003), art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/2003/l10.699.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2004-05-01",
+      "vigencia_fim": "2005-04-30",
+      "valor": "260.00",
+      "valor_diario": "8.67",
+      "valor_horario": "1.18",
+      "norma": "Lei 10.888, de 24/06/2004 (conversão da MP 182/2004), art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2004/lei/l10.888.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2005-05-01",
+      "vigencia_fim": "2006-03-31",
+      "valor": "300.00",
+      "valor_diario": "10.00",
+      "valor_horario": "1.36",
+      "norma": "Lei 11.164, de 18/08/2005 (conversão da MP 248/2005), art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2005/lei/l11164.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2006-04-01",
+      "vigencia_fim": "2007-03-31",
+      "valor": "350.00",
+      "valor_diario": "11.67",
+      "valor_horario": "1.59",
+      "norma": "Lei 11.321, de 07/07/2006 (conversão da MP 288/2006), art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11321.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2007-04-01",
+      "vigencia_fim": "2008-02-29",
+      "valor": "380.00",
+      "valor_diario": "12.67",
+      "valor_horario": "1.73",
+      "norma": "Lei 11.498, de 28/06/2007 (conversão da MP 362/2007), art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2007/lei/l11498.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2008-03-01",
+      "vigencia_fim": "2009-01-31",
+      "valor": "415.00",
+      "valor_diario": "13.83",
+      "valor_horario": "1.89",
+      "norma": "Lei 11.709, de 19/06/2008 (conversão da MP 421/2008), art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2008/lei/l11709.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2009-02-01",
+      "vigencia_fim": "2009-12-31",
+      "valor": "465.00",
+      "valor_diario": "15.50",
+      "valor_horario": "2.11",
+      "norma": "Lei 11.944, de 28/05/2009 (conversão da MP 456/2009), art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2009/lei/l11944.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2010-01-01",
+      "vigencia_fim": "2010-12-31",
+      "valor": "510.00",
+      "valor_diario": "17.00",
+      "valor_horario": "2.32",
+      "norma": "Lei 12.255, de 15/06/2010 (conversão da MP 474/2009), art. 1º, I, e parágrafo único",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2010/lei/l12255.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2011-01-01",
+      "vigencia_fim": "2011-02-28",
+      "valor": "540.00",
+      "valor_diario": "18.00",
+      "valor_horario": "2.45",
+      "norma": "Medida Provisória 516, de 30/12/2010, art. 1º (prejudicada; vide Lei 12.382/2011)",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2010/mpv/516.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2011-03-01",
+      "vigencia_fim": "2011-12-31",
+      "valor": "545.00",
+      "valor_diario": "18.17",
+      "valor_horario": "2.48",
+      "norma": "Lei 12.382, de 25/02/2011, art. 1º e art. 7º (vigência no primeiro dia do mês seguinte à publicação; DOU 28/02/2011)",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12382.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2012-01-01",
+      "vigencia_fim": "2012-12-31",
+      "valor": "622.00",
+      "valor_diario": "20.73",
+      "valor_horario": "2.83",
+      "norma": "Decreto 7.655, de 23/12/2011, art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/decreto/d7655.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2013-01-01",
+      "vigencia_fim": "2013-12-31",
+      "valor": "678.00",
+      "valor_diario": "22.60",
+      "valor_horario": "3.08",
+      "norma": "Decreto 7.872, de 26/12/2012, art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/decreto/d7872.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2014-01-01",
+      "vigencia_fim": "2014-12-31",
+      "valor": "724.00",
+      "valor_diario": "24.13",
+      "valor_horario": "3.29",
+      "norma": "Decreto 8.166, de 23/12/2013, art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2013/decreto/d8166.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2015-01-01",
+      "vigencia_fim": "2015-12-31",
+      "valor": "788.00",
+      "valor_diario": "26.27",
+      "valor_horario": "3.58",
+      "norma": "Decreto 8.381, de 29/12/2014, art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2014/decreto/d8381.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2016-01-01",
+      "vigencia_fim": "2016-12-31",
+      "valor": "880.00",
+      "valor_diario": "29.33",
+      "valor_horario": "4.00",
+      "norma": "Decreto 8.618, de 29/12/2015, art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/decreto/d8618.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2017-01-01",
+      "vigencia_fim": "2017-12-31",
+      "valor": "937.00",
+      "valor_diario": "31.23",
+      "valor_horario": "4.26",
+      "norma": "Decreto 8.948, de 29/12/2016, art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2016/decreto/d8948.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2018-01-01",
+      "vigencia_fim": "2018-12-31",
+      "valor": "954.00",
+      "valor_diario": "31.80",
+      "valor_horario": "4.34",
+      "norma": "Decreto 9.255, de 29/12/2017, art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/decreto/d9255.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2019-01-01",
+      "vigencia_fim": "2019-12-31",
+      "valor": "998.00",
+      "valor_diario": "33.27",
+      "valor_horario": "4.54",
+      "norma": "Decreto 9.661, de 01/01/2019, art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2019/decreto/d9661.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2020-01-01",
+      "vigencia_fim": "2020-01-31",
+      "valor": "1039.00",
+      "valor_diario": "34.63",
+      "valor_horario": "4.72",
+      "norma": "Lei 14.013, de 10/06/2020, art. 1º (origem: MP 916/2019)",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2020/lei/l14013.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2020-02-01",
+      "vigencia_fim": "2020-12-31",
+      "valor": "1045.00",
+      "valor_diario": "34.83",
+      "valor_horario": "4.75",
+      "norma": "Lei 14.013/2020, art. 2º (conversão da MP 919/2020)",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2020/lei/l14013.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2021-01-01",
+      "vigencia_fim": "2021-12-31",
+      "valor": "1100.00",
+      "valor_diario": "36.67",
+      "valor_horario": "5.00",
+      "norma": "Lei 14.158, de 02/06/2021 (conversão da MP 1.021/2020), art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14158.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2022-01-01",
+      "vigencia_fim": "2022-12-31",
+      "valor": "1212.00",
+      "valor_diario": "40.40",
+      "valor_horario": "5.51",
+      "norma": "Lei 14.358, de 01/06/2022 (conversão da MP 1.091/2021), art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2022/lei/l14358.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2023-01-01",
+      "vigencia_fim": "2023-04-30",
+      "valor": "1302.00",
+      "valor_diario": "43.40",
+      "valor_horario": "5.92",
+      "norma": "Medida Provisória 1.143, de 12/12/2022, art. 1º (revogada pela MP 1.172/2023 e pela Lei 14.663/2023, com efeitos a partir de 01/05/2023)",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2022/mpv/mpv1143.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2023-05-01",
+      "vigencia_fim": "2023-12-31",
+      "valor": "1320.00",
+      "valor_diario": "44.00",
+      "valor_horario": "6.00",
+      "norma": "Lei 14.663, de 28/08/2023 (conversão da MP 1.172/2023), art. 2º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14663.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2024-01-01",
+      "vigencia_fim": "2024-12-31",
+      "valor": "1412.00",
+      "valor_diario": "47.07",
+      "valor_horario": "6.42",
+      "norma": "Decreto 11.864, de 27/12/2023, art. 1º",
+      "arquivo": "context/lei/serie-salario-minimo-1994-2026.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/decreto/d11864.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2025-01-01",
+      "vigencia_fim": "2025-12-31",
+      "valor": "1518.00",
+      "valor_diario": "50.60",
+      "valor_horario": "6.90",
+      "norma": "Decreto 12.342/2024, art. 1º e parágrafo único",
+      "arquivo": "context/lei/decreto-12342-2024-salario-minimo.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/decreto/d12342.htm",
+      "nota_vigencia_fim": "fim derivado do início da vigência seguinte"
+    },
+    {
+      "vigencia_inicio": "2026-01-01",
+      "vigencia_fim": null,
+      "valor": "1621.00",
+      "valor_diario": "54.04",
+      "valor_horario": "7.37",
+      "norma": "Decreto 12.797/2025, art. 1º e parágrafo único",
+      "arquivo": "context/lei/decreto-12797-2025-salario-minimo.md",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/decreto/d12797.htm",
+      "nota_vigencia_fim": "sem decreto posterior capturado; confiável até 2026-12-31"
+    }
+  ],
+  "lacunas": [
+    {
+      "periodo": "antes de 1994-07-01",
+      "valor": null,
+      "motivo": "fora do escopo (Plano Real começa em 07/1994); valores em cruzeiro real/URV não capturados"
+    },
+    {
+      "periodo": "1994-07-01 a 1994-08-31",
+      "valor": null,
+      "valor_candidato": "64.79",
+      "motivo": "🔴 valor não escrito em norma capturada: 64,79 URV da Portaria Interministerial 4/1994 (DOU 03/03/1994, não capturada) convertidos 1:1 em Real pela MP 542/1994 (Lei 9.069/1995); regra de conversão na Lei 8.880/1994, art. 18. Ipeadata e TRT-MG dão R$ 64,79. Ver context/lei/serie-salario-minimo-1994-2026.md"
+    },
+    {
+      "periodo": "a partir de 2027-01-01",
+      "valor": null,
+      "motivo": "decreto de 2027 não capturado"
+    }
+  ]
+}
