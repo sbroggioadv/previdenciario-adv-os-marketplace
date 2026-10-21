@@ -81,5 +81,5 @@ Nunca protocolar beneficio previdenciario sem conferir carencia e qualidade; nun
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do documento:
-`Entregue pela skill administrativo-inss-crps - plugin previdenciario-adv-os v2.0.1`.
+`Entregue pela skill administrativo-inss-crps - plugin previdenciario-adv-os v2.0.2`.
 Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

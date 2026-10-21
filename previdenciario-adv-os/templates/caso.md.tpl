@@ -4,7 +4,7 @@
 > **Um arquivo por caso.** Um caso não vaza para o outro, e o advogado arquiva ou apaga um sem tocar nos demais.
 > O `slug` não leva nome civil, CPF nem NIT do cliente: use um código do escritório (ex.: `2026-031-aposentadoria-especial`).
 
-**Aberto em:** {{DATA}} · **Última atualização:** {{DATA}} · **Plugin:** previdenciario-adv-os v2.0.1
+**Aberto em:** {{DATA}} · **Última atualização:** {{DATA}} · **Plugin:** previdenciario-adv-os v2.0.2
 
 ---
 
@@ -83,7 +83,7 @@
 
 | Data | Ato | Script / conta | Assinatura |
 |---|---|---|---|
-| {{DATA}} | {{o que foi feito}} | {{calc_previdenciario_x v2.0.1 \| conta aberta}} | Entregue pela skill {{skill}} - plugin previdenciario-adv-os v2.0.1 |
+| {{DATA}} | {{o que foi feito}} | {{calc_previdenciario_x v2.0.2 \| conta aberta}} | Entregue pela skill {{skill}} - plugin previdenciario-adv-os v2.0.2 |
 
 ## Próxima providência
 

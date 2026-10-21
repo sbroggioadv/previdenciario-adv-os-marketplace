@@ -31,7 +31,7 @@ Entregar ao advogado a tabela regra a regra (cumpre ou nao, em que data, com que
 7. Melhor data: comparar aposentar ja com esperar ate a proxima mudanca (ponto e idade progressivos em 1o de janeiro, +2 pontos de coeficiente por ano extra, descarte de salarios). Quando as duas normalizacoes de M1 mudam o veredito, mostrar as duas datas.
 8. [redacao] Propor 2-3 rotas, cada uma com ganho e risco. Exemplos: aposentar ja na regra X; esperar ate a data Y por coeficiente maior; complementar competencias abaixo do minimo antes de pedir (IN 128, art. 209, par. 1). O advogado escolhe.
 9. Requerimento: lembrar que o INSS deve oferecer o beneficio mais vantajoso e pode reafirmar a DER com concordancia (IN 128, art. 577, I e II).
-10. Pessoa com deficiencia: requisitos da LC 142 (art. 3) e percentuais (art. 8) entram como regra citada, sem conta por script na 2.0.1; dizer isso.
+10. Pessoa com deficiencia: requisitos da LC 142 (art. 3) e percentuais (art. 8) entram como regra citada, sem conta por script na 2.0.2; dizer isso.
 11. [redacao] Passada anti-IA com `context/escrita-humana.md` (secao 7) antes de entregar o texto ao cliente; a tabela pode ir pelo `visual-law-previdenciario`.
 
 ## Calculo
@@ -130,5 +130,5 @@ Nunca numero de cabeca: tempo, pontos, data e RMI so por script ou conta aberta.
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do documento:
-`Entregue pela skill planejamento-previdenciario - plugin previdenciario-adv-os v2.0.1`.
+`Entregue pela skill planejamento-previdenciario - plugin previdenciario-adv-os v2.0.2`.
 Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

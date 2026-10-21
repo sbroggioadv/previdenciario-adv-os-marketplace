@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "previdenciario-adv-os-marketplace",
-  "description": "Marketplace oficial do plugin Previdenciario Adv-OS (v2.0.1). Sistema operacional do advogado previdenciarista que atua para o segurado, o dependente e o beneficiario contra o INSS: 34 skills em 6 camadas, 9 comandos, 7 scripts de calculo com fonte de cada numero, lei seca anexada e revisao final R1-R4 (Suprema Corte).",
+  "description": "Marketplace oficial do plugin Previdenciario Adv-OS (v2.0.2). Sistema operacional do advogado previdenciarista que atua para o segurado, o dependente e o beneficiario contra o INSS: 34 skills em 6 camadas, 9 comandos, 7 scripts de calculo com fonte de cada numero, lei seca anexada e revisao final R1-R4 (Suprema Corte).",
   "owner": {
     "name": "Sbroggio Advocacia & IA Combativa"
   },

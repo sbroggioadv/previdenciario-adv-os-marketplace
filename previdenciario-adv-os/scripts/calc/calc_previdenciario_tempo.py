@@ -24,7 +24,7 @@ import sys
 from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
 
-VERSAO = "2.0.1"
+VERSAO = "2.0.2"
 EXIT_OK, EXIT_ENTRADA, EXIT_FALTA = 0, 2, 3
 
 MARCO_EC103 = dt.date(2019, 11, 13)

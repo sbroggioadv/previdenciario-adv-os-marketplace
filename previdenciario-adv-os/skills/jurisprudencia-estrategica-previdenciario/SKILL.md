@@ -71,5 +71,5 @@ Bloqueia: precedente fora do arquivo apresentado como firme; numero de tema sem 
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do documento:
-`Entregue pela skill jurisprudencia-estrategica-previdenciario - plugin previdenciario-adv-os v2.0.1`.
+`Entregue pela skill jurisprudencia-estrategica-previdenciario - plugin previdenciario-adv-os v2.0.2`.
 Registrar a mesma linha em `previdenciario/casos/<slug>.md`.

@@ -28,7 +28,7 @@ import sys
 from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
 
-VERSAO = "2.0.1"
+VERSAO = "2.0.2"
 NOME = "calc_previdenciario_incapacidade"
 EXIT_OK, EXIT_ENTRADA, EXIT_FALTA = 0, 2, 3
 

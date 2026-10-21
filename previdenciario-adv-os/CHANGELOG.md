@@ -2,6 +2,24 @@
 
 Todas as mudanças relevantes do plugin `previdenciario-adv-os`. Formato [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/); versões pelo [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [2.0.2] - 2026-10-21
+
+Correção sem mudança de uso: nada a refazer na configuração. Atualize pelo mesmo marketplace; não é preciso rodar `/start-previdenciario` de novo.
+
+### Corrigido
+
+- **Alerta do CNJ quando o teto global da Selic é aplicado.** No cálculo federal depois da EC 136, quando a Selic sobre o valor consolidado fica abaixo de IPCA + 2% a.a. e há juros anteriores (não Selic), a saída agora traz o alerta `[VERIFICAR]` com o texto literal do Provimento CNJ 207/2025 (art. 2º, III: a Selic "exclusivamente sobre o principal") ao lado da Res. CJF 983/2026 (art. 7º, §3º, III: a Selic sobre o valor consolidado), dizendo que as duas bases diferem e que o script segue a Res. CJF 983/2026. No RPV o alerta aparece na fase R2, com o prefixo `[motor de atualização, R2]`. O valor calculado não muda. Sem juros anteriores as duas bases coincidem e o alerta não sai. Fecha a ressalva registrada na 2.0.1.
+
+### Dados
+
+- Motor de atualização monetária igual ao do plugin de cálculos judiciais 0.1.3 (cópia conferida por sha256). Só o motor mudou, e só pelo alerta acima; nenhum índice e nenhum resultado mudou.
+
+### Continua em aberto
+
+- **Reajustes de 05/1995 e 05/1996:** sem texto capturado (o DOU só tem imagem).
+- **Benefício com início anterior a 2004:** o valor da causa e a revisão da RMI abrem a conta (exit 3, fórmula com `[VERIFICAR]`), porque a compensação do aumento do mínimo no reajuste de junho não está modelada.
+- **Portaria de reajuste de 2027:** ainda não publicada.
+
 ## [2.0.1] - 2026-10-20
 
 Correção sem mudança de uso: nada a refazer na configuração. Atualize pelo mesmo marketplace; não é preciso rodar `/start-previdenciario` de novo.

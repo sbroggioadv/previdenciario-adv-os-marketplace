@@ -47,7 +47,7 @@ import sys
 from decimal import ROUND_CEILING, ROUND_FLOOR, ROUND_HALF_UP, Decimal
 from pathlib import Path
 
-VERSAO = "2.0.1"
+VERSAO = "2.0.2"
 NOME = "calc_previdenciario_rmi"
 EXIT_OK, EXIT_ENTRADA, EXIT_FALTA = 0, 2, 3
 

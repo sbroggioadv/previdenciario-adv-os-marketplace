@@ -62,7 +62,7 @@ incluir_pontos_forenses   bool   opcional   padrao true
 uf   texto   opcional   so informativo
 excecao_recesso_penal   enum   opcional   reu-preso|maria-da-penha|medida-urgente; nunca usar aqui
 ```
-Achar o motor como na secao 13 da metodologia: `<pasta-base>/../../scripts/calc/calc_previdenciario_prazo.py --entrada <arquivo>`. Sem `--versao` no motor, havendo mais de uma copia, usar o motor de prazo que acompanha os scripts de calculo do plugin, versao 2.0.1 (a copia na pasta em que os demais scripts respondem 2.0.1 ao `--versao`).
+Achar o motor como na secao 13 da metodologia: `<pasta-base>/../../scripts/calc/calc_previdenciario_prazo.py --entrada <arquivo>`. Sem `--versao` no motor, havendo mais de uma copia, usar o motor de prazo que acompanha os scripts de calculo do plugin, versao 2.0.2 (a copia na pasta em que os demais scripts respondem 2.0.2 ao `--versao`).
 Exit 0: usar o resultado. Exit 2: mostrar o `detalhe` e perguntar de novo o dado recusado. Sem Python, sem motor ou outro exit: contar a mao pela regra do passo 3, dia a dia, e avisar que a data nao foi conferida por script.
 
 ## Se faltar anexo
@@ -80,5 +80,5 @@ Seguir com o que ha no context/ e avisar em uma linha o que faltou e o que isso 
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do documento:
-`Entregue pela skill prazos-previdenciarios - plugin previdenciario-adv-os v2.0.1`.
+`Entregue pela skill prazos-previdenciarios - plugin previdenciario-adv-os v2.0.2`.
 Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

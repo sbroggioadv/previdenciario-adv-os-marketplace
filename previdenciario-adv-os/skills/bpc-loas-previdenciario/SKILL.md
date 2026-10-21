@@ -76,5 +76,5 @@ Nunca "inferior a 1/4" para a lei atual: e "igual ou inferior". Nunca abono no B
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do documento:
-`Entregue pela skill bpc-loas-previdenciario - plugin previdenciario-adv-os v2.0.1`.
+`Entregue pela skill bpc-loas-previdenciario - plugin previdenciario-adv-os v2.0.2`.
 Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

@@ -57,7 +57,7 @@ Garantir que nenhuma afirmacao proibida, numero inventado ou gap preenchido por 
 Marcos por competencia, nao por dia: a Selic de ago./2025 se aplica em set./2025; setembro de 2025 nao se fraciona.
 
 ## Gaps que nao se preenchem por invencao
-Tabua de mortalidade do IBGE e formula do fator previdenciario (imagem na fonte) · limite de ruido do Anexo IV em numero (exigir PPP amparado em laudo) · anexos da IN 128/2022 · ato vigente da lista de doencas que dispensam carencia (dispensa so quando o advogado marca) · regulamento do art. 20, par. 11-A, da LOAS (sem ampliacao automatica) · Lei 9.289/1996 (custas na Justica Federal) · acumulacao do auxilio-acidente com o auxilio temporario fora da vedacao com aposentadoria e da suspensao na reabertura pelo mesmo acidente · juros da poupanca (maio/2012 a nov./2021) e taxa legal depois de maio/2026 · duracao da cota da pensao por morte (conferir o art. 77 no anexo antes de citar) · ADI 6.096 sobre o art. 103 da Lei 8.213 · andamento da ADI 7.873 · sem script na 2.0.1: RPPS, previdencia complementar, pessoa com deficiencia (LC 142/2013) e pensao por morte.
+Tabua de mortalidade do IBGE e formula do fator previdenciario (imagem na fonte) · limite de ruido do Anexo IV em numero (exigir PPP amparado em laudo) · anexos da IN 128/2022 · ato vigente da lista de doencas que dispensam carencia (dispensa so quando o advogado marca) · regulamento do art. 20, par. 11-A, da LOAS (sem ampliacao automatica) · Lei 9.289/1996 (custas na Justica Federal) · acumulacao do auxilio-acidente com o auxilio temporario fora da vedacao com aposentadoria e da suspensao na reabertura pelo mesmo acidente · juros da poupanca (maio/2012 a nov./2021) e taxa legal depois de maio/2026 · duracao da cota da pensao por morte (conferir o art. 77 no anexo antes de citar) · ADI 6.096 sobre o art. 103 da Lei 8.213 · andamento da ADI 7.873 · sem script na 2.0.2: RPPS, previdencia complementar, pessoa com deficiencia (LC 142/2013) e pensao por morte.
 
 ## Se faltar anexo
 Seguir com as proibicoes desta skill, que valem sozinhas, e avisar em uma linha que o objeto correto de cada tema nao foi conferido no arquivo: todo tema citado vira `[VERIFICAR]`.
@@ -70,5 +70,5 @@ Violacao nao corrigida bloqueia a entrega. A tese e escolha do advogado, mas o p
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do documento:
-`Entregue pela skill anti-alucinacao-previdenciario - plugin previdenciario-adv-os v2.0.1`.
+`Entregue pela skill anti-alucinacao-previdenciario - plugin previdenciario-adv-os v2.0.2`.
 Registrar a mesma linha em `previdenciario/casos/<slug>.md`.

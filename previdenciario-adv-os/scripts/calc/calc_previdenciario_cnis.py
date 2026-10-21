@@ -20,7 +20,7 @@ import sys
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
-VERSAO = "2.0.1"
+VERSAO = "2.0.2"
 EXIT_OK, EXIT_ENTRADA, EXIT_FALTA = 0, 2, 3
 
 AQUI = Path(__file__).resolve().parent

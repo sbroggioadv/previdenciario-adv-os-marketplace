@@ -1168,6 +1168,14 @@ def trecho_ec136(e, cache, faltas, alertas, principal, juros, juros_selic, d_ini
         alertas.append(
             "Teto aplicado: a Selic sobre o valor consolidado (principal e juros) ficou abaixo de IPCA + 2% "
             "a.a.; vale a Selic (Res. CJF 983/2026 art. 7º §3º III), sem incidir sobre os juros Selic (§4º).")
+        if ente == "federal" and conhecido and juros:
+            # Com juros não Selic, a Selic só sobre o principal (CNJ) e sobre o consolidado (CJF) diferem.
+            alertas.append(
+                "[VERIFICAR] Teto aplicado com juros anteriores: o Provimento CNJ 207/2025 (art. 2º III) "
+                "aplica a Selic \"exclusivamente sobre o principal\"; a Res. CJF 983/2026 (art. 7º §3º III) "
+                "aplica a Selic sobre o valor consolidado (principal e juros). As duas bases diferem aqui. "
+                "O script segue a Res. CJF 983/2026."
+            )
         formula = ("valor_final = (valor + valor_juros) x (1 + soma Selic/100) + valor_juros_selic "
                    "(o menor: Selic sobre o consolidado)")
         if not conhecido:

@@ -1,4 +1,4 @@
-# Previdenciário Adv OS — v2.0.1
+# Previdenciário Adv OS — v2.0.2
 
 Plugin de Direito Previdenciário brasileiro para o advogado do **segurado, do dependente e do beneficiário contra o INSS**: do requerimento administrativo ao cumprimento de sentença, com as contas feitas por script e cada número acompanhado da fonte.
 
