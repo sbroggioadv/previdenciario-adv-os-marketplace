@@ -62,5 +62,5 @@ Bloqueia: artigo sem diploma nomeado; transcricao que nao saiu do arquivo; linha
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do documento:
-`Entregue pela skill base-legal-previdenciaria - plugin previdenciario-adv-os v2.0.2`.
+`Entregue pela skill base-legal-previdenciaria - plugin previdenciario-adv-os v2.0.3`.
 Registrar a mesma linha em `previdenciario/casos/<slug>.md`.

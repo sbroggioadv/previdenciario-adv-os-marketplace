@@ -1,7 +1,7 @@
 # Metodologia do plugin previdenciario-adv-os
 
 > O primeiro arquivo que o orquestrador (`previdenciario-master`) lê, **sempre**. Diz como as 34 skills se articulam, qual anexo cada uma usa, qual é a pergunta que reordena a trilha e o que nunca se afirma sem fonte.
-> Versão do plugin: **2.0.2**. Perspectiva: advogado do **segurado, dependente ou beneficiário** contra o INSS (polo ativo). O lado é preferência gravada no `previdenciario/perfil.md`, não trava.
+> Versão do plugin: **2.0.3**. Perspectiva: advogado do **segurado, dependente ou beneficiário** contra o INSS (polo ativo). O lado é preferência gravada no `previdenciario/perfil.md`, não trava.
 > Este arquivo é distribuído com o plugin. A fonte de cada regra é um arquivo de `context/lei/` (mapa em `context/lei/INDICE.md`); o que não está lá não é citado.
 
 ---
@@ -93,7 +93,7 @@ Ha prazo correndo ou cessacao/indeferimento ha menos de 30 dias?
           ├── processo em curso → replica / audiencia / recursos / cumprimento-sentenca-inss
           ├── ato ilegal com prova pre-constituida → mandado-seguranca-previdenciario
           └── servidor publico ou previdencia privada → rpps-servidor-publico / previdencia-complementar
-                  (triagem e encaminhamento; sem conta na 2.0.2)
+                  (triagem e encaminhamento; sem conta na 2.0.3)
 ```
 
 **Disciplinas da elicitação** (master e triagem): não perguntar o que dá para inferir do `perfil.md`, do `casos/<slug>.md` ou dos documentos enviados; no máximo 1 a 3 perguntas por turno; pergunta de risco só quando algo no caso aponta risco. O CNIS e o laudo médico são dado pessoal sensível: tratar só no computador do advogado e não colar em ferramenta externa.
@@ -230,7 +230,7 @@ Marcos por competência, não por dia: a Selic de ago./2025 é aplicada em set./
 - MP 316/2006 e DL 2.322/1987: **capturados** (`context/lei/mp-316-2006.md` e `context/lei/dl-2322-1987.md`). A MP vem toda riscada na fonte porque foi convertida na Lei 11.430/2006, cujo texto é o vivo. O DL, art. 3º, fala em créditos **trabalhistas** e juros **capitalizados mensalmente**: o "1% ao mês simples" previdenciário até jun./2009 é regra do Manual (item 4.3.2), não da letra do DL.
 - Dispositivo exato da duração da cota de pensão por morte (Lei 8.213, art. 77): conferir no anexo antes de citar.
 - **RPPS e previdência complementar:** capturados a LC 108/2001 (`lc-108-2001.md`), a LC 109/2001 (`lc-109-2001.md`) e a Lei 9.717/1998, regras gerais dos RPPS (`lei-9717-1998-rpps.md`), além de CF, arts. 40 e 202 (`cf88-seguridade.md`), e EC 103, arts. 4º, 10 e 20, para o servidor federal; cita-se só o dispositivo achado no arquivo (mapa no `INDICE.md`). Lei própria de RPPS de estado ou município não está em `context/lei/`: sem ela, a skill não cita dispositivo dela, faz checklist de documentos e de questões e declara o gap. A LC 142/2013 (pessoa com deficiência) também está capturada (`lc-142-2013-pcd.md`); o que falta ali é script, não texto.
-- **Fora do escopo dos scripts na 2.0.2:** cálculo do RPPS, aposentadoria da pessoa com deficiência (LC 142/2013) e pensão por morte.
+- **Fora do escopo dos scripts na 2.0.3:** cálculo do RPPS, aposentadoria da pessoa com deficiência (LC 142/2013) e pensão por morte.
 
 ---
 
@@ -284,7 +284,7 @@ Acionado pela `suprema-corte-previdenciaria` (R2). Item 🔴 sem reverificação
 
 Cálculo judicial genérico e auditoria de laudo → `calculosjudiciais-adv-os` · busca de jurisprudência ao vivo → `juris-adv-os` · reconhecimento de vínculo para o CNIS → `trabalhista-adv-os`.
 
-**OUT — gap declarado na 2.0.2:** cálculo do RPPS; previdência complementar além do que estiver capturado em `context/lei/`; aposentadoria da pessoa com deficiência (LC 142/2013) e pensão por morte sem script; limite de ruído do Anexo IV em número; fator previdenciário em número (sem a tábua do IBGE).
+**OUT — gap declarado na 2.0.3:** cálculo do RPPS; previdência complementar além do que estiver capturado em `context/lei/`; aposentadoria da pessoa com deficiência (LC 142/2013) e pensão por morte sem script; limite de ruído do Anexo IV em número; fator previdenciário em número (sem a tábua do IBGE).
 
 ---
 
@@ -359,7 +359,7 @@ Qualquer outro código, ou script ausente, ou Python ausente: conta aberta pelo 
 
 1. **Pasta base da skill → `scripts/calc/`:** `<pasta-base>/../../scripts/calc/calc_previdenciario_<x>.py`.
 2. **Se não existir, busca pelo nome único**, primeiro na pasta do usuário e depois na raiz.
-3. **Se a busca devolver mais de um arquivo** (versões antigas em cache depois de atualizar), rodar `--versao` em cada um e usar o que bate com **2.0.2**. Nenhum bate: conta aberta e aviso.
+3. **Se a busca devolver mais de um arquivo** (versões antigas em cache depois de atualizar), rodar `--versao` em cada um e usar o que bate com **2.0.3**. Nenhum bate: conta aberta e aviso.
 4. **Nada funcionou:** conta aberta.
 
 ```bash

@@ -4,7 +4,7 @@
 > **Fica no diretório de trabalho do advogado, nunca dentro do plugin.** O plugin é somente leitura; escrever nele quebra na atualização.
 > Lido pelo `previdenciario-master` (recorte e modo) e pelo `estilo-juridico-previdenciario` (voz). Nenhum hook lê este arquivo.
 
-**Configurado em:** {{DATA}} · **Versão do plugin:** 2.0.2 · **Origem:** {{wizard 2.0.2 | migrado da 0.1.0 em DATA}}
+**Configurado em:** {{DATA}} · **Versão do plugin:** 2.0.3 · **Origem:** {{wizard 2.0.3 | migrado da 0.1.0 em DATA}}
 
 ---
 

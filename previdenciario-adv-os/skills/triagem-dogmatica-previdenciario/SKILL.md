@@ -44,7 +44,7 @@ Devolver ao master, sem palpite: fase, objetivo, beneficio, skill alvo, prazo, i
 10. **Devolver o resultado** (formato abaixo) e o quadro do caso para o master confirmar com o advogado.
 
 ## Calculo
-So quando carencia ou qualidade de segurado decidem a triagem. Rodar `calc_previdenciario_cnis.py` conforme `context/metodologia-previdenciario.md` secao 13 (pasta base -> `scripts/calc/` -> busca pelo nome -> `--versao` 2.0.2). Entrada em JSON por `--entrada <arquivo>` ou pela entrada padrao. Bloco `campos`: uma linha por campo, colunas separadas por 2+ espacos: nome · tipo (`lista<sub>` quando a lista tem tipo) · obrigatorio|opcional · valores do enum separados por `|`, ou `min=N`, ou `padrao=<valor>`.
+So quando carencia ou qualidade de segurado decidem a triagem. Rodar `calc_previdenciario_cnis.py` conforme `context/metodologia-previdenciario.md` secao 13 (pasta base -> `scripts/calc/` -> busca pelo nome -> `--versao` 2.0.3). Entrada em JSON por `--entrada <arquivo>` ou pela entrada padrao. Bloco `campos`: uma linha por campo, colunas separadas por 2+ espacos: nome · tipo (`lista<sub>` quando a lista tem tipo) · obrigatorio|opcional · valores do enum separados por `|`, ou `min=N`, ou `padrao=<valor>`.
 ```flags
 --entrada  path  opcional
 --versao   bool  opcional
@@ -95,5 +95,5 @@ Nunca classificar sem a pergunta critica. Nunca preencher data, vinculo ou valor
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do documento:
-`Entregue pela skill triagem-dogmatica-previdenciario - plugin previdenciario-adv-os v2.0.2`
+`Entregue pela skill triagem-dogmatica-previdenciario - plugin previdenciario-adv-os v2.0.3`
 Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

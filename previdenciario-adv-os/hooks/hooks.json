@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '[previdenciario-adv-os] v2.0.2 ativo: Direito Previdenciario do segurado contra o INSS, do administrativo ao cumprimento, com calculos previdenciarios. Rode /start-previdenciario para configurar; depois /previdenciario-master.'"
+            "command": "echo '[previdenciario-adv-os] v2.0.3 ativo: Direito Previdenciario do segurado contra o INSS, do administrativo ao cumprimento, com calculos previdenciarios. Rode /start-previdenciario para configurar; depois /previdenciario-master.'"
           }
         ]
       }

@@ -28,7 +28,7 @@ import sys
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
-VERSAO = "2.0.2"
+VERSAO = "2.0.3"
 EXIT_OK, EXIT_ENTRADA, EXIT_FALTA = 0, 2, 3
 
 AQUI = Path(__file__).resolve().parent
@@ -197,7 +197,7 @@ ALTERNATIVAS = (
 )
 NAO_SUPORTADAS = (
     {"perfil": "pessoa com deficiência", "regra": "LC 142/2013 (aposentadoria da pessoa com deficiência)",
-     "motivo": "sem script na versão 2.0.2 (gap declarado no CLAUDE.md do plugin): a entrada não tem campo de "
+     "motivo": "sem script na versão 2.0.3 (gap declarado no CLAUDE.md do plugin): a entrada não tem campo de "
                "deficiência e nenhuma conta é feita"},
 )
 

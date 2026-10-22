@@ -37,7 +37,7 @@ Aposentadoria: ordem fixa cnis -> tempo -> transicao -> rmi; o resultado de um e
 1. Identificar a conta pela tabela acima. Pedido de mais de uma conta: rodar na ordem fixa.
 2. Ler a secao CAMPOS do `context/calculo-<x>.md`. Perguntar so o campo obrigatorio que falta, 1 a 3 por turno. "Nao sei" e lacuna, nunca suposicao: campo obrigatorio sem valor nao vai ao script (seria exit 2, entrada invalida); a conta sai aberta pelo `calculo-<x>.md` ate onde da, com a lista do que falta. Exit 3 e outra coisa: o script recebeu entrada valida e a conta nao fecha (tabela, fator, duas leituras).
 3. Montar o JSON so com os campos da lista (campo desconhecido o script recusa). Gravar em `previdenciario/casos/<slug>-calc-<x>.json`, no computador do advogado. CNIS e laudo sao dado sensivel: nunca colar em ferramenta externa.
-4. Achar e rodar o script conforme a secao 13 da metodologia: `<pasta-base>/../../scripts/calc/calc_previdenciario_<x>.py --entrada <arquivo>`; sem o arquivo, busca pelo nome e `--versao` igual a 2.0.2.
+4. Achar e rodar o script conforme a secao 13 da metodologia: `<pasta-base>/../../scripts/calc/calc_previdenciario_<x>.py --entrada <arquivo>`; sem o arquivo, busca pelo nome e `--versao` igual a 2.0.3.
 5. Ler o exit:
    - 0: mostrar o resultado, a `memoria` passo a passo, a `regra` e a `fonte` de cada numero. Duas leituras com `[VERIFICAR]`: mostrar as duas, nunca escolher em silencio.
    - 2: dizer qual campo foi recusado e perguntar de novo so esse campo.
@@ -146,5 +146,5 @@ Seguir com o que ha no context/ e avisar em uma linha o que faltou e o que isso 
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do documento:
-`Entregue pela skill calculos-previdenciarios - plugin previdenciario-adv-os v2.0.2`.
+`Entregue pela skill calculos-previdenciarios - plugin previdenciario-adv-os v2.0.3`.
 Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

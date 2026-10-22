@@ -77,7 +77,7 @@ Mostrar o resumo em tabela e perguntar [Gravar] [Corrigir um campo] [Cancelar]. 
 
 ### Bloco 9 — Encerramento
 ```
-Plugin previdenciario-adv-os v2.0.2 configurado.
+Plugin previdenciario-adv-os v2.0.3 configurado.
 Advogado: <nome> - OAB <numero>/<UF> · Escritorio: <firma> (<cidade>/<UF>)
 Lado: <lado> · Frentes: <lista> · Tom: <perfil> (<X>/10) · Modo: <modo>
 Suprema Corte: <ATIVA | DESATIVADA> · Perfil em: <raiz>/previdenciario/perfil.md
@@ -125,4 +125,4 @@ Nao inventar dado do advogado: o que nao foi respondido fica em branco. Pasta si
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do perfil.md:
-`Entregue pela skill previdenciario-onboarding - plugin previdenciario-adv-os v2.0.2`.
+`Entregue pela skill previdenciario-onboarding - plugin previdenciario-adv-os v2.0.3`.

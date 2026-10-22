@@ -48,5 +48,5 @@ Nao alterar fato, data, valor, pedido, dispositivo, tema ou numero de calculo: e
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do documento:
-`Entregue pela skill estilo-juridico-previdenciario - plugin previdenciario-adv-os v2.0.2`
+`Entregue pela skill estilo-juridico-previdenciario - plugin previdenciario-adv-os v2.0.3`
 Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

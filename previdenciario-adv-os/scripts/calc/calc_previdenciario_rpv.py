@@ -29,7 +29,7 @@ import sys
 from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
 from pathlib import Path
 
-VERSAO = "2.0.2"
+VERSAO = "2.0.3"
 EXIT_OK, EXIT_ENTRADA, EXIT_FALTA = 0, 2, 3
 
 PASTA = Path(__file__).resolve().parent
@@ -1391,8 +1391,8 @@ def r2(e, res, especie, graca, motor_a, faltas, alertas, memoria, fundamento, sa
     alertas.append(ALERTA_ADI)
     pre = True
     for campo, motivo in (
-            ("data_expedicao", "expedição do requisitório: marco do motor de atualização (com expedição posterior à "
-                               "data-base, o trecho entre as duas fica em aberto)"),
+            ("data_expedicao", "expedição do requisitório: conferência do pagamento posterior à expedição (o regime "
+                               "da R2 corre desde a data-base, Res. CJF 983/2026, art. 7º, caput)"),
             ("data_apresentacao", "apresentação da requisição ao tribunal: marco da graça e, no precatório, do "
                                   "exercício de pagamento (CF, art. 100, §5º)"),
             ("data_pagamento", "data do efetivo depósito (Manual 2026, cap. 5, Nota 6): fim da conta e teste de "
@@ -1433,23 +1433,10 @@ def r2(e, res, especie, graca, motor_a, faltas, alertas, memoria, fundamento, sa
                                  "desde set./2025: a comparação do §3º, III, posicionada na inscrição, com o limite "
                                  "saldo + base_elegivel_selic × Σ Selic"],
             "fonte": FONTE["r2"]})
-    # Regime entre a data-base e a expedição (I-7): a Res. CJF 983/2026, art. 7º, caput, e o F1 (03, §7) põem a R2
-    # desde a data-base; o motor canônico aplica, da data-base à expedição, a fase pré-requisitório (EC 113 original
-    # e Tema 1.419) e só depois a EC 136. Enquanto o motor não for conciliado com a regra, o trecho fica em aberto e
-    # nenhum número sai dele: repassar o [VERIFICAR] do motor com exit 0 entregaria a conta pela regra divergente.
+    # Marco do regime requisitório = início da data-base, não a expedição real (decisão do coordenador, 21/10/2026): a Res.
+    # CJF 983/2026, art. 7º, caput, corre "da data-base informada pelo juízo até o efetivo depósito". Com
+    # data_expedicao igual à data_inicial, o motor aplica o art. 7º, §3º, desde a data-base, sem fase pré-requisitório.
     inicio_r2 = dt.date(base[0], base[1], 1)
-    if "data_expedicao" in e and e["data_expedicao"] > inicio_r2:
-        saida["fatias_em_aberto"].append({
-            "trecho": f"{comp_txt(base)} (data-base) a {e['data_expedicao'].isoformat()} (expedição)",
-            "motivo": "a Res. CJF 983/2026, art. 7º, caput, manda a atualização da requisição correr da data-base "
-                      "informada pelo juízo até o efetivo depósito; o motor de atualização aplica nesse trecho a fase "
-                      "pré-requisitório (EC 113, redação original, até 08/2025; Tema 1.419 depois) e só da expedição "
-                      "em diante a Res. 983. Divergência de regime não conciliada com o dono do motor",
-            "contas_possiveis": [
-                "(a) Res. CJF 983/2026, art. 7º, §3º, desde a data-base (regra do F1, 03 §7, e de context/calculo-rpv.md)",
-                "(b) fase pré-requisitório até a expedição e Res. CJF 983/2026 depois (motor canônico)"],
-            "fonte": FONTE["r2"]})
-        pre = False
     # ramo do índice desde set./2025 (qualquer espécie): os juros anteriores recebem o índice? indeterminado
     # juros anteriores = até dez./2021 + Selic; os da taxa legal (desde set./2025, antes da requisição) não entram
     if res["ok"]:
@@ -1494,7 +1481,7 @@ def r2(e, res, especie, graca, motor_a, faltas, alertas, memoria, fundamento, sa
     entrada = {
         "valor": str(q2(principal)), "valor_juros": str(q2(juros_ns)),
         "valor_juros_selic": str(q2(juros_s)),
-        "data_inicial": f"{comp_txt(base)}-01", "data_expedicao": e["data_expedicao"].isoformat(),
+        "data_inicial": inicio_r2.isoformat(), "data_expedicao": inicio_r2.isoformat(),
         "data_final": e["data_pagamento"].isoformat(), "regime": "fazenda-requisitorio-ec136", "ente": "federal",
         "natureza": e["natureza"],
     }
@@ -1507,7 +1494,8 @@ def r2(e, res, especie, graca, motor_a, faltas, alertas, memoria, fundamento, sa
         if a != ALERTA_ADI and not a.startswith(("[VERIFICAR] ADI 7873", "[VERIFICAR] ADI 7.873")):
             alertas.append(f"[motor de atualização, R2] {a}")
     memoria.append(f"R2: motor de atualização (fazenda-requisitorio-ec136, federal) da data-base {comp_txt(base)} "
-                   f"ao pagamento {e['data_pagamento'].isoformat()}, expedição {e['data_expedicao'].isoformat()}, "
+                   f"ao pagamento {e['data_pagamento'].isoformat()}, regime requisitório desde a data-base (Res. CJF "
+                   f"983/2026, art. 7º, caput; expedição em {e['data_expedicao'].isoformat()} não muda o marco), "
                    f"graça {entrada.get('periodo_graca')}; vale o menor entre IPCA + 2% a.a. e Selic (art. 7º, §3º, III)")
     detalhe = {"entrada_motor": entrada, "motor_exit": codigo, "valor_final": out.get("valor_final"),
                "componentes": out.get("componentes"),

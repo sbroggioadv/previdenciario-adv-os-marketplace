@@ -93,5 +93,5 @@ Nenhum dispositivo, tema, sumula, percentual, indice ou prazo sem `validador-pre
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do documento:
-`Entregue pela skill previdenciario-master - plugin previdenciario-adv-os v2.0.2`
+`Entregue pela skill previdenciario-master - plugin previdenciario-adv-os v2.0.3`
 Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

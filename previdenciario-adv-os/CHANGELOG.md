@@ -2,6 +2,23 @@
 
 Todas as mudanças relevantes do plugin `previdenciario-adv-os`. Formato [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/); versões pelo [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [2.0.3] - 2026-10-21
+
+Correção sem mudança de uso: nada a refazer na configuração. Atualize pelo mesmo marketplace; não é preciso rodar `/start-previdenciario` de novo.
+
+### Corrigido
+
+- **RPV e precatório: o trecho entre a data-base e a expedição deixou de ficar em aberto.** A atualização da requisição corre "da data-base informada pelo juízo até o efetivo depósito" (Res. CJF 983/2026, art. 7º, caput), pelas regras do art. 7º, §3º, desde a data-base: Selic até 08/2025 sobre principal e juros não Selic, sem nova Selic sobre os juros Selic (§4º); desde 09/2025, o menor entre IPCA + 2% a.a. e Selic. Até a 2.0.2, quando a expedição vinha depois do primeiro dia da data-base, o script abria esse trecho em `fatias_em_aberto` e saía em exit 3 sem número. Agora a conta fecha (exit 0 quando o resto está completo), igual à de uma expedição no primeiro dia da data-base. A data de expedição continua obrigatória para a fase R2, conferida (o pagamento tem de ser posterior a ela) e registrada na memória de cálculo.
+
+### Dados
+
+- Casos-ouro: só RPV-06 e RPV-05 (este fora da suíte, pendente de revisor) mudam, e só na parte em aberto: some o trecho "data-base a expedição"; os dois seguem em exit 3 pelos outros pontos em aberto, com os mesmos valores. Motor de atualização inalterado (cópia conferida por sha256).
+
+### Continua em aberto
+
+- Graça na faixa da Selic, pagamento fora do prazo constitucional, juros anteriores no índice desde 09/2025, graça antes de 09/2025 e data-base anterior a 12/2021 seguem em aberto no RPV, como na 2.0.2.
+- **Reajustes de 05/1995 e 05/1996**, **benefício com início anterior a 2004** e **portaria de reajuste de 2027**: como na 2.0.2.
+
 ## [2.0.2] - 2026-10-21
 
 Correção sem mudança de uso: nada a refazer na configuração. Atualize pelo mesmo marketplace; não é preciso rodar `/start-previdenciario` de novo.

@@ -52,7 +52,7 @@ Script `calc_previdenciario_incapacidade.py`, localizado e rodado conforme `cont
 
 ```flags
 --entrada   arquivo   opcional   caminho do JSON de entrada; ausente = stdin
---versao    flag      opcional   imprime a versao (2.0.2)
+--versao    flag      opcional   imprime a versao (2.0.3)
 ```
 
 ```campos
@@ -92,5 +92,5 @@ Seguir com o que ha no context/ e avisar em uma linha o que faltou e o que isso 
 
 ## Assinatura (fora da peca)
 No rodape da resposta ao advogado, nunca dentro do documento:
-`Entregue pela skill pericia-medica-previdenciaria - plugin previdenciario-adv-os v2.0.2`.
+`Entregue pela skill pericia-medica-previdenciaria - plugin previdenciario-adv-os v2.0.3`.
 Registrar a mesma linha no `previdenciario/casos/<slug>.md`.

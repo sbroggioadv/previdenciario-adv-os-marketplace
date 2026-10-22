@@ -137,7 +137,7 @@ Entrada em JSON (`--entrada <arquivo>` ou stdin). Flags: `--entrada`, `--versao`
 | `data_base_conta` | competencia | sim quando há atrasados | data-base informada pelo juízo (fim de R1, início de R2) |
 | `valor_consolidado_12_2021` | decimal | não | principal consolidado em dez./2021, quando já apurado (supre a falta da série da poupança) |
 | `juros_consolidados_12_2021` | decimal | não | "juros até 12/2021", com `valor_consolidado_12_2021` |
-| `data_expedicao` | data | não | expedição do requisitório |
+| `data_expedicao` | data | não | expedição do requisitório; exigida para R2 e conferida (o pagamento tem de ser posterior a ela), mas não muda o início de R2, que corre desde a data-base pela Res. CJF 983/2026, art. 7º, caput e §3º (2.0.3) |
 | `data_apresentacao` | data | não | apresentação/entrega ao tribunal; define o corte, o prazo e a graça |
 | `data_transmissao` | data | sim quando há `valor_atualizado_ate_transmissao` | marco do limite da RPV (M4) |
 | `data_pagamento` | data | não | sem ela, R2 sai em fórmula com a lista de faltantes |
